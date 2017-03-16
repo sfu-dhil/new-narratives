@@ -1,0 +1,4 @@
+[submodule "src/Nines"]
+	path = src/Nines
+	url = git@github.com:ubermichael/nines-bundles.git
+	branch = master

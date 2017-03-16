@@ -36,8 +36,16 @@ framework:
 
 # Twig Configuration
 twig:
+    form_themes:      
+        - 'bootstrap_3_horizontal_layout.html.twig'
+        - '@NinesUtilBundle/Form/fields.html.twig'
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    paths:
+        '%kernel.root_dir%/../src/Nines/UtilBundle/Resources/views': NinesUtilBundle
+    exception_controller:  NinesUtilBundle:Error:showException
+    globals:
+        comment_service: "@feedback.comment"
 
 # Doctrine Configuration
 doctrine:
@@ -48,18 +56,24 @@ doctrine:
         dbname:   "%database_name%"
         user:     "%database_user%"
         password: "%database_password%"
-        charset:  UTF8
-        # if using pdo_sqlite as your database driver:
-        #   1. add the path in parameters.yml
-        #     e.g. database_path: "%kernel.root_dir%/../var/data/data.sqlite"
-        #   2. Uncomment database_path in parameters.yml.dist
-        #   3. Uncomment next line:
-        #path:     "%database_path%"
-
+        charset: utf8mb4
+        default_table_options:
+            charset: utf8mb4
+            collate: utf8mb4_unicode_ci
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+        dql:
+            datetime_functions:
+                YEAR: DoctrineExtensions\Query\Mysql\Year 
+                DATE: DoctrineExtensions\Query\Mysql\Date
+                STRTODATE: DoctrineExtensions\Query\Mysql\StrToDate                
+            string_functions:
+                MATCH_AGAINST: Nines\UtilBundle\Extensions\Doctrine\MatchAgainstFunction
+            numeric_functions:
+                INT: Nines\UtilBundle\Extensions\Doctrine\CastAsIntegerFunction
+                RAND: Nines\UtilBundle\Extensions\Doctrine\RandFunction
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -68,3 +82,98 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+assetic:
+    debug:          '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    filters:
+        cssrewrite: ~
+    bundles: 
+        - AppBundle
+    assets:
+        bootstrap_js:
+            inputs:
+                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/js/bootstrap.js"
+        bootstrap_css:
+            inputs:
+                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/css/bootstrap.css"
+                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/css/bootstrap-theme.css"
+            filters: [cssrewrite]
+
+        bootstrap_glyphicons_ttf:
+            inputs:
+                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf"
+            output: "fonts/glyphicons-halflings-regular.ttf"
+        bootstrap_glyphicons_eot:
+            inputs:
+                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.eot"
+            output: "fonts/glyphicons-halflings-regular.eot"
+        bootstrap_glyphicons_woff:
+            inputs:
+                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.woff"
+            output: "fonts/glyphicons-halflings-regular.woff"
+        bootstrap_glyphicons_woff2:
+            inputs:
+                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2"
+            output: "fonts/glyphicons-halflings-regular.woff2"
+
+        jquery:
+            inputs:
+                - "%kernel.root_dir%/../vendor/components/jquery/jquery.js"                   
+                
+knp_paginator:
+    page_range: 5                      # default page range used in pagination control
+    default_options:
+        page_name: page                # page query parameter name
+        sort_field_name: sort          # sort field query parameter name
+        sort_direction_name: dir       # sort direction query parameter name
+        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+    template:
+        pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig     # bootstrapy pagination
+        sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: Nines\UserBundle\Entity\User
+    profile:
+        form:
+            type: Nines\UserBundle\Form\ProfileType
+    change_password:
+        form:
+            type: Nines\UserBundle\Form\PasswordType
+            
+ivory_ck_editor:
+    input_sync: true
+    default_config: wphp_config
+    configs:
+        wphp_config:
+            toolbar: standard
+
+knp_menu:
+    twig:
+        template: KnpMenuBundle::menu.html.twig
+
+nines_feedback:
+    default_status: submitted
+    public_status: published
+    commenting:
+        firm:
+            class: AppBundle\Entity\Firm
+            route: firm_show
+        person:
+            class: AppBundle\Entity\Person
+            route: person_show
+        title:
+            class: AppBundle\Entity\Title
+            route: title_show
+        blog_post:
+            class: Nines\BlogBundle\Post
+            route: post_show
+        blog_page:
+            class: Nines\BlogBundle\Page
+            route: page_show
+
+nines_blog:
+    default_status: draft
+    default_category: none
