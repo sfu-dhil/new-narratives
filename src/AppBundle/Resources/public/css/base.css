@@ -7,9 +7,13 @@ body > .container {
 /* Custom app styles */
 
 label.required::after {
-    content: ' *';
+    content: '*';
     color: red;
     font-weight: bold;
+}
+
+.radio label.required::after {
+    content: '';
 }
 
 a[href ^= 'mailto:']::after {

@@ -46,6 +46,9 @@ twig:
     exception_controller:  NinesUtilBundle:Error:showException
     globals:
         comment_service: "@feedback.comment"
+    date:
+        format: d.m.Y, H:i:s
+        interval_format: '%%d days'        
 
 # Doctrine Configuration
 doctrine:
