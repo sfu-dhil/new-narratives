@@ -210,5 +210,5 @@ class DateYearController extends Controller
         $this->addFlash('success', 'The dateYear was deleted.');
 
         return $this->redirectToRoute('date_index');
-    }
+    }    
 }

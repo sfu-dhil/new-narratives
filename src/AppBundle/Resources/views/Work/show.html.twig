@@ -42,15 +42,24 @@
                 <td>{{ work.volume }}</td>
             </tr>
             <tr>
-                <th>People</th>
+                <th>Contributions</th>
                 <td>
-                    <a href="#">Add person</a> | <a href="#">Remove person</a>
+                    <a href="{{ path('work_contributions', {'id': work.id}) }}">Edit contributions</a>
                 </td>
             </tr>
             <tr>
                 <th>Dates</th>
                 <td>
-                    <a href="#">Add date</a> | <a href="#">Remove date</a>
+                    {% if work.dates|length > 0 %}
+                        <ul>
+                            {% for dateYear in work.dates %}
+                                <li>{{ dateYear.dateCategory}}: {{ dateYear.value }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('work_dates', {'id': work.id}) }}">Edit dates</a> 
+                    {% endif %}
                 </td>
             </tr>
             <tr>

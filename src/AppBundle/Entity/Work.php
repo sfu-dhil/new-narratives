@@ -134,7 +134,7 @@ class Work extends AbstractEntity {
 
     /**
      * @var Collection|DateYear[]
-     * @ORM\OneToMany(targetEntity="DateYear", mappedBy="work")
+     * @ORM\OneToMany(targetEntity="DateYear", mappedBy="work", cascade={"persist"}, orphanRemoval=true)
      */
     private $dates;
 
@@ -616,6 +616,16 @@ class Work extends AbstractEntity {
      */
     public function getDates() {
         return $this->dates;
+    }
+    
+    /**
+     * Set dates
+     * 
+     * @param Collection|DateYear[] $dates
+     */
+    public function setDates($dates) {
+        $this->dates = $dates;
+        return $this;
     }
 
     /**

@@ -57,6 +57,7 @@ class DateYear extends AbstractEntity {
     private $work;
 
     public function __construct() {
+        parent::__construct();
         $this->start = null;
         $this->startCirca = null;
         $this->end = null;
@@ -69,8 +70,7 @@ class DateYear extends AbstractEntity {
      * @return string
      */
     public function __toString() {
-        if (($this->startCirca === $this->endCirca) &&
-                ($this->start === $this->end)) {
+        if (($this->startCirca === $this->endCirca) && ($this->start === $this->end)) {
             return ($this->startCirca ? 'c' : '') . $this->start;
         }
         return ($this->startCirca ? 'c' : '') . $this->start .

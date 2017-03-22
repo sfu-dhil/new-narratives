@@ -2,13 +2,13 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\Work;
+use AppBundle\Form\WorkDatesType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Entity\Work;
-use AppBundle\Form\WorkType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Work controller.
@@ -210,5 +210,50 @@ class WorkController extends Controller
         $this->addFlash('success', 'The work was deleted.');
 
         return $this->redirectToRoute('work_index');
+    }
+    
+    /**
+     * Add/remove dates to a work.
+     * 
+     * @Route("/{id}/dates", name="work_dates")
+     * @Method({"GET", "POST"})
+     * @Template()
+     * @param Request $request
+     * @param Work $work
+     */
+    public function workDatesAction(Request $request, Work $work) {
+        // clone the dates because otherwise they are handled as references.
+        $form = $this->createForm(WorkDatesType::class, $work);
+        $form->handleRequest($request);
+        
+        if($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            
+            // Even though the form is bound to $work, the dates won't end
+            // up associated with it. Boo.
+//            foreach($work->getDates() as $date) {
+//                $date->setWork($work);
+//            }
+            $em->flush();
+            $this->addFlash('success', 'The dates have been updated.');
+            //return $this->redirectToRoute('work_show', array('id' => $work->getId()));
+        }
+        return array(
+            'work' => $work,
+            'form' => $form->createView(),
+        );
+    }
+    
+    /**
+     * Add contributions to a work.
+     * 
+     * @Route("/{id}/contributions", name="work_contributions")
+     * @Method({"GET", "POST"})
+     * @Template()
+     * @param Request $request
+     * @param Work $work
+     */
+    public function addContributionAction(Request $request, Work $work) {
+        
     }
 }

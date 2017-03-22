@@ -3,8 +3,8 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DateYearType extends AbstractType
@@ -14,10 +14,13 @@ class DateYearType extends AbstractType
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {    
-        $builder->add('value');     
+    {   
+        $work = $options['work'];
+        $builder->add('work', HiddenType::class, array(
+            // 'data' => 1,
+        ));
         $builder->add('dateCategory');     
-        $builder->add('work');         
+        $builder->add('value');     
     }
     
     /**
@@ -26,7 +29,8 @@ class DateYearType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\DateYear'
+            'data_class' => 'AppBundle\Entity\DateYear',
+            'work' => null,
         ));
     }
 }

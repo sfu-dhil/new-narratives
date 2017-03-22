@@ -3,6 +3,16 @@ newn
 
 A Symfony project created on March 16, 2017, 3:20 pm.
 
+To do
+-----
+
+Have separate fields in Work for LC Subject and for PP Subject.
+
+One is a select list, one is free text maybe. Dunno.
+
+LCSH
+------
+
 For LCSH, do something like this:
 
 (from http://id.loc.gov/techcenter/searching.html )
