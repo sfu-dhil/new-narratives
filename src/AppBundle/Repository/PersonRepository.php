@@ -10,4 +10,10 @@ namespace AppBundle\Repository;
  */
 class PersonRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function searchQuery($q) {
+        $qb = $this->createQueryBuilder('e');
+        $qb->where("e.fullName like concat('%', :q, '%')");
+        $qb->setParameter('q', $q);
+        return $qb->getQuery();
+    }
 }

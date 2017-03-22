@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Nines\UtilBundle\Entity\AbstractEntity;
 
 /**
@@ -18,12 +19,14 @@ class Person extends AbstractEntity {
     /**
      * @var string
      * @ORM\Column(type="string", length=200)
+     * @Groups({"shallow"})
      */
-    private $fullname;
+    private $fullName;
     
     /**
      * @var Collection|Contribution[]
      * @ORM\OneToMany(targetEntity="Contribution", mappedBy="person")
+     * @Groups({"contributions"})
      */
     private $contributions;
     
@@ -37,32 +40,32 @@ class Person extends AbstractEntity {
      * @return string
      */
     public function __toString() {
-        return $this->fullname;
+        return $this->fullName;
     }
 
 
     /**
-     * Set fullname
+     * Set fullName
      *
-     * @param string $fullname
+     * @param string $fullName
      *
      * @return Person
      */
-    public function setFullname($fullname)
+    public function setFullName($fullName)
     {
-        $this->fullname = $fullname;
+        $this->fullName = $fullName;
 
         return $this;
     }
 
     /**
-     * Get fullname
+     * Get fullName
      *
      * @return string
      */
-    public function getFullname()
+    public function getFullName()
     {
-        return $this->fullname;
+        return $this->fullName;
     }
 
     /**

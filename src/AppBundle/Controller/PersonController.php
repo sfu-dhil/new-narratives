@@ -2,31 +2,39 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\Person;
+use Doctrine\Common\Annotations\AnnotationReader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Entity\Person;
-use AppBundle\Form\PersonType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 /**
  * Person controller.
  *
  * @Route("/person")
  */
-class PersonController extends Controller
-{
+class PersonController extends Controller {
+
     /**
      * Lists all Person entities.
      *
      * @Route("/", name="person_index")
      * @Method("GET")
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function indexAction(Request $request)
-    {
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Person e ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -37,88 +45,133 @@ class PersonController extends Controller
             'people' => $people,
         );
     }
+
+    /**
+     * @return Serializer
+     */
+    private function getSerializer() {
+        $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+        $encoders = array(new JsonEncoder());
+        $converter = new CamelCaseToSnakeCaseNameConverter();
+        $dateTimeNormalizer = new DateTimeNormalizer();
+        $objectNormalizer = new ObjectNormalizer($classMetadataFactory, $converter, null, new ReflectionExtractor());
+        $normalizers = array($dateTimeNormalizer, $objectNormalizer);
+        $serializer = new Serializer($normalizers, $encoders);
+
+        return $serializer;
+    }
+
+    /**
+     * Typeahead info for people.
+     * 
+     * @Route("/typeahead", name="person_typeahead")
+     * @Method("GET")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function typeaheadAction(Request $request) {
+        $serializer = $this->getSerializer();
+
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository(Person::class);
+        $q = $request->query->get('q');
+        $query = $repo->searchQuery($q);
+        $result = $query->execute();
+
+        $data = $serializer->normalize($result, 'json', array(
+            'groups' => ['shallow'],
+            'enable_max_depth' => false,
+        ));
+
+        return new JsonResponse(array(
+            'head' => [
+                'count' => count($data),
+            ],
+            'data' => $data
+        ));
+    }
+
     /**
      * Search for Person entities.
-	 *
-	 * To make this work, add a method like this one to the 
-	 * AppBundle:Person repository. Replace the fieldName with
-	 * something appropriate, and adjust the generated search.html.twig
-	 * template.
-	 * 
-     //    public function searchQuery($q) {
-     //        $qb = $this->createQueryBuilder('e');
-     //        $qb->where("e.fieldName like '%$q%'");
-     //        return $qb->getQuery();
-     //    }
-	 *
+     *
+     * To make this work, add a method like this one to the 
+     * AppBundle:Person repository. Replace the fieldName with
+     * something appropriate, and adjust the generated search.html.twig
+     * template.
+     * 
+      //    public function searchQuery($q) {
+      //        $qb = $this->createQueryBuilder('e');
+      //        $qb->where("e.fieldName like '%$q%'");
+      //        return $qb->getQuery();
+      //    }
+     *
      *
      * @Route("/search", name="person_search")
      * @Method("GET")
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function searchAction(Request $request)
-    {
+    public function searchAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-		$repo = $em->getRepository('AppBundle:Person');
-		$q = $request->query->get('q');
-		if($q) {
-	        $query = $repo->searchQuery($q);
-			$paginator = $this->get('knp_paginator');
-			$people = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
-		} else {
-			$people = array();
-		}
+        $repo = $em->getRepository('AppBundle:Person');
+        $q = $request->query->get('q');
+        if ($q) {
+            $query = $repo->searchQuery($q);
+            $paginator = $this->get('knp_paginator');
+            $people = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
+        } else {
+            $people = array();
+        }
 
         return array(
             'people' => $people,
-			'q' => $q,
+            'q' => $q,
         );
     }
+
     /**
      * Full text search for Person entities.
-	 *
-	 * To make this work, add a method like this one to the 
-	 * AppBundle:Person repository. Replace the fieldName with
-	 * something appropriate, and adjust the generated fulltext.html.twig
-	 * template.
-	 * 
-	//    public function fulltextQuery($q) {
-	//        $qb = $this->createQueryBuilder('e');
-	//        $qb->addSelect("MATCH_AGAINST (e.name, :q 'IN BOOLEAN MODE') as score");
-	//        $qb->add('where', "MATCH_AGAINST (e.name, :q 'IN BOOLEAN MODE') > 0.5");
-	//        $qb->orderBy('score', 'desc');
-	//        $qb->setParameter('q', $q);
-	//        return $qb->getQuery();
-	//    }	 
-	 * 
-	 * Requires a MatchAgainst function be added to doctrine, and appropriate
-	 * fulltext indexes on your Person entity.
-	 *     ORM\Index(name="alias_name_idx",columns="name", flags={"fulltext"})
-	 *
+     *
+     * To make this work, add a method like this one to the 
+     * AppBundle:Person repository. Replace the fieldName with
+     * something appropriate, and adjust the generated fulltext.html.twig
+     * template.
+     * 
+      //    public function fulltextQuery($q) {
+      //        $qb = $this->createQueryBuilder('e');
+      //        $qb->addSelect("MATCH_AGAINST (e.name, :q 'IN BOOLEAN MODE') as score");
+      //        $qb->add('where', "MATCH_AGAINST (e.name, :q 'IN BOOLEAN MODE') > 0.5");
+      //        $qb->orderBy('score', 'desc');
+      //        $qb->setParameter('q', $q);
+      //        return $qb->getQuery();
+      //    }
+     * 
+     * Requires a MatchAgainst function be added to doctrine, and appropriate
+     * fulltext indexes on your Person entity.
+     *     ORM\Index(name="alias_name_idx",columns="name", flags={"fulltext"})
+     *
      *
      * @Route("/fulltext", name="person_fulltext")
      * @Method("GET")
      * @Template()
-	 * @param Request $request
-	 * @return array
+     * @param Request $request
+     * @return array
      */
-    public function fulltextAction(Request $request)
-    {
+    public function fulltextAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-		$repo = $em->getRepository('AppBundle:Person');
-		$q = $request->query->get('q');
-		if($q) {
-	        $query = $repo->fulltextQuery($q);
-			$paginator = $this->get('knp_paginator');
-			$people = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
-		} else {
-			$people = array();
-		}
+        $repo = $em->getRepository('AppBundle:Person');
+        $q = $request->query->get('q');
+        if ($q) {
+            $query = $repo->fulltextQuery($q);
+            $paginator = $this->get('knp_paginator');
+            $people = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
+        } else {
+            $people = array();
+        }
 
         return array(
             'people' => $people,
-			'q' => $q,
+            'q' => $q,
         );
     }
 
@@ -128,10 +181,9 @@ class PersonController extends Controller
      * @Route("/new", name="person_new")
      * @Method({"GET", "POST"})
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function newAction(Request $request)
-    {
+    public function newAction(Request $request) {
         $person = new Person();
         $form = $this->createForm('AppBundle\Form\PersonType', $person);
         $form->handleRequest($request);
@@ -157,10 +209,9 @@ class PersonController extends Controller
      * @Route("/{id}", name="person_show")
      * @Method("GET")
      * @Template()
-	 * @param Person $person
+     * @param Person $person
      */
-    public function showAction(Person $person)
-    {
+    public function showAction(Person $person) {
 
         return array(
             'person' => $person,
@@ -173,11 +224,10 @@ class PersonController extends Controller
      * @Route("/{id}/edit", name="person_edit")
      * @Method({"GET", "POST"})
      * @Template()
-	 * @param Request $request
-	 * @param Person $person
+     * @param Request $request
+     * @param Person $person
      */
-    public function editAction(Request $request, Person $person)
-    {
+    public function editAction(Request $request, Person $person) {
         $editForm = $this->createForm('AppBundle\Form\PersonType', $person);
         $editForm->handleRequest($request);
 
@@ -199,11 +249,10 @@ class PersonController extends Controller
      *
      * @Route("/{id}/delete", name="person_delete")
      * @Method("GET")
-	 * @param Request $request
-	 * @param Person $person
+     * @param Request $request
+     * @param Person $person
      */
-    public function deleteAction(Request $request, Person $person)
-    {
+    public function deleteAction(Request $request, Person $person) {
         $em = $this->getDoctrine()->getManager();
         $em->remove($person);
         $em->flush();
@@ -211,4 +260,5 @@ class PersonController extends Controller
 
         return $this->redirectToRoute('person_index');
     }
+
 }

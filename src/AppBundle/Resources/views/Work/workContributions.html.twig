@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Dates</h1>
+    <h1>Contributions</h1>
 
     <p>Edit the dates contributions associated with <i>{{ work.title }}</i>.</p>
 
@@ -16,4 +16,7 @@
     </div>
     {{ form_end(form) }}
 
+    <script>
+        typeahead_path = '{{ path('person_typeahead') }}';
+    </script>
 {% endblock %}
