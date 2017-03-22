@@ -2,6 +2,9 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Work;
+use AppBundle\Transformer\HiddenEntityTransformer;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -10,6 +13,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class DateYearType extends AbstractType
 {
     /**
+     * @var ObjectManager
+     */
+    private $em;
+    
+    public function __construct(ObjectManager $em) {
+        $this->em = $em;
+    }
+    
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -17,10 +29,13 @@ class DateYearType extends AbstractType
     {   
         $work = $options['work'];
         $builder->add('work', HiddenType::class, array(
-            // 'data' => 1,
+            'data' => $work,
+            'data_class' => null,
         ));
         $builder->add('dateCategory');     
         $builder->add('value');     
+        
+        $builder->get('work')->addModelTransformer(new HiddenEntityTransformer($this->em, Work::class));
     }
     
     /**

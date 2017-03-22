@@ -44,7 +44,14 @@
             <tr>
                 <th>Contributions</th>
                 <td>
-                    <a href="{{ path('work_contributions', {'id': work.id}) }}">Edit contributions</a>
+                    {% if work.contributions|length > 0 %}
+                        <ul>
+                            {% for contribution in work.contributions %}
+                                <li><a href="{{ path('person_show', {'id': contribution.person.id}) }}">{{ contribution.person }}</a>, {{ contribution.role }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <a href="{{ path('work_contributions', {'id': work.id}) }}" class="pull-right">Edit contributions</a>
                 </td>
             </tr>
             <tr>
@@ -54,12 +61,10 @@
                         <ul>
                             {% for dateYear in work.dates %}
                                 <li>{{ dateYear.dateCategory}}: {{ dateYear.value }}</li>
-                            {% endfor %}
+                                {% endfor %}
                         </ul>
                     {% endif %}
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path('work_dates', {'id': work.id}) }}">Edit dates</a> 
-                    {% endif %}
+                    <a href="{{ path('work_dates', {'id': work.id}) }}" class="pull-right">Edit dates</a> 
                 </td>
             </tr>
             <tr>

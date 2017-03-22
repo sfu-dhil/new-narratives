@@ -18,12 +18,16 @@ class WorkContributionsType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {    
-        $builder->add('dates', CollectionType::class, array(
+        $work = $options['work'];
+        $builder->add('contributions', CollectionType::class, array(
             'allow_add' => true,
             'allow_delete' => true,
             'delete_empty' => true,
             'entry_type' => ContributionType::class,
-            'label' => 'Dates',
+            'entry_options' => array(
+                'work' => $work,
+            ),
+            'label' => 'Contributions',
             'attr' => array(
                 'group_class' => 'collection',
             ),
@@ -36,7 +40,8 @@ class WorkContributionsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => Work::class
+            'data_class' => Work::class,
+            'work' => null,
         ));
     }
 }

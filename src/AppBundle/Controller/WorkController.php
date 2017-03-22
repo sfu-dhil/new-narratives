@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Work;
+use AppBundle\Form\WorkContributionsType;
 use AppBundle\Form\WorkDatesType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -222,21 +223,16 @@ class WorkController extends Controller
      * @param Work $work
      */
     public function workDatesAction(Request $request, Work $work) {
-        // clone the dates because otherwise they are handled as references.
-        $form = $this->createForm(WorkDatesType::class, $work);
+        $form = $this->createForm(WorkDatesType::class, $work, array(
+            'work' => $work
+        ));
         $form->handleRequest($request);
         
         if($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            
-            // Even though the form is bound to $work, the dates won't end
-            // up associated with it. Boo.
-//            foreach($work->getDates() as $date) {
-//                $date->setWork($work);
-//            }
             $em->flush();
             $this->addFlash('success', 'The dates have been updated.');
-            //return $this->redirectToRoute('work_show', array('id' => $work->getId()));
+            return $this->redirectToRoute('work_show', array('id' => $work->getId()));
         }
         return array(
             'work' => $work,
@@ -253,7 +249,21 @@ class WorkController extends Controller
      * @param Request $request
      * @param Work $work
      */
-    public function addContributionAction(Request $request, Work $work) {
+    public function workContributionsAction(Request $request, Work $work) {
+        $form = $this->createForm(WorkContributionsType::class, $work, array(
+            'work' => $work
+        ));
+        $form->handleRequest($request);
         
+        if($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            $this->addFlash('success', 'The contributions have been updated.');
+            //return $this->redirectToRoute('work_show', array('id' => $work->getId()));
+        }
+        return array(
+            'work' => $work,
+            'form' => $form->createView(),
+        );
     }
 }

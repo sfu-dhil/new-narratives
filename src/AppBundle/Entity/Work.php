@@ -128,7 +128,7 @@ class Work extends AbstractEntity {
 
     /**
      * @var Collection|Contribution[]
-     * @ORM\OneToMany(targetEntity="Contribution", mappedBy="work")
+     * @ORM\OneToMany(targetEntity="Contribution", mappedBy="work", cascade={"persist"}, orphanRemoval=true)
      */
     private $contributions;
 

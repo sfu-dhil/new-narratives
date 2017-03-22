@@ -1,0 +1,12 @@
+services:
+    app.form.date_year_type:
+        class: AppBundle\Form\DateYearType
+        arguments: [ "@doctrine.orm.entity_manager" ]
+        tags:
+            - { name: form.type }
+
+    app.form.contribution_type:
+        class: AppBundle\Form\ContributionType
+        arguments: [ "@doctrine.orm.entity_manager" ]
+        tags:
+            - { name: form.type }
