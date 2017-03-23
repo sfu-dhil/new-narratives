@@ -42,7 +42,11 @@ class ContributionType extends AbstractType
                 'class' => 'typeahead'
             )
         ));
-        $builder->add('person', HiddenType::class, array());
+        $builder->add('person', HiddenType::class, array(
+            'attr' => array(
+                'class' => 'contribution_person',
+            )
+        ));
         
         $builder->get('work')->addModelTransformer(
             new HiddenEntityTransformer($this->em, Work::class)

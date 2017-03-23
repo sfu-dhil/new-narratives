@@ -45,7 +45,6 @@
     
     function addFormItem($container) {
         var prototype = $container.data('prototype');
-        console.log(prototype);
         var index = $container.data('count');
         var $form = $(prototype.replace(/__name__/g, index).replace(/label__/g, ''));
         $container.append($form);
@@ -55,6 +54,7 @@
             $form.remove();
         });
         $container.data('count', index + 1);
+        $container.trigger('collection:add', $form);
     }
 
     function updateFormItem($container) {

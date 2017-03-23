@@ -1,6 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block styles %}
+    <style>
+        .tt-match {
+            background-color: pink;
+        }
+        .twitter-typeahead {
+            width: 100% !important;
+        }
+        
+        .twitter-typeahead .list-group {
+            width: 100% !important;
+        }
+    </style>        
 {% endblock %}
 
 {% block body %}
@@ -19,12 +31,13 @@
     </div>
     {{ form_end(form) }}
 
-    <script>
-        typeahead_path = '{{ path('person_typeahead') }}';
-    </script>
 {% endblock %}
 
 {% block javascripts %}
     <script>
+        typeahead_path = '{{ path('person_typeahead') }}';
     </script>
+    <script src="{{ asset('bower/typeahead.js/dist/typeahead.jquery.min.js') }}"></script>
+    <script src="{{ asset('bower/typeahead.js/dist/bloodhound.min.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/typeahead.js') }}?v={{ random() }}"></script>
 {% endblock %}

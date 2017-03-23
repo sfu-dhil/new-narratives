@@ -83,12 +83,7 @@ class PersonController extends Controller {
             'enable_max_depth' => false,
         ));
 
-        return new JsonResponse(array(
-            'head' => [
-                'count' => count($data),
-            ],
-            'data' => $data
-        ));
+        return new JsonResponse($data);
     }
 
     /**
