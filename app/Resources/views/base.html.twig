@@ -4,23 +4,13 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}
-            {% stylesheets '@AppBundle/Resources/public/css/*' %}
-            <link rel='stylesheet' href='{{ asset_url }}'>
-            {% endstylesheets %}
-        {% endblock %}
-
-        {% stylesheets '@bootstrap_css' %}
-        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}">
-        {% endstylesheets %}
-
-        {% stylesheets 'bundles/app/css/*' filter='cssrewrite' %}
-        <link rel='stylesheet' href='{{ asset_url }}'>
-        {% endstylesheets %}
-
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">        
+        <link rel="stylesheet" href="{{ asset('bower/bootstrap/dist/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bower/bootstrap/dist/css/bootstrap-theme.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/app/css/base.css') }}">        
+        <script src="{{ asset('bower/jquery/dist/jquery.min.js') }}"></script>        
+        {% block styles %}{% endblock %}
     </head>
     <body>
 
@@ -132,18 +122,10 @@
             {% endfor %}
 
         {% block body %}{% endblock %}
-
     </div>
 
-    {% javascripts '@jquery' '@bootstrap_js' 'bundles/app/js/*' %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-
-    {% javascripts '@AppBundle/Resources/public/js/*' %}	
-    {% endjavascripts %}
-    
-    <script type="text/javascript" src="{{ asset('bundles/bmatznerjqueryui/js/minified/jquery-ui.min.js') }}"></script>
-
-{% block javascripts %}{% endblock %}
+    <script src="{{ asset('bower/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/form.js') }}"></script>
+    {% block javascripts %}{% endblock %}
 </body>
 </html>
