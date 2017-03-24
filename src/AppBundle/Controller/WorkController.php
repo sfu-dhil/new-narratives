@@ -38,44 +38,7 @@ class WorkController extends Controller
             'works' => $works,
         );
     }
-    /**
-     * Search for Work entities.
-	 *
-	 * To make this work, add a method like this one to the 
-	 * AppBundle:Work repository. Replace the fieldName with
-	 * something appropriate, and adjust the generated search.html.twig
-	 * template.
-	 * 
-     //    public function searchQuery($q) {
-     //        $qb = $this->createQueryBuilder('e');
-     //        $qb->where("e.fieldName like '%$q%'");
-     //        return $qb->getQuery();
-     //    }
-	 *
-     *
-     * @Route("/search", name="work_search")
-     * @Method("GET")
-     * @Template()
-	 * @param Request $request
-     */
-    public function searchAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-		$repo = $em->getRepository('AppBundle:Work');
-		$q = $request->query->get('q');
-		if($q) {
-	        $query = $repo->searchQuery($q);
-			$paginator = $this->get('knp_paginator');
-			$works = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
-		} else {
-			$works = array();
-		}
 
-        return array(
-            'works' => $works,
-			'q' => $q,
-        );
-    }
     /**
      * Full text search for Work entities.
 	 *
@@ -98,7 +61,7 @@ class WorkController extends Controller
 	 *     ORM\Index(name="alias_name_idx",columns="name", flags={"fulltext"})
 	 *
      *
-     * @Route("/fulltext", name="work_fulltext")
+     * @Route("/search", name="work_search")
      * @Method("GET")
      * @Template()
 	 * @param Request $request

@@ -30,23 +30,27 @@ use Symfony\Component\Form\DataTransformerInterface;
  */
 class HiddenEntityTransformer implements DataTransformerInterface {
     
+    /**
+     * @var ObjectManager
+     */
     private $em;
-    
+
+    /**
+     * @var string
+     */
     private $class;
     
+    /**
+     * Build and configure the transformer.
+     * 
+     * @param ObjectManager $em
+     * @param type $class
+     */
     public function __construct(ObjectManager $em, $class) {
         $this->em = $em;
         $this->class = $class;
     }
     
-    public function getObjectManager() {
-        return $this->em;
-    }
-    
-    public function getClass() {
-        return $this->class;
-    }
-
     /**
      * Transform an entity to a string.
      * 
