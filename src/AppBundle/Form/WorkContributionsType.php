@@ -20,6 +20,7 @@ class WorkContributionsType extends AbstractType
     {    
         $work = $options['work'];
         $builder->add('contributions', CollectionType::class, array(
+            'required' => false,
             'allow_add' => true,
             'allow_delete' => true,
             'delete_empty' => true,

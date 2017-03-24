@@ -52,12 +52,12 @@
             var $item = $(item);
             initTypeahead($item);
         });
-
-        $(document).on('collection:add', function (event, item) {
-            console.log(item);
-            initTypeahead($(item).find('input.typeahead'));
-        });
-
     });
+
+    $(document).on('collection:add', function (event, item) {
+        console.log(item);
+        initTypeahead($(item).find('input.typeahead'));
+    });
+
 
 })(jQuery, window);

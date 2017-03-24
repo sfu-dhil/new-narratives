@@ -47,7 +47,10 @@
                     {% if work.contributions|length > 0 %}
                         <ul>
                             {% for contribution in work.contributions %}
-                                <li><a href="{{ path('person_show', {'id': contribution.person.id}) }}">{{ contribution.person }}</a>, {{ contribution.role }}</li>
+                                <li>
+                                    <a href="{{ path('person_show', {'id': contribution.person.id}) }}">{{ contribution.person }}</a>, 
+                                    <a href="{{ path('role_show', {'id': contribution.role.id}) }}">{{ contribution.role }}</a>
+                                </li>
                             {% endfor %}
                         </ul>
                     {% endif %}
@@ -60,8 +63,12 @@
                     {% if work.dates|length > 0 %}
                         <ul>
                             {% for dateYear in work.dates %}
-                                <li>{{ dateYear.dateCategory}}: {{ dateYear.value }}</li>
-                                {% endfor %}
+                                <li>
+                                    <a href="{{ path('date_category_show', {'id': dateYear.dateCategory.id}) }}">
+                                        {{ dateYear.dateCategory}}
+                                    </a>: {{ dateYear.value }}
+                                </li>
+                            {% endfor %}
                         </ul>
                     {% endif %}
                     <a href="{{ path('work_dates', {'id': work.id}) }}" class="pull-right">Edit dates</a> 

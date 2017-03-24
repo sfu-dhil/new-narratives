@@ -11,7 +11,9 @@ use Nines\UtilBundle\Entity\AbstractEntity;
 /**
  * Person
  *
- * @ORM\Table(name="person")
+ * @ORM\Table(name="person", indexes={
+ *  @ORM\Index(columns={"full_name"}, flags={"fulltext"})
+ * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PersonRepository")
  */
 class Person extends AbstractEntity {

@@ -35,5 +35,7 @@
             </tr>
         </tbody>
     </table>
+            
+    {% include 'AppBundle:Work:workList.html.twig' with {'works': publisher.works} %}
 
 {% endblock %}

@@ -10,7 +10,9 @@ use Nines\UtilBundle\Entity\AbstractEntity;
 /**
  * Publisher
  *
- * @ORM\Table(name="publisher")
+ * @ORM\Table(name="publisher", indexes={
+ *  @ORM\Index(columns={"name"}, flags={"fulltext"})
+ * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PublisherRepository")
  */
 class Publisher extends AbstractEntity {
