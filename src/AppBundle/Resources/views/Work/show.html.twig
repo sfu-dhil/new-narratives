@@ -181,11 +181,19 @@
             </tr>
             <tr>
                 <th>Created</th>
-                <td>{% if work.created %}{{ work.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    {% if work.created %}{{ work.created|date('Y-m-d H:i:s') }}{% endif %}
+                    {% if work.createdBy %} by {{ work.createdBy.fullname }}{% endif %}
+                </td>
             </tr>
             <tr>
                 <th>Updated</th>
-                <td>{% if work.updated %}{{ work.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    Most recent update {% if work.updated %}{{ work.updated|date('Y-m-d H:i:s') }}{% endif %}.
+                    {% if work.checkedBy|length > 0 %}
+                        Checked by {% for user in work.checkedBy %}{{ user.fullname }}{% if not loop.last %}, {% endif %}{% endfor %}.
+                    {% endif %}
+                </td>
             </tr>
         </tbody>
     </table>

@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Nines\UserBundle\Entity\User;
 use Nines\UtilBundle\Entity\AbstractEntity;
 
 /**
@@ -108,7 +109,6 @@ class Work extends AbstractEntity {
     /**
      * @var Genre
      * @ORM\ManyToOne(targetEntity="Genre", inversedBy="works")
-     * @ORM\JoinColumn(nullable=false)
      */
     private $genre;
 
@@ -125,6 +125,19 @@ class Work extends AbstractEntity {
      * @ORM\JoinColumn(nullable=false)
      */
     private $workCategory;
+
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="Nines\UserBundle\Entity\User")
+     */
+    private $createdBy;
+
+    /**
+     * @var Collection|User[]
+     * @ORM\ManyToMany(targetEntity="Nines\UserBundle\Entity\User")
+     * @ORM\JoinTable(name="work_checked_user")
+     */
+    private $checkedBy;
 
     /**
      * @var Collection|Contribution[]
@@ -617,7 +630,7 @@ class Work extends AbstractEntity {
     public function getDates() {
         return $this->dates;
     }
-    
+
     /**
      * Set dates
      * 
@@ -657,6 +670,61 @@ class Work extends AbstractEntity {
      */
     public function getSubjects() {
         return $this->subjects;
+    }
+
+    /**
+     * Set createdBy
+     *
+     * @param User $createdBy
+     *
+     * @return Work
+     */
+    public function setCreatedBy(User $createdBy = null) {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * Get createdBy
+     *
+     * @return User
+     */
+    public function getCreatedBy() {
+        return $this->createdBy;
+    }
+
+    /**
+     * Add checkedBy
+     *
+     * @param User $checkedBy
+     *
+     * @return Work
+     */
+    public function addCheckedBy(User $checkedBy) {
+        if (!$this->checkedBy->contains($checkedBy)) {
+            $this->checkedBy->add($checkedBy);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove checkedBy
+     *
+     * @param User $checkedBy
+     */
+    public function removeCheckedBy(User $checkedBy) {
+        $this->checkedBy->removeElement($checkedBy);
+    }
+
+    /**
+     * Get checkedBy
+     *
+     * @return Collection
+     */
+    public function getCheckedBy() {
+        return $this->checkedBy;
     }
 
 }
