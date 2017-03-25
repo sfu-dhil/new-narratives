@@ -11,7 +11,11 @@ use Nines\UtilBundle\Entity\AbstractEntity;
 /**
  * Work
  *
- * @ORM\Table(name="work")
+ * @ORM\Table(name="work", indexes={
+ *  @ORM\Index(columns={"title"}, flags={"fulltext"}),
+ *  @ORM\Index(columns={"publication_place"}, flags={"fulltext"}),
+ *  @ORM\Index(columns={"dedication"}, flags={"fulltext"})
+ * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\WorkRepository")
  */
 class Work extends AbstractEntity {

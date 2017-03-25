@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Work;
 use AppBundle\Form\WorkContributionsType;
 use AppBundle\Form\WorkDatesType;
+use AppBundle\Form\WorkSearchType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -67,22 +68,22 @@ class WorkController extends Controller
 	 * @param Request $request
 	 * @return array
      */
-    public function fulltextAction(Request $request)
-    {
+    public function searchAction(Request $request)
+    {        
         $em = $this->getDoctrine()->getManager();
 		$repo = $em->getRepository('AppBundle:Work');
-		$q = $request->query->get('q');
-		if($q) {
-	        $query = $repo->fulltextQuery($q);
+        $works = array();
+        $form = $this->createForm(WorkSearchType::class, null, array());
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+	        $query = $repo->searchQuery($form->getData());
 			$paginator = $this->get('knp_paginator');
 			$works = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
-		} else {
-			$works = array();
-		}
+        }
 
         return array(
             'works' => $works,
-			'q' => $q,
+            'form' => $form->createView(),
         );
     }
 
