@@ -166,6 +166,7 @@ class Work extends AbstractEntity {
         $this->subjects = new ArrayCollection();
         $this->dates = new ArrayCollection();
         $this->contributions = new ArrayCollection();
+        $this->checkedBy = new ArrayCollection();
     }
 
     /**
