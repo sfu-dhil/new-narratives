@@ -7,6 +7,8 @@ use AppBundle\Entity\Work;
 use AppBundle\Transformer\HiddenEntityTransformer;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -47,7 +49,6 @@ class ContributionType extends AbstractType
                 'class' => 'contribution_person',
             )
         ));
-        
         $builder->get('work')->addModelTransformer(
             new HiddenEntityTransformer($this->em, Work::class)
         );
@@ -55,6 +56,15 @@ class ContributionType extends AbstractType
         $builder->get('person')->addModelTransformer(
             new HiddenEntityTransformer($this->em, Person::class)
         );
+        
+        $builder->addEventListener(FormEvents::POST_SET_DATA, function(FormEvent $event){
+            $contribution = $event->getData();
+            if($contribution === null) {
+                return;
+            }
+            $builder = $event->getForm()->get('person_name');
+            $builder->setData($contribution->getPerson()->getFullname());
+        });
     }
     
     /**

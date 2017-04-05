@@ -152,7 +152,9 @@
             <tr>
                 <th>Genre</th>
                 <td>
+                    {% if work.genre is not null %}
                     <a href='{{ path('genre_show', {'id': work.genre.id}) }}'>{{work.genre}}</a>
+                    {% endif %}
                 </td>
             </tr>
             <tr>
