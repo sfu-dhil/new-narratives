@@ -28,6 +28,10 @@ framework:
         # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
         handler_id:  session.handler.native_file
         save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+        
+        cookie_path: '%router.request_context.base_url%'
+        cookie_domain: '%router.request_context.host%'
+        cookie_secure: '%secure_cookies%'
     fragments:       ~
     http_method_override: true
     assets: ~

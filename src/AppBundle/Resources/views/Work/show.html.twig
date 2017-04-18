@@ -75,7 +75,7 @@
                 </td>
             </tr>
             <tr>
-                <th>Publicationplace</th>
+                <th>Publication Place</th>
                 <td>{{ work.publicationPlace }}</td>
             </tr>
             <tr>
@@ -87,7 +87,7 @@
                 </td>
             </tr>              
             <tr>
-                <th>Physicaldescription</th>
+                <th>Physical Description</th>
                 <td>{{ work.physicalDescription }}</td>
             </tr>
             <tr>
@@ -115,7 +115,7 @@
                 </td>
             </tr>
             <tr>
-                <th>Translationdescription</th>
+                <th>Translation Description</th>
                 <td>{{ work.translationDescription }}</td>
             </tr>
             <tr>
@@ -123,7 +123,7 @@
                 <td>{{ work.dedication }}</td>
             </tr>
             <tr>
-                <th>Worldcaturl</th>
+                <th>Worldcat Url</th>
                 <td>
                     <a href='{{ work.worldcatUrl }}'>
                         {{ work.worldcatUrl }}
@@ -152,9 +152,7 @@
             <tr>
                 <th>Genre</th>
                 <td>
-                    {% if work.genre is not null %}
                     <a href='{{ path('genre_show', {'id': work.genre.id}) }}'>{{work.genre}}</a>
-                    {% endif %}
                 </td>
             </tr>
             <tr>
@@ -162,15 +160,15 @@
                 <td>{% if work.transcription %}Yes{% else %}No{% endif %}</td>
             </tr>
             <tr>
-                <th>Physicallocations</th>
+                <th>Physical Locations</th>
                 <td>{{ work.physicalLocations }}</td>
             </tr>
             <tr>
-                <th>Digitallocations</th>
+                <th>Digital Locations</th>
                 <td>{{ work.digitalLocations }}</td>
             </tr>
             <tr>
-                <th>Digitalurl</th>
+                <th>Digital Url</th>
                 <td>
                     <a href='{{ work.digitalUrl }}'>
                         {{ work.digitalUrl }}

@@ -15,5 +15,6 @@
 /vendor/
 /web/bundles/
 /web/bower
+/web/docs
 /data
 /nbproject
