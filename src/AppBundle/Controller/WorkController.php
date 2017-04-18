@@ -223,7 +223,7 @@ class WorkController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $this->addFlash('success', 'The contributions have been updated.');
-            //return $this->redirectToRoute('work_show', array('id' => $work->getId()));
+            return $this->redirectToRoute('work_show', array('id' => $work->getId()));
         }
         return array(
             'work' => $work,
