@@ -11,12 +11,14 @@
             <a href="{{ path('subject_source_index') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-arrow-left"></span> Back
             </a>
-            <a href="{{ path('subject_source_edit', { 'id': subjectSource.id }) }}" class="btn btn-default">
-                <span class='glyphicon glyphicon-edit'></span> Edit
-            </a>
-            <a href="{{ path('subject_source_delete', { 'id': subjectSource.id }) }}" class="btn btn-default" data-confirm="Are you sure you want to delete this SubjectSource?">
-                <span class='glyphicon glyphicon-remove'></span> Delete
-            </a>
+            {% if is_granted('ROLE_CONTENT_ADMIN') %}
+                <a href="{{ path('subject_source_edit', { 'id': subjectSource.id }) }}" class="btn btn-default">
+                    <span class='glyphicon glyphicon-edit'></span> Edit
+                </a>
+                <a href="{{ path('subject_source_delete', { 'id': subjectSource.id }) }}" class="btn btn-default" data-confirm="Are you sure you want to delete this SubjectSource?">
+                    <span class='glyphicon glyphicon-remove'></span> Delete
+                </a>
+            {% endif %}
         </div>
     </div>
     <table class="table table-bordered table-condensed table-hover table-striped">

@@ -11,12 +11,14 @@
             <a href="{{ path('date_category_index') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-arrow-left"></span> Back
             </a>
-            <a href="{{ path('date_category_edit', { 'id': dateCategory.id }) }}" class="btn btn-default">
-                <span class='glyphicon glyphicon-edit'></span> Edit
-            </a>
-            <a href="{{ path('date_category_delete', { 'id': dateCategory.id }) }}" class="btn btn-default" data-confirm="Are you sure you want to delete this DateCategory?">
-                <span class='glyphicon glyphicon-remove'></span> Delete
-            </a>
+            {% if is_granted('ROLE_CONTENT_ADMIN') %}
+                <a href="{{ path('date_category_edit', { 'id': dateCategory.id }) }}" class="btn btn-default">
+                    <span class='glyphicon glyphicon-edit'></span> Edit
+                </a>
+                <a href="{{ path('date_category_delete', { 'id': dateCategory.id }) }}" class="btn btn-default" data-confirm="Are you sure you want to delete this DateCategory?">
+                    <span class='glyphicon glyphicon-remove'></span> Delete
+                </a>
+            {% endif %}
         </div>
     </div>
     <table class="table table-bordered table-condensed table-hover table-striped">
