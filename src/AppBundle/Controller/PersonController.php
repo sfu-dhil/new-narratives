@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Person;
+use AppBundle\Form\PersonType;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -127,7 +128,7 @@ class PersonController extends Controller {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
         $person = new Person();
-        $form = $this->createForm('AppBundle\Form\PersonType', $person);
+        $form = $this->createForm(PersonType::class, $person);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -174,7 +175,7 @@ class PersonController extends Controller {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
-        $editForm = $this->createForm('AppBundle\Form\PersonType', $person);
+        $editForm = $this->createForm(PersonType::class, $person);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

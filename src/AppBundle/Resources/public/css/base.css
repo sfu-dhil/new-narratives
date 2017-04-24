@@ -58,31 +58,9 @@ a[href ^= 'https://']::after {
 }
 
 /* Collection form pages. */ 
-.form-group {
-	border-bottom: 1px solid #ccc;
-	padding-bottom: 12px;
+/* make the search form checkboxes less bad. */
+div.checkbox, div.radio {
+    width: 30%;
+    float: left;
 }
 
-.form-group .form-group {
-	border-bottom: none;
-}
-
-.collection .form-group {
-	padding-top: 28px;
-}
-
-.collection .form-group:last-child {
-    border-bottom: none;
-}
-.collection .form-group .form-group {
-    border-bottom: none;
-    padding-top: 0px;
-}
-
-.collection .form-group label {
-
-}
-
-label .btn {
-    display: block;
-}

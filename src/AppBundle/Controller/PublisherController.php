@@ -2,13 +2,13 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\Publisher;
+use AppBundle\Form\PublisherType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Entity\Publisher;
-use AppBundle\Form\PublisherType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Publisher controller.
@@ -81,7 +81,7 @@ class PublisherController extends Controller
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
         $publisher = new Publisher();
-        $form = $this->createForm('AppBundle\Form\PublisherType', $publisher);
+        $form = $this->createForm(PublisherType::class, $publisher);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -130,7 +130,7 @@ class PublisherController extends Controller
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
-        $editForm = $this->createForm('AppBundle\Form\PublisherType', $publisher);
+        $editForm = $this->createForm(PublisherType::class, $publisher);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

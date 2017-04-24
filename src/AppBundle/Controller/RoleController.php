@@ -2,13 +2,13 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\Role;
+use AppBundle\Form\RoleType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Entity\Role;
-use AppBundle\Form\RoleType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Role controller.
@@ -53,7 +53,7 @@ class RoleController extends Controller
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
         $role = new Role();
-        $form = $this->createForm('AppBundle\Form\RoleType', $role);
+        $form = $this->createForm(RoleType::class, $role);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -102,7 +102,7 @@ class RoleController extends Controller
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
-        $editForm = $this->createForm('AppBundle\Form\RoleType', $role);
+        $editForm = $this->createForm(RoleType::class, $role);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

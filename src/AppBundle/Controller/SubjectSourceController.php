@@ -2,13 +2,13 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\SubjectSource;
+use AppBundle\Form\SubjectSourceType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Entity\SubjectSource;
-use AppBundle\Form\SubjectSourceType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * SubjectSource controller.
@@ -53,7 +53,7 @@ class SubjectSourceController extends Controller
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
         $subjectSource = new SubjectSource();
-        $form = $this->createForm('AppBundle\Form\SubjectSourceType', $subjectSource);
+        $form = $this->createForm(SubjectSourceType::class, $subjectSource);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -102,7 +102,7 @@ class SubjectSourceController extends Controller
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
-        $editForm = $this->createForm('AppBundle\Form\SubjectSourceType', $subjectSource);
+        $editForm = $this->createForm(SubjectSourceType::class, $subjectSource);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

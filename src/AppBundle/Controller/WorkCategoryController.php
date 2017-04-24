@@ -2,13 +2,13 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\WorkCategory;
+use AppBundle\Form\WorkCategoryType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Entity\WorkCategory;
-use AppBundle\Form\WorkCategoryType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * WorkCategory controller.
@@ -53,7 +53,7 @@ class WorkCategoryController extends Controller
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
         $workCategory = new WorkCategory();
-        $form = $this->createForm('AppBundle\Form\WorkCategoryType', $workCategory);
+        $form = $this->createForm(WorkCategoryType::class, $workCategory);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -102,7 +102,7 @@ class WorkCategoryController extends Controller
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
-        $editForm = $this->createForm('AppBundle\Form\WorkCategoryType', $workCategory);
+        $editForm = $this->createForm(WorkCategoryType::class, $workCategory);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

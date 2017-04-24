@@ -6,6 +6,7 @@ use AppBundle\Entity\Work;
 use AppBundle\Form\WorkContributionsType;
 use AppBundle\Form\WorkDatesType;
 use AppBundle\Form\WorkSearchType;
+use AppBundle\Form\WorkType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -102,7 +103,7 @@ class WorkController extends Controller
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
         $work = new Work();
-        $form = $this->createForm('AppBundle\Form\WorkType', $work);
+        $form = $this->createForm(WorkType::class, $work);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -151,7 +152,7 @@ class WorkController extends Controller
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
-        $editForm = $this->createForm('AppBundle\Form\WorkType', $work);
+        $editForm = $this->createForm(WorkType::class, $work);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\DateCategory;
+use AppBundle\Form\DateCategoryType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -52,7 +53,7 @@ class DateCategoryController extends Controller
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
         $dateCategory = new DateCategory();
-        $form = $this->createForm('AppBundle\Form\DateCategoryType', $dateCategory);
+        $form = $this->createForm(DateCategoryType::class, $dateCategory);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -101,7 +102,7 @@ class DateCategoryController extends Controller
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
-        $editForm = $this->createForm('AppBundle\Form\DateCategoryType', $dateCategory);
+        $editForm = $this->createForm(DateCategoryType::class, $dateCategory);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
