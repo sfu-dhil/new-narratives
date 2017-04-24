@@ -48,6 +48,10 @@ class RoleController extends Controller
      */
     public function newAction(Request $request)
     {
+        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $role = new Role();
         $form = $this->createForm('AppBundle\Form\RoleType', $role);
         $form->handleRequest($request);
@@ -94,6 +98,10 @@ class RoleController extends Controller
      */
     public function editAction(Request $request, Role $role)
     {
+        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $editForm = $this->createForm('AppBundle\Form\RoleType', $role);
         $editForm->handleRequest($request);
 
@@ -120,6 +128,10 @@ class RoleController extends Controller
      */
     public function deleteAction(Request $request, Role $role)
     {
+        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($role);
         $em->flush();

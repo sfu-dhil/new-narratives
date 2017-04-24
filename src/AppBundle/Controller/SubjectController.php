@@ -76,6 +76,10 @@ class SubjectController extends Controller
      */
     public function newAction(Request $request)
     {
+        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $subject = new Subject();
         $form = $this->createForm('AppBundle\Form\SubjectType', $subject);
         $form->handleRequest($request);
@@ -122,6 +126,10 @@ class SubjectController extends Controller
      */
     public function editAction(Request $request, Subject $subject)
     {
+        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $editForm = $this->createForm('AppBundle\Form\SubjectType', $subject);
         $editForm->handleRequest($request);
 
@@ -148,6 +156,10 @@ class SubjectController extends Controller
      */
     public function deleteAction(Request $request, Subject $subject)
     {
+        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($subject);
         $em->flush();

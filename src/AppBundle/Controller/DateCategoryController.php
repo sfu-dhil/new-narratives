@@ -2,13 +2,12 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\DateCategory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Entity\DateCategory;
-use AppBundle\Form\DateCategoryType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * DateCategory controller.
@@ -48,6 +47,10 @@ class DateCategoryController extends Controller
      */
     public function newAction(Request $request)
     {
+        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $dateCategory = new DateCategory();
         $form = $this->createForm('AppBundle\Form\DateCategoryType', $dateCategory);
         $form->handleRequest($request);
@@ -94,6 +97,10 @@ class DateCategoryController extends Controller
      */
     public function editAction(Request $request, DateCategory $dateCategory)
     {
+        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $editForm = $this->createForm('AppBundle\Form\DateCategoryType', $dateCategory);
         $editForm->handleRequest($request);
 
@@ -120,6 +127,10 @@ class DateCategoryController extends Controller
      */
     public function deleteAction(Request $request, DateCategory $dateCategory)
     {
+        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($dateCategory);
         $em->flush();
