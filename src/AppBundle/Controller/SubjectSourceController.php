@@ -2,13 +2,13 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\SubjectSource;
+use AppBundle\Form\SubjectSourceType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Entity\SubjectSource;
-use AppBundle\Form\SubjectSourceType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * SubjectSource controller.
@@ -48,8 +48,12 @@ class SubjectSourceController extends Controller
      */
     public function newAction(Request $request)
     {
+        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $subjectSource = new SubjectSource();
-        $form = $this->createForm('AppBundle\Form\SubjectSourceType', $subjectSource);
+        $form = $this->createForm(SubjectSourceType::class, $subjectSource);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -94,7 +98,11 @@ class SubjectSourceController extends Controller
      */
     public function editAction(Request $request, SubjectSource $subjectSource)
     {
-        $editForm = $this->createForm('AppBundle\Form\SubjectSourceType', $subjectSource);
+        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
+        $editForm = $this->createForm(SubjectSourceType::class, $subjectSource);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -120,6 +128,10 @@ class SubjectSourceController extends Controller
      */
     public function deleteAction(Request $request, SubjectSource $subjectSource)
     {
+        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($subjectSource);
         $em->flush();

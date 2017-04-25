@@ -29,15 +29,7 @@ class Builder implements ContainerAwareInterface {
             'class' => 'dropdown-menu',
         ));
         $menu->setAttribute('dropdown', true);
-        
-        $menu->addChild('contribution', array(
-            'label' => 'Contributions',
-            'route' => 'contribution_index',
-        ));
-        $menu->addChild('date', array(
-            'label' => 'Dates',
-            'route' => 'date_index',
-        ));
+
         $menu->addChild('date_category', array(
             'label' => 'Date Categories',
             'route' => 'date_category_index',
@@ -74,14 +66,23 @@ class Builder implements ContainerAwareInterface {
             'label' => 'Work Categories',
             'route' => 'work_category_index',
         ));
-        
-        if ($this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+
+        if ($this->container->get('security.token_storage')->getToken() && $this->container->get('security.authorization_checker')->isGranted('ROLE_CONTENT_ADMIN')) {
             $menu->addChild('divider', array(
                 'label' => '',
             ));
             $menu['divider']->setAttributes(array(
                 'role' => 'separator',
                 'class' => 'divider',
+            ));
+            
+            $menu->addChild('contribution', array(
+                'label' => 'Contributions',
+                'route' => 'contribution_index',
+            ));
+            $menu->addChild('date', array(
+                'label' => 'Dates',
+                'route' => 'date_index',
             ));
         }
 

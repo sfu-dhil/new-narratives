@@ -11,12 +11,14 @@
             <a href="{{ path('work_index') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-arrow-left"></span> Back
             </a>
-            <a href="{{ path('work_edit', { 'id': work.id }) }}" class="btn btn-default">
-                <span class='glyphicon glyphicon-edit'></span> Edit
-            </a>
-            <a href="{{ path('work_delete', { 'id': work.id }) }}" class="btn btn-default" data-confirm="Are you sure you want to delete this Work?">
-                <span class='glyphicon glyphicon-remove'></span> Delete
-            </a>
+            {% if is_granted('ROLE_CONTENT_ADMIN') %}
+                <a href="{{ path('work_edit', { 'id': work.id }) }}" class="btn btn-default">
+                    <span class='glyphicon glyphicon-edit'></span> Edit
+                </a>
+                <a href="{{ path('work_delete', { 'id': work.id }) }}" class="btn btn-default" data-confirm="Are you sure you want to delete this Work?">
+                    <span class='glyphicon glyphicon-remove'></span> Delete
+                </a>
+            {% endif %}                
         </div>
     </div>
     <table class="table table-bordered table-condensed table-hover table-striped">
@@ -54,7 +56,9 @@
                             {% endfor %}
                         </ul>
                     {% endif %}
-                    <a href="{{ path('work_contributions', {'id': work.id}) }}" class="pull-right">Edit contributions</a>
+                    {% if is_granted('ROLE_CONTENT_ADMIN') %}
+                        <a href="{{ path('work_contributions', {'id': work.id}) }}" class="pull-right">Edit contributions</a>
+                    {% endif %}
                 </td>
             </tr>
             <tr>
@@ -71,11 +75,13 @@
                             {% endfor %}
                         </ul>
                     {% endif %}
-                    <a href="{{ path('work_dates', {'id': work.id}) }}" class="pull-right">Edit dates</a> 
+                    {% if is_granted('ROLE_CONTENT_ADMIN') %}
+                        <a href="{{ path('work_dates', {'id': work.id}) }}" class="pull-right">Edit dates</a> 
+                    {% endif %}
                 </td>
             </tr>
             <tr>
-                <th>Publicationplace</th>
+                <th>Publication Place</th>
                 <td>{{ work.publicationPlace }}</td>
             </tr>
             <tr>
@@ -87,7 +93,7 @@
                 </td>
             </tr>              
             <tr>
-                <th>Physicaldescription</th>
+                <th>Physical Description</th>
                 <td>{{ work.physicalDescription }}</td>
             </tr>
             <tr>
@@ -115,7 +121,7 @@
                 </td>
             </tr>
             <tr>
-                <th>Translationdescription</th>
+                <th>Translation Description</th>
                 <td>{{ work.translationDescription }}</td>
             </tr>
             <tr>
@@ -123,7 +129,7 @@
                 <td>{{ work.dedication }}</td>
             </tr>
             <tr>
-                <th>Worldcaturl</th>
+                <th>Worldcat Url</th>
                 <td>
                     <a href='{{ work.worldcatUrl }}'>
                         {{ work.worldcatUrl }}
@@ -160,15 +166,15 @@
                 <td>{% if work.transcription %}Yes{% else %}No{% endif %}</td>
             </tr>
             <tr>
-                <th>Physicallocations</th>
+                <th>Physical Locations</th>
                 <td>{{ work.physicalLocations }}</td>
             </tr>
             <tr>
-                <th>Digitallocations</th>
+                <th>Digital Locations</th>
                 <td>{{ work.digitalLocations }}</td>
             </tr>
             <tr>
-                <th>Digitalurl</th>
+                <th>Digital Url</th>
                 <td>
                     <a href='{{ work.digitalUrl }}'>
                         {{ work.digitalUrl }}

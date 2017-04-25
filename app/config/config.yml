@@ -27,7 +27,10 @@ framework:
     session:
         # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
         handler_id:  session.handler.native_file
-        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"        
+        cookie_path: '%router.request_context.base_url%'
+        cookie_domain: '%router.request_context.host%'
+        cookie_secure: '%secure_cookies%'
     fragments:       ~
     http_method_override: true
     assets: ~
@@ -123,15 +126,6 @@ nines_feedback:
     default_status: submitted
     public_status: published
     commenting:
-        firm:
-            class: AppBundle\Entity\Firm
-            route: firm_show
-        person:
-            class: AppBundle\Entity\Person
-            route: person_show
-        title:
-            class: AppBundle\Entity\Title
-            route: title_show
         blog_post:
             class: Nines\BlogBundle\Post
             route: post_show
@@ -142,3 +136,6 @@ nines_feedback:
 nines_blog:
     default_status: draft
     default_category: none
+
+nines_user:
+    permission_levels: [ ROLE_ADMIN, ROLE_BLOG_ADMIN, ROLE_COMMENT_ADMIN, ROLE_CONTENT_ADMIN ]

@@ -6,6 +6,7 @@ use AppBundle\Entity\Work;
 use AppBundle\Form\WorkContributionsType;
 use AppBundle\Form\WorkDatesType;
 use AppBundle\Form\WorkSearchType;
+use AppBundle\Form\WorkType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -97,8 +98,12 @@ class WorkController extends Controller
      */
     public function newAction(Request $request)
     {
+        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $work = new Work();
-        $form = $this->createForm('AppBundle\Form\WorkType', $work);
+        $form = $this->createForm(WorkType::class, $work);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -143,7 +148,11 @@ class WorkController extends Controller
      */
     public function editAction(Request $request, Work $work)
     {
-        $editForm = $this->createForm('AppBundle\Form\WorkType', $work);
+        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
+        $editForm = $this->createForm(WorkType::class, $work);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -169,6 +178,10 @@ class WorkController extends Controller
      */
     public function deleteAction(Request $request, Work $work)
     {
+        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($work);
         $em->flush();
@@ -187,6 +200,10 @@ class WorkController extends Controller
      * @param Work $work
      */
     public function workDatesAction(Request $request, Work $work) {
+        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $form = $this->createForm(WorkDatesType::class, $work, array(
             'work' => $work
         ));
@@ -214,6 +231,10 @@ class WorkController extends Controller
      * @param Work $work
      */
     public function workContributionsAction(Request $request, Work $work) {
+        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+            $this->addFlash('danger', 'You must login to access this page.');
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $form = $this->createForm(WorkContributionsType::class, $work, array(
             'work' => $work
         ));
@@ -223,7 +244,7 @@ class WorkController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $this->addFlash('success', 'The contributions have been updated.');
-            //return $this->redirectToRoute('work_show', array('id' => $work->getId()));
+            return $this->redirectToRoute('work_show', array('id' => $work->getId()));
         }
         return array(
             'work' => $work,

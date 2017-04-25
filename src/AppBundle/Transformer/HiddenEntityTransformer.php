@@ -4,6 +4,7 @@ namespace AppBundle\Transformer;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Description of HiddenEntityTransformer
