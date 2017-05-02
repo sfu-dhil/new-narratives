@@ -15,15 +15,46 @@ class Builder implements ContainerAwareInterface {
     use ContainerAwareTrait;
 
     /**
-     * Build a menu for blog posts.
+     * Build a search menu.
+     * 
+     * @param FactoryInterface $factory
+     * @param array $options
+     * @return ItemInterface
+     */
+    public function searchMenu(FactoryInterface $factory, array $options) {
+        $menu = $factory->createItem('root');
+        $menu->setChildrenAttributes(array(
+            'class' => 'dropdown-menu',
+        ));
+        $menu->setAttribute('dropdown', true);
+
+        $menu->addChild('search_advanced', array(
+            'label' => 'Advanced Search',
+            'route' => 'work_search',
+        ));
+        $menu->addChild('search_person', array(
+            'label' => 'Person Search',
+            'route' => 'person_search',
+        ));
+        $menu->addChild('search_publisher', array(
+            'label' => 'Publisher Search',
+            'route' => 'publisher_search',
+        ));
+        $menu->addChild('search_subject', array(
+            'label' => 'Subject Search',
+            'route' => 'subject_search',
+        ));
+        return $menu;
+    }
+    
+    /**
+     * Build a menu content.
      * 
      * @param FactoryInterface $factory
      * @param array $options
      * @return ItemInterface
      */
     public function navMenu(FactoryInterface $factory, array $options) {
-        $em = $this->container->get('doctrine')->getManager();
-
         $menu = $factory->createItem('root');
         $menu->setChildrenAttributes(array(
             'class' => 'dropdown-menu',
