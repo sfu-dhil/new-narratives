@@ -26,8 +26,7 @@
         <thead>
             <tr>
                 <th>Full Name</th>
-                <th>Created</th>
-                <th>Updated</th>            </tr>
+            </tr>
         </thead>
         <tbody>
         {% for person in people %}
@@ -37,8 +36,6 @@
                         {{ person.fullName }}
                     </a>
                 </td>
-                <td>{% if person.created %}{{ person.created|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if person.updated %}{{ person.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
             </tr>
         {% endfor %}
         </tbody>

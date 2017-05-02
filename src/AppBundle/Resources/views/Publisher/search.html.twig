@@ -37,8 +37,6 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Created</th>
-                    <th>Updated</th>
                 </tr>
             </thead>
             <tbody>
@@ -49,10 +47,6 @@
                                 {{ publisher.name }}
                             </a>                    
                         </td>
-                        <td>
-                            {{ publisher.created|date('Y-m-d H:i:s') }}
-                        </td>
-                        <td>{{ publisher.updated|date('Y-m-d H:i:s') }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

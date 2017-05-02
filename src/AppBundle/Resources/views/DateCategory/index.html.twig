@@ -24,8 +24,6 @@
             <tr>
                 <th>Name</th>
                 <th>Label</th>
-                <th>Created</th>
-                <th>Updated</th>         
             </tr>
         </thead>
         <tbody>
@@ -37,8 +35,6 @@
                         </a>
                     </td>
                     <td>{{ dateCategory.label }}</td>
-                    <td>{{ dateCategory.created|date('Y-m-d H:i:s') }}</td>
-                    <td>{{ dateCategory.updated|date('Y-m-d H:i:s') }}</td>
                 </tr>
             {% endfor %}
         </tbody>

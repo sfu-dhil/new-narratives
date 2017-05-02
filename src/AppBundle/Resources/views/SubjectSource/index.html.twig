@@ -24,8 +24,6 @@
             <tr>
                 <th>Name</th>
                 <th>Label</th>
-                <th>Created</th>
-                <th>Updated</th>         
             </tr>
         </thead>
         <tbody>
@@ -37,8 +35,6 @@
                         </a>
                     </td>
                     <td>{{ subjectSource.label }}</td>
-                    <td>{{ subjectSource.created|date('Y-m-d H:i:s') }}</td>
-                    <td>{{ subjectSource.updated|date('Y-m-d H:i:s') }}</td>
                 </tr>
             {% endfor %}
         </tbody>
