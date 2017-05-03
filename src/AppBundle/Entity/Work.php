@@ -731,5 +731,20 @@ class Work extends AbstractEntity {
     public function getCheckedBy() {
         return $this->checkedBy;
     }
+    
+    /**
+     * @return Contribution
+     */
+    public function getFirstContribution() {
+        foreach($this->contributions as $contribution) {
+            if($contribution->getRole()->getName() === 'aut') {
+                return $contribution;
+            }
+        }
+        if(count($this->contributions) > 0) {
+            return $this->contributions[0];
+        }
+        return null;
+    }
 
 }

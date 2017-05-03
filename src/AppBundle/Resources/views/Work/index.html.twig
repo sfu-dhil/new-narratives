@@ -26,6 +26,7 @@
         <thead>
             <tr>
                 <th>Title</th>
+                <th>Author</th>
                 <th>Edition</th>
                 <th>Volume</th>
                 <th>Publisher</th>
@@ -39,7 +40,14 @@
                             {{ work.title }}
                         </a>
                     </td>
-                    <td>{{ work.edition }}</td>
+                    <td>
+                        {% set contribution = work.getFirstContribution() %}
+                        {% if contribution is not null %}
+                            {{ contribution.person.fullname }}
+                            {% if contribution.role.name != 'aut' %}({{ contribution.role }}){% endif %}
+                        {% endif %}
+                    </td>
+                    <td>{{ work.edition }}</td>                    
                     <td>{{ work.volume }}</td>
                     <td>{{ work.publicationPlace }} {{ work.publisher }}</td>
                 </tr>
