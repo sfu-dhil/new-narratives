@@ -28,7 +28,7 @@ class ImportCsvCommand extends ContainerAwareCommand {
      * @var ObjectManager
      */
     private $em;
-
+    
     /**
      * If true, commit the import to the database. Set by the commit option
      * at the command line.
