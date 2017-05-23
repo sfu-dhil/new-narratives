@@ -28,7 +28,7 @@ class ImportCsvCommand extends ContainerAwareCommand {
      * @var ObjectManager
      */
     private $em;
-    
+
     /**
      * If true, commit the import to the database. Set by the commit option
      * at the command line.
@@ -36,6 +36,8 @@ class ImportCsvCommand extends ContainerAwareCommand {
      * @var boolean
      */
     private $commit;
+    private $from;
+    private $to;
 
     public function __construct($name = null) {
         parent::__construct($name);
@@ -45,8 +47,10 @@ class ImportCsvCommand extends ContainerAwareCommand {
     protected function configure() {
         $this->setName('app:import:csv');
         $this->setDescription('Import a CSV file');
-        $this->addArgument('files', InputArgument::IS_ARRAY, 'Argument description');
+        $this->addArgument('file', InputArgument::REQUIRED, 'File to import.');
         $this->addOption('commit', null, InputOption::VALUE_NONE, 'Commit the import to the database.');
+        $this->addOption('from', null, InputOption::VALUE_REQUIRED, 'Start import at this row.');
+        $this->addOption('to', null, InputOption::VALUE_REQUIRED, 'Stop importing at this row.');
     }
 
     public function setContainer(ContainerInterface $container = null) {
@@ -296,24 +300,38 @@ class ImportCsvCommand extends ContainerAwareCommand {
 
     protected function import($path, OutputInterface $output) {
         $fh = fopen($path, 'r');
+        $n = 0;
         $headers = fgetcsv($fh);
+        $n++;
         $index = $this->headersToIndex($headers);
-        fgetcsv($fh); // row numbers.
         while (($row = fgetcsv($fh))) {
-            $output->writeln(' * ' . $row[0]);
+            $n++;
+            if($this->from && $n < $this->from) {
+                $output->writeln("skipping row {$n}");
+                continue;
+            }
+            if($this->to && $this->to < $n) {
+                $output->writeln("and skipping row {$n}");
+                continue;
+            }
+            $output->writeln( $n . ' * ' . $row[0]);
             $this->importRow($row, $index);
         }
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-        $files = $input->getArgument('files');
+        $file = $input->getArgument('file');
         if ($input->getOption('commit')) {
             $this->commit = true;
         }
-        foreach ($files as $file) {
-            $output->writeln($file);
-            $this->import($file, $output);
+        if ($input->getOption('from')) {
+            $this->from = $input->getOption('from');
         }
+        if ($input->getOption('to')) {
+            $this->to = $input->getOption('to');
+        }
+        $output->writeln($file);
+        $this->import($file, $output);
     }
 
 }
