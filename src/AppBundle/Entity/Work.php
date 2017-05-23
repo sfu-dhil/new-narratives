@@ -22,7 +22,7 @@ class Work extends AbstractEntity {
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=200)
+     * @ORM\Column(type="text")
      */
     private $title;
 
@@ -70,7 +70,7 @@ class Work extends AbstractEntity {
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=200, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $dedication;
 
@@ -100,7 +100,7 @@ class Work extends AbstractEntity {
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=200, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $digitalUrl;
 
@@ -119,7 +119,6 @@ class Work extends AbstractEntity {
     /**
      * @var Publisher
      * @ORM\ManyToOne(targetEntity="Publisher", inversedBy="works")
-     * @ORM\JoinColumn(nullable=false)
      */
     private $publisher;
 

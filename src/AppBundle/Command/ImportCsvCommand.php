@@ -307,14 +307,12 @@ class ImportCsvCommand extends ContainerAwareCommand {
         while (($row = fgetcsv($fh))) {
             $n++;
             if($this->from && $n < $this->from) {
-                $output->writeln("skipping row {$n}");
                 continue;
             }
             if($this->to && $this->to < $n) {
-                $output->writeln("and skipping row {$n}");
                 continue;
             }
-            $output->writeln( $n . ' * ' . $row[0]);
+            $output->writeln( $n . ': ' . $row[0]);
             $this->importRow($row, $index);
         }
     }
