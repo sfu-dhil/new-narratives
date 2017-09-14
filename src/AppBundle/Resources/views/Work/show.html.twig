@@ -186,11 +186,12 @@
                 <td>{{ work.notes }}</td>
             </tr>
             <tr>
-                <th>Created</th>
-                <td>
-                    {% if work.created %}{{ work.created|date('Y-m-d H:i:s') }}{% endif %}
-                    {% if work.createdBy %} by {{ work.createdBy.fullname }}{% endif %}
-                </td>
+                <th>Editorial Notes</th>
+                <td>{{ work.editorialNotes }}</td>
+            </tr>
+            <tr>
+                <th>Complete</th>
+                <td>{% if work.complete %}Yes{% else %}No{% endif %}</td>
             </tr>
             <tr>
                 <th>Updated</th>

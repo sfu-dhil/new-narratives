@@ -64,7 +64,7 @@ class Work extends AbstractEntity {
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=200, nullable=true)
+     * @ORM\Column(type="string", length=600, nullable=true)
      */
     private $translationDescription;
 
@@ -109,6 +109,12 @@ class Work extends AbstractEntity {
      * @ORM\Column(type="text", nullable=true)
      */
     private $notes;
+    
+    /**
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $editorialNotes;
 
     /**
      * @var Genre
@@ -128,12 +134,12 @@ class Work extends AbstractEntity {
      * @ORM\JoinColumn(nullable=false)
      */
     private $workCategory;
-
+    
     /**
-     * @var User
-     * @ORM\ManyToOne(targetEntity="Nines\UserBundle\Entity\User")
+     * @var boolean
+     * @ORM\Column(type="boolean", nullable=false)
      */
-    private $createdBy;
+    private $complete;
 
     /**
      * @var Collection|User[]
@@ -162,6 +168,8 @@ class Work extends AbstractEntity {
     private $subjects;
 
     public function __construct() {
+        parent::__construct();
+        $this->complete = false;
         $this->subjects = new ArrayCollection();
         $this->dates = new ArrayCollection();
         $this->contributions = new ArrayCollection();
@@ -677,28 +685,6 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Set createdBy
-     *
-     * @param User $createdBy
-     *
-     * @return Work
-     */
-    public function setCreatedBy(User $createdBy = null) {
-        $this->createdBy = $createdBy;
-
-        return $this;
-    }
-
-    /**
-     * Get createdBy
-     *
-     * @return User
-     */
-    public function getCreatedBy() {
-        return $this->createdBy;
-    }
-
-    /**
      * Add checkedBy
      *
      * @param User $checkedBy
@@ -746,4 +732,52 @@ class Work extends AbstractEntity {
         return null;
     }
 
+
+    /**
+     * Set editorialNotes
+     *
+     * @param string $editorialNotes
+     *
+     * @return Work
+     */
+    public function setEditorialNotes($editorialNotes)
+    {
+        $this->editorialNotes = $editorialNotes;
+
+        return $this;
+    }
+
+    /**
+     * Get editorialNotes
+     *
+     * @return string
+     */
+    public function getEditorialNotes()
+    {
+        return $this->editorialNotes;
+    }
+
+    /**
+     * Set complete
+     *
+     * @param boolean $complete
+     *
+     * @return Work
+     */
+    public function setComplete($complete)
+    {
+        $this->complete = $complete;
+
+        return $this;
+    }
+
+    /**
+     * Get complete
+     *
+     * @return boolean
+     */
+    public function getComplete()
+    {
+        return $this->complete;
+    }
 }
