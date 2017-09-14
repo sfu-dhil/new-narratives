@@ -64,7 +64,7 @@ class Work extends AbstractEntity {
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=200, nullable=true)
+     * @ORM\Column(type="string", length=600, nullable=true)
      */
     private $translationDescription;
 

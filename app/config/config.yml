@@ -113,9 +113,9 @@ fos_user:
             
 ivory_ck_editor:
     input_sync: true
-    default_config: wphp_config
+    default_config: newn_config
     configs:
-        wphp_config:
+        newn_config:
             toolbar: standard
 
 knp_menu:
