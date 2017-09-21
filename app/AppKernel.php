@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(), 
+            new Tetranz\Select2EntityBundle\TetranzSelect2EntityBundle(),
             
             new AppBundle\AppBundle(),
             
