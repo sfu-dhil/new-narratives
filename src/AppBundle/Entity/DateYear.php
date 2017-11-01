@@ -59,9 +59,9 @@ class DateYear extends AbstractEntity {
     public function __construct() {
         parent::__construct();
         $this->start = null;
-        $this->startCirca = null;
+        $this->startCirca = false;
         $this->end = null;
-        $this->endCirca = null;
+        $this->endCirca = false;
     }
     
     /**
@@ -101,8 +101,8 @@ class DateYear extends AbstractEntity {
             throw new Exception("Malformed Date range '{$value}'");
         }
         
-        $this->startCirca = ($matches[1] === 'c');
-        $this->start = $matches[2];
+            $this->startCirca = ($matches[1] === 'c');
+            $this->start = $matches[2];
         if (count($matches) > 3) {
             $this->endCirca = ($matches[3] === 'c');
             $this->end = $matches[4];

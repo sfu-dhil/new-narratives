@@ -130,12 +130,12 @@ class ImportCsvCommand extends ContainerAwareCommand {
         return $result;
     }
 
-    protected function importContribution($work, $personCol, $rowCol) {
-        if (!$personCol || !$rowCol) {
+    protected function importContribution($work, $personCol, $roleCol) {
+        if (!$personCol || !$roleCol) {
             return;
         }
         $person = $this->getPerson($personCol);
-        $role = $this->getRole($rowCol);
+        $role = $this->getRole($roleCol);
         $contribution = new Contribution();
         $contribution->setPerson($person);
         $contribution->setRole($role);
@@ -158,7 +158,7 @@ class ImportCsvCommand extends ContainerAwareCommand {
         }
         $date = new DateYear();
         try {
-        $date->setValue($dateCol);
+            $date->setValue($dateCol);
         } catch (\Exception $e) {
             $this->logger->error("Malformed date line:{$this->lineNumber}. '{$dateCol}'");
             return;
@@ -352,7 +352,11 @@ class ImportCsvCommand extends ContainerAwareCommand {
         $this->persist($work);
         $this->flush();
     }
-
+    
+    protected function trim($string) {
+        return preg_replace("/^\p{Z}*|\p{Z}*$/u", '', $string);
+    }
+    
     protected function import($path, OutputInterface $output) {
         $fh = fopen($path, 'r');
         $this->lineNumber = 1;
@@ -360,8 +364,12 @@ class ImportCsvCommand extends ContainerAwareCommand {
         $this->lineNumber++;
         $index = $this->headersToIndex($headers);
         while (($row = fgetcsv($fh))) {
+            $row = $this->trim($row);
             $this->lineNumber++;
             if($this->from && $this->lineNumber < $this->from) {
+                continue;
+            }
+            if(count(array_filter($row)) === 0) {
                 continue;
             }
             $this->logger->notice($this->lineNumber . ': ' . $row[0]);
