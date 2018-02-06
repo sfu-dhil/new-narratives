@@ -25,7 +25,7 @@
     {{ form_end(form) }}
 
     {% if works|length > 0 %}
-        {% include 'AppBundle:Work:workList.html.twig' with {'works': works} %}
+        {% include 'AppBundle:work:workList.html.twig' with {'works': works} %}
     {% endif %}
 
 {% endblock %}

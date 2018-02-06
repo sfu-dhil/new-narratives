@@ -51,7 +51,7 @@
         <ul>
             {% for date in dateCategory.dates %}
                 <li>
-                    {% include 'AppBundle:Work:workBrief.html.twig' with {'work': date.work} %}
+                    {% include 'AppBundle:work:workBrief.html.twig' with {'work': date.work} %}
                 </li>
             {% endfor %}
         </ul>

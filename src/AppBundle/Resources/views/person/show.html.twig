@@ -43,7 +43,7 @@
         <ul>
             {% for contribution in person.contributions %}
                 <li>
-                    {% include 'AppBundle:Work:workBrief.html.twig' with {'work': contribution.work} %}
+                    {% include 'AppBundle:work:workBrief.html.twig' with {'work': contribution.work} %}
                 </li>
             {% endfor %}
         </ul>
