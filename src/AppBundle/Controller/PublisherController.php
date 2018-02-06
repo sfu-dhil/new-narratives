@@ -70,13 +70,11 @@ class PublisherController extends Controller {
      * @Route("/new", name="publisher_new")
      * @Method({"GET", "POST"})
      * @Template()
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * 
      * @param Request $request
      */
     public function newAction(Request $request) {
-        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $publisher = new Publisher();
         $form = $this->createForm(PublisherType::class, $publisher);
         $form->handleRequest($request);
@@ -117,14 +115,12 @@ class PublisherController extends Controller {
      * @Route("/{id}/edit", name="publisher_edit")
      * @Method({"GET", "POST"})
      * @Template()
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * 
      * @param Request $request
      * @param Publisher $publisher
      */
     public function editAction(Request $request, Publisher $publisher) {
-        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $editForm = $this->createForm(PublisherType::class, $publisher);
         $editForm->handleRequest($request);
 
@@ -146,14 +142,12 @@ class PublisherController extends Controller {
      *
      * @Route("/{id}/delete", name="publisher_delete")
      * @Method("GET")
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * 
      * @param Request $request
      * @param Publisher $publisher
      */
     public function deleteAction(Request $request, Publisher $publisher) {
-        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($publisher);
         $em->flush();

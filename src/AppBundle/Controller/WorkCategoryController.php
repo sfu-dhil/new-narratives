@@ -43,13 +43,11 @@ class WorkCategoryController extends Controller {
      * @Route("/new", name="work_category_new")
      * @Method({"GET", "POST"})
      * @Template()
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * 
      * @param Request $request
      */
     public function newAction(Request $request) {
-        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $workCategory = new WorkCategory();
         $form = $this->createForm(WorkCategoryType::class, $workCategory);
         $form->handleRequest($request);
@@ -90,14 +88,12 @@ class WorkCategoryController extends Controller {
      * @Route("/{id}/edit", name="work_category_edit")
      * @Method({"GET", "POST"})
      * @Template()
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * 
      * @param Request $request
      * @param WorkCategory $workCategory
      */
     public function editAction(Request $request, WorkCategory $workCategory) {
-        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $editForm = $this->createForm(WorkCategoryType::class, $workCategory);
         $editForm->handleRequest($request);
 
@@ -119,14 +115,12 @@ class WorkCategoryController extends Controller {
      *
      * @Route("/{id}/delete", name="work_category_delete")
      * @Method("GET")
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * 
      * @param Request $request
      * @param WorkCategory $workCategory
      */
     public function deleteAction(Request $request, WorkCategory $workCategory) {
-        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($workCategory);
         $em->flush();

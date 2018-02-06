@@ -43,13 +43,11 @@ class DateCategoryController extends Controller {
      * @Route("/new", name="date_category_new")
      * @Method({"GET", "POST"})
      * @Template()
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * 
      * @param Request $request
      */
     public function newAction(Request $request) {
-        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $dateCategory = new DateCategory();
         $form = $this->createForm(DateCategoryType::class, $dateCategory);
         $form->handleRequest($request);
@@ -90,14 +88,12 @@ class DateCategoryController extends Controller {
      * @Route("/{id}/edit", name="date_category_edit")
      * @Method({"GET", "POST"})
      * @Template()
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * 
      * @param Request $request
      * @param DateCategory $dateCategory
      */
     public function editAction(Request $request, DateCategory $dateCategory) {
-        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $editForm = $this->createForm(DateCategoryType::class, $dateCategory);
         $editForm->handleRequest($request);
 
@@ -119,14 +115,12 @@ class DateCategoryController extends Controller {
      *
      * @Route("/{id}/delete", name="date_category_delete")
      * @Method("GET")
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * 
      * @param Request $request
      * @param DateCategory $dateCategory
      */
     public function deleteAction(Request $request, DateCategory $dateCategory) {
-        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($dateCategory);
         $em->flush();

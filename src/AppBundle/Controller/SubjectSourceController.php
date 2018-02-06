@@ -43,13 +43,11 @@ class SubjectSourceController extends Controller {
      * @Route("/new", name="subject_source_new")
      * @Method({"GET", "POST"})
      * @Template()
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * 
      * @param Request $request
      */
     public function newAction(Request $request) {
-        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $subjectSource = new SubjectSource();
         $form = $this->createForm(SubjectSourceType::class, $subjectSource);
         $form->handleRequest($request);
@@ -90,14 +88,12 @@ class SubjectSourceController extends Controller {
      * @Route("/{id}/edit", name="subject_source_edit")
      * @Method({"GET", "POST"})
      * @Template()
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * 
      * @param Request $request
      * @param SubjectSource $subjectSource
      */
     public function editAction(Request $request, SubjectSource $subjectSource) {
-        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $editForm = $this->createForm(SubjectSourceType::class, $subjectSource);
         $editForm->handleRequest($request);
 
@@ -119,14 +115,12 @@ class SubjectSourceController extends Controller {
      *
      * @Route("/{id}/delete", name="subject_source_delete")
      * @Method("GET")
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * 
      * @param Request $request
      * @param SubjectSource $subjectSource
      */
     public function deleteAction(Request $request, SubjectSource $subjectSource) {
-        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($subjectSource);
         $em->flush();

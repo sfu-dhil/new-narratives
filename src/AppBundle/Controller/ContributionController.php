@@ -21,13 +21,11 @@ class ContributionController extends Controller {
      * @Route("/", name="contribution_index")
      * @Method("GET")
      * @Template()
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * 
      * @param Request $request
      */
     public function indexAction(Request $request) {
-        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Contribution e ORDER BY e.id';
         $query = $em->createQuery($dql);

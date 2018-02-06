@@ -43,25 +43,6 @@ class WorkController extends Controller {
     /**
      * Full text search for Work entities.
      *
-     * To make this work, add a method like this one to the 
-     * AppBundle:Work repository. Replace the fieldName with
-     * something appropriate, and adjust the generated fulltext.html.twig
-     * template.
-     * 
-      //    public function fulltextQuery($q) {
-      //        $qb = $this->createQueryBuilder('e');
-      //        $qb->addSelect("MATCH_AGAINST (e.name, :q 'IN BOOLEAN MODE') as score");
-      //        $qb->add('where', "MATCH_AGAINST (e.name, :q 'IN BOOLEAN MODE') > 0.5");
-      //        $qb->orderBy('score', 'desc');
-      //        $qb->setParameter('q', $q);
-      //        return $qb->getQuery();
-      //    }
-     * 
-     * Requires a MatchAgainst function be added to doctrine, and appropriate
-     * fulltext indexes on your Work entity.
-     *     ORM\Index(name="alias_name_idx",columns="name", flags={"fulltext"})
-     *
-     *
      * @Route("/search", name="work_search")
      * @Method("GET")
      * @Template()
@@ -92,13 +73,11 @@ class WorkController extends Controller {
      * @Route("/new", name="work_new")
      * @Method({"GET", "POST"})
      * @Template()
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * 
      * @param Request $request
      */
     public function newAction(Request $request) {
-        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $work = new Work();
         $form = $this->createForm(WorkType::class, $work);
         $form->handleRequest($request);
@@ -139,14 +118,12 @@ class WorkController extends Controller {
      * @Route("/{id}/edit", name="work_edit")
      * @Method({"GET", "POST"})
      * @Template()
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * 
      * @param Request $request
      * @param Work $work
      */
     public function editAction(Request $request, Work $work) {
-        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $editForm = $this->createForm(WorkType::class, $work);
         $editForm->handleRequest($request);
 
@@ -168,14 +145,12 @@ class WorkController extends Controller {
      *
      * @Route("/{id}/delete", name="work_delete")
      * @Method("GET")
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * 
      * @param Request $request
      * @param Work $work
      */
     public function deleteAction(Request $request, Work $work) {
-        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($work);
         $em->flush();
@@ -190,14 +165,12 @@ class WorkController extends Controller {
      * @Route("/{id}/dates", name="work_dates")
      * @Method({"GET", "POST"})
      * @Template()
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * 
      * @param Request $request
      * @param Work $work
      */
     public function workDatesAction(Request $request, Work $work) {
-        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $form = $this->createForm(WorkDatesType::class, $work, array(
             'work' => $work
         ));
@@ -221,14 +194,12 @@ class WorkController extends Controller {
      * @Route("/{id}/contributions", name="work_contributions")
      * @Method({"GET", "POST"})
      * @Template()
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * 
      * @param Request $request
      * @param Work $work
      */
     public function workContributionsAction(Request $request, Work $work) {
-        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
-            $this->addFlash('danger', 'You must login to access this page.');
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
         $form = $this->createForm(WorkContributionsType::class, $work, array(
             'work' => $work
         ));
