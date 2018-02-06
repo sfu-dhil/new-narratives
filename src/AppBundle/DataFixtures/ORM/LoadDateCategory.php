@@ -4,13 +4,12 @@ namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\DateCategory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * LoadDateCategory form.
  */
-class LoadDateCategory extends Fixture implements DependentFixtureInterface
+class LoadDateCategory extends Fixture
 {
     /**
      * {@inheritDoc}
@@ -19,6 +18,9 @@ class LoadDateCategory extends Fixture implements DependentFixtureInterface
     {
         for($i = 0; $i < 4; $i++) {
             $fixture = new DateCategory();
+            $fixture->setName('category_' . $i);
+            $fixture->setLabel('Category ' . $i);
+            $fixture->setDescription('category description ' . $i);
             
             $em->persist($fixture);
             $this->setReference('datecategory.' . $i, $fixture);
@@ -27,17 +29,5 @@ class LoadDateCategory extends Fixture implements DependentFixtureInterface
         $em->flush();
         
     }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function getDependencies() {
-        // add dependencies here, or remove this 
-        // function and "implements DependentFixtureInterface" above
-        return [
-            
-        ];
-    }
-    
         
 }

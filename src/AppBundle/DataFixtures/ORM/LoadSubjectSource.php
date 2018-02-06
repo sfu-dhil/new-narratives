@@ -4,13 +4,12 @@ namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\SubjectSource;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * LoadSubjectSource form.
  */
-class LoadSubjectSource extends Fixture implements DependentFixtureInterface
+class LoadSubjectSource extends Fixture 
 {
     /**
      * {@inheritDoc}
@@ -19,6 +18,9 @@ class LoadSubjectSource extends Fixture implements DependentFixtureInterface
     {
         for($i = 0; $i < 4; $i++) {
             $fixture = new SubjectSource();
+            $fixture->setName('source_' . $i);
+            $fixture->setLabel('Source ' . $i);
+            $fixture->setDescription('source description ' . $i);
             
             $em->persist($fixture);
             $this->setReference('subjectsource.' . $i, $fixture);
@@ -27,17 +29,5 @@ class LoadSubjectSource extends Fixture implements DependentFixtureInterface
         $em->flush();
         
     }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function getDependencies() {
-        // add dependencies here, or remove this 
-        // function and "implements DependentFixtureInterface" above
-        return [
-            
-        ];
-    }
-    
         
 }

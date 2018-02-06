@@ -57,7 +57,10 @@ class LoadWork extends Fixture implements DependentFixtureInterface
         // add dependencies here, or remove this 
         // function and "implements DependentFixtureInterface" above
         return [
-            
+            LoadGenre::class,
+            LoadPublisher::class,
+            LoadWorkCategory::class,
+            LoadSubject::class,
         ];
     }
     

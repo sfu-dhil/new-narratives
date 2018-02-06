@@ -10,7 +10,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * LoadPublisher form.
  */
-class LoadPublisher extends Fixture implements DependentFixtureInterface
+class LoadPublisher extends Fixture
 {
     /**
      * {@inheritDoc}
@@ -29,16 +29,4 @@ class LoadPublisher extends Fixture implements DependentFixtureInterface
         
     }
     
-    /**
-     * {@inheritdoc}
-     */
-    public function getDependencies() {
-        // add dependencies here, or remove this 
-        // function and "implements DependentFixtureInterface" above
-        return [
-            
-        ];
-    }
-    
-        
 }

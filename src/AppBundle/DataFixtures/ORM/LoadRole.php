@@ -4,13 +4,12 @@ namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Role;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * LoadRole form.
  */
-class LoadRole extends Fixture implements DependentFixtureInterface
+class LoadRole extends Fixture
 {
     /**
      * {@inheritDoc}
@@ -19,6 +18,9 @@ class LoadRole extends Fixture implements DependentFixtureInterface
     {
         for($i = 0; $i < 4; $i++) {
             $fixture = new Role();
+            $fixture->setName('role_' . $i);
+            $fixture->setLabel('Role ' . $i);
+            $fixture->setDescription('role description ' . $i);
             
             $em->persist($fixture);
             $this->setReference('role.' . $i, $fixture);
@@ -27,17 +29,5 @@ class LoadRole extends Fixture implements DependentFixtureInterface
         $em->flush();
         
     }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function getDependencies() {
-        // add dependencies here, or remove this 
-        // function and "implements DependentFixtureInterface" above
-        return [
-            
-        ];
-    }
-    
         
 }

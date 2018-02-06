@@ -4,13 +4,12 @@ namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Person;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * LoadPerson form.
  */
-class LoadPerson extends Fixture implements DependentFixtureInterface
+class LoadPerson extends Fixture
 {
     /**
      * {@inheritDoc}
@@ -29,16 +28,4 @@ class LoadPerson extends Fixture implements DependentFixtureInterface
         
     }
     
-    /**
-     * {@inheritdoc}
-     */
-    public function getDependencies() {
-        // add dependencies here, or remove this 
-        // function and "implements DependentFixtureInterface" above
-        return [
-            
-        ];
-    }
-    
-        
 }
