@@ -18,18 +18,17 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/work")
  */
-class WorkController extends Controller
-{
+class WorkController extends Controller {
+
     /**
      * Lists all Work entities.
      *
      * @Route("/", name="work_index")
      * @Method("GET")
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function indexAction(Request $request)
-    {
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Work e ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -43,43 +42,42 @@ class WorkController extends Controller
 
     /**
      * Full text search for Work entities.
-	 *
-	 * To make this work, add a method like this one to the 
-	 * AppBundle:Work repository. Replace the fieldName with
-	 * something appropriate, and adjust the generated fulltext.html.twig
-	 * template.
-	 * 
-	//    public function fulltextQuery($q) {
-	//        $qb = $this->createQueryBuilder('e');
-	//        $qb->addSelect("MATCH_AGAINST (e.name, :q 'IN BOOLEAN MODE') as score");
-	//        $qb->add('where', "MATCH_AGAINST (e.name, :q 'IN BOOLEAN MODE') > 0.5");
-	//        $qb->orderBy('score', 'desc');
-	//        $qb->setParameter('q', $q);
-	//        return $qb->getQuery();
-	//    }	 
-	 * 
-	 * Requires a MatchAgainst function be added to doctrine, and appropriate
-	 * fulltext indexes on your Work entity.
-	 *     ORM\Index(name="alias_name_idx",columns="name", flags={"fulltext"})
-	 *
+     *
+     * To make this work, add a method like this one to the 
+     * AppBundle:Work repository. Replace the fieldName with
+     * something appropriate, and adjust the generated fulltext.html.twig
+     * template.
+     * 
+      //    public function fulltextQuery($q) {
+      //        $qb = $this->createQueryBuilder('e');
+      //        $qb->addSelect("MATCH_AGAINST (e.name, :q 'IN BOOLEAN MODE') as score");
+      //        $qb->add('where', "MATCH_AGAINST (e.name, :q 'IN BOOLEAN MODE') > 0.5");
+      //        $qb->orderBy('score', 'desc');
+      //        $qb->setParameter('q', $q);
+      //        return $qb->getQuery();
+      //    }
+     * 
+     * Requires a MatchAgainst function be added to doctrine, and appropriate
+     * fulltext indexes on your Work entity.
+     *     ORM\Index(name="alias_name_idx",columns="name", flags={"fulltext"})
+     *
      *
      * @Route("/search", name="work_search")
      * @Method("GET")
      * @Template()
-	 * @param Request $request
-	 * @return array
+     * @param Request $request
+     * @return array
      */
-    public function searchAction(Request $request)
-    {        
+    public function searchAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-		$repo = $em->getRepository('AppBundle:Work');
+        $repo = $em->getRepository('AppBundle:Work');
         $works = array();
         $form = $this->createForm(WorkSearchType::class, null, array());
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()) {
-	        $query = $repo->searchQuery($form->getData());
-			$paginator = $this->get('knp_paginator');
-			$works = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $query = $repo->searchQuery($form->getData());
+            $paginator = $this->get('knp_paginator');
+            $works = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
         }
 
         return array(
@@ -94,11 +92,10 @@ class WorkController extends Controller
      * @Route("/new", name="work_new")
      * @Method({"GET", "POST"})
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function newAction(Request $request)
-    {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+    public function newAction(Request $request) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -127,10 +124,9 @@ class WorkController extends Controller
      * @Route("/{id}", name="work_show")
      * @Method("GET")
      * @Template()
-	 * @param Work $work
+     * @param Work $work
      */
-    public function showAction(Work $work)
-    {
+    public function showAction(Work $work) {
 
         return array(
             'work' => $work,
@@ -143,12 +139,11 @@ class WorkController extends Controller
      * @Route("/{id}/edit", name="work_edit")
      * @Method({"GET", "POST"})
      * @Template()
-	 * @param Request $request
-	 * @param Work $work
+     * @param Request $request
+     * @param Work $work
      */
-    public function editAction(Request $request, Work $work)
-    {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+    public function editAction(Request $request, Work $work) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -173,12 +168,11 @@ class WorkController extends Controller
      *
      * @Route("/{id}/delete", name="work_delete")
      * @Method("GET")
-	 * @param Request $request
-	 * @param Work $work
+     * @param Request $request
+     * @param Work $work
      */
-    public function deleteAction(Request $request, Work $work)
-    {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+    public function deleteAction(Request $request, Work $work) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -189,7 +183,7 @@ class WorkController extends Controller
 
         return $this->redirectToRoute('work_index');
     }
-    
+
     /**
      * Add/remove dates to a work.
      * 
@@ -200,7 +194,7 @@ class WorkController extends Controller
      * @param Work $work
      */
     public function workDatesAction(Request $request, Work $work) {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -208,8 +202,8 @@ class WorkController extends Controller
             'work' => $work
         ));
         $form->handleRequest($request);
-        
-        if($form->isSubmitted() && $form->isValid()) {
+
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $this->addFlash('success', 'The dates have been updated.');
@@ -220,7 +214,7 @@ class WorkController extends Controller
             'form' => $form->createView(),
         );
     }
-    
+
     /**
      * Add contributions to a work.
      * 
@@ -231,7 +225,7 @@ class WorkController extends Controller
      * @param Work $work
      */
     public function workContributionsAction(Request $request, Work $work) {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -239,8 +233,8 @@ class WorkController extends Controller
             'work' => $work
         ));
         $form->handleRequest($request);
-        
-        if($form->isSubmitted() && $form->isValid()) {
+
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $this->addFlash('success', 'The contributions have been updated.');
@@ -251,4 +245,5 @@ class WorkController extends Controller
             'form' => $form->createView(),
         );
     }
+
 }

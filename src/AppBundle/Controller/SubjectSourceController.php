@@ -15,18 +15,17 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/subject_source")
  */
-class SubjectSourceController extends Controller
-{
+class SubjectSourceController extends Controller {
+
     /**
      * Lists all SubjectSource entities.
      *
      * @Route("/", name="subject_source_index")
      * @Method("GET")
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function indexAction(Request $request)
-    {
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:SubjectSource e ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -44,11 +43,10 @@ class SubjectSourceController extends Controller
      * @Route("/new", name="subject_source_new")
      * @Method({"GET", "POST"})
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function newAction(Request $request)
-    {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+    public function newAction(Request $request) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -77,10 +75,9 @@ class SubjectSourceController extends Controller
      * @Route("/{id}", name="subject_source_show")
      * @Method("GET")
      * @Template()
-	 * @param SubjectSource $subjectSource
+     * @param SubjectSource $subjectSource
      */
-    public function showAction(SubjectSource $subjectSource)
-    {
+    public function showAction(SubjectSource $subjectSource) {
 
         return array(
             'subjectSource' => $subjectSource,
@@ -93,12 +90,11 @@ class SubjectSourceController extends Controller
      * @Route("/{id}/edit", name="subject_source_edit")
      * @Method({"GET", "POST"})
      * @Template()
-	 * @param Request $request
-	 * @param SubjectSource $subjectSource
+     * @param Request $request
+     * @param SubjectSource $subjectSource
      */
-    public function editAction(Request $request, SubjectSource $subjectSource)
-    {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+    public function editAction(Request $request, SubjectSource $subjectSource) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -123,12 +119,11 @@ class SubjectSourceController extends Controller
      *
      * @Route("/{id}/delete", name="subject_source_delete")
      * @Method("GET")
-	 * @param Request $request
-	 * @param SubjectSource $subjectSource
+     * @param Request $request
+     * @param SubjectSource $subjectSource
      */
-    public function deleteAction(Request $request, SubjectSource $subjectSource)
-    {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+    public function deleteAction(Request $request, SubjectSource $subjectSource) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -139,4 +134,5 @@ class SubjectSourceController extends Controller
 
         return $this->redirectToRoute('subject_source_index');
     }
+
 }

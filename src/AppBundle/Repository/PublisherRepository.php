@@ -12,8 +12,8 @@ class PublisherRepository extends \Doctrine\ORM\EntityRepository {
 
     public function fulltextQuery($q) {
         $qb = $this->createQueryBuilder('e');
-        $qb->addSelect("MATCH_AGAINST (e.name, :q 'IN BOOLEAN MODE') as HIDDEN score");
-        $qb->add('where', "MATCH_AGAINST (e.name, :q 'IN BOOLEAN MODE') > 0");
+        $qb->addSelect("MATCH (e.name) AGAINST (:q BOOLEAN) as HIDDEN score");
+        $qb->add('where', "MATCH (e.name) AGAINST (:q BOOLEAN) > 0");
         $qb->orderBy('score', 'desc');
         $qb->setParameter('q', $q);
         return $qb->getQuery();

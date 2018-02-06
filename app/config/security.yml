@@ -15,11 +15,17 @@ security:
 
     firewalls:
         main:
+            remember_me:
+                secret: '%secret%'
+                lifetime: 604800 # one week in seconds
+                path: '%router.request_context.base_url%'
+                domain: '%router.request_context.host%'
+                secure: '%secure_cookies%'
             pattern: ^/
             form_login:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
-            
+            logout_on_user_change: true
             logout:       true
             anonymous:    true
 

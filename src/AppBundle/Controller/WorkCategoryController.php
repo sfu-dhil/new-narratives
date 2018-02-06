@@ -15,18 +15,17 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/work_category")
  */
-class WorkCategoryController extends Controller
-{
+class WorkCategoryController extends Controller {
+
     /**
      * Lists all WorkCategory entities.
      *
      * @Route("/", name="work_category_index")
      * @Method("GET")
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function indexAction(Request $request)
-    {
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:WorkCategory e ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -44,11 +43,10 @@ class WorkCategoryController extends Controller
      * @Route("/new", name="work_category_new")
      * @Method({"GET", "POST"})
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function newAction(Request $request)
-    {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+    public function newAction(Request $request) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -77,10 +75,9 @@ class WorkCategoryController extends Controller
      * @Route("/{id}", name="work_category_show")
      * @Method("GET")
      * @Template()
-	 * @param WorkCategory $workCategory
+     * @param WorkCategory $workCategory
      */
-    public function showAction(WorkCategory $workCategory)
-    {
+    public function showAction(WorkCategory $workCategory) {
 
         return array(
             'workCategory' => $workCategory,
@@ -93,12 +90,11 @@ class WorkCategoryController extends Controller
      * @Route("/{id}/edit", name="work_category_edit")
      * @Method({"GET", "POST"})
      * @Template()
-	 * @param Request $request
-	 * @param WorkCategory $workCategory
+     * @param Request $request
+     * @param WorkCategory $workCategory
      */
-    public function editAction(Request $request, WorkCategory $workCategory)
-    {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+    public function editAction(Request $request, WorkCategory $workCategory) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -123,12 +119,11 @@ class WorkCategoryController extends Controller
      *
      * @Route("/{id}/delete", name="work_category_delete")
      * @Method("GET")
-	 * @param Request $request
-	 * @param WorkCategory $workCategory
+     * @param Request $request
+     * @param WorkCategory $workCategory
      */
-    public function deleteAction(Request $request, WorkCategory $workCategory)
-    {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+    public function deleteAction(Request $request, WorkCategory $workCategory) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -139,4 +134,5 @@ class WorkCategoryController extends Controller
 
         return $this->redirectToRoute('work_category_index');
     }
+
 }

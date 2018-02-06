@@ -16,18 +16,17 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/subject")
  */
-class SubjectController extends Controller
-{
+class SubjectController extends Controller {
+
     /**
      * Lists all Subject entities.
      *
      * @Route("/", name="subject_index")
      * @Method("GET")
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function indexAction(Request $request)
-    {
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Subject e ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -38,27 +37,26 @@ class SubjectController extends Controller
             'subjects' => $subjects,
         );
     }
-    
+
     /**
      * Search for Subject entities.
      *
      * @Route("/search", name="subject_search")
      * @Method("GET")
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function searchAction(Request $request)
-    {
+    public function searchAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(SubjectSearchType::class);
         $subjects = array();
-        $form->handleRequest($request);        
-		if($form->isSubmitted() && $form->isValid()) {
-    		$repo = $em->getRepository(Subject::class);
-	        $query = $repo->searchQuery($form->getData());
-			$paginator = $this->get('knp_paginator');
-			$subjects = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
-		}
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repo = $em->getRepository(Subject::class);
+            $query = $repo->searchQuery($form->getData());
+            $paginator = $this->get('knp_paginator');
+            $subjects = $paginator->paginate($query, $request->query->getInt('page', 1), 25);
+        }
 
         return array(
             'search_form' => $form->createView(),
@@ -72,11 +70,10 @@ class SubjectController extends Controller
      * @Route("/new", name="subject_new")
      * @Method({"GET", "POST"})
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function newAction(Request $request)
-    {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+    public function newAction(Request $request) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -105,10 +102,9 @@ class SubjectController extends Controller
      * @Route("/{id}", name="subject_show")
      * @Method("GET")
      * @Template()
-	 * @param Subject $subject
+     * @param Subject $subject
      */
-    public function showAction(Subject $subject)
-    {
+    public function showAction(Subject $subject) {
 
         return array(
             'subject' => $subject,
@@ -121,12 +117,11 @@ class SubjectController extends Controller
      * @Route("/{id}/edit", name="subject_edit")
      * @Method({"GET", "POST"})
      * @Template()
-	 * @param Request $request
-	 * @param Subject $subject
+     * @param Request $request
+     * @param Subject $subject
      */
-    public function editAction(Request $request, Subject $subject)
-    {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+    public function editAction(Request $request, Subject $subject) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -151,12 +146,11 @@ class SubjectController extends Controller
      *
      * @Route("/{id}/delete", name="subject_delete")
      * @Method("GET")
-	 * @param Request $request
-	 * @param Subject $subject
+     * @param Request $request
+     * @param Subject $subject
      */
-    public function deleteAction(Request $request, Subject $subject)
-    {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+    public function deleteAction(Request $request, Subject $subject) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -167,4 +161,5 @@ class SubjectController extends Controller
 
         return $this->redirectToRoute('subject_index');
     }
+
 }

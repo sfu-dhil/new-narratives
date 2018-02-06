@@ -4,28 +4,11 @@ parameters:
     container.autowiring.strict_mode: true
 
 services:
-    # default configuration for services in *this* file
     _defaults:
-        # automatically injects dependencies in your services
         autowire: true
-        # automatically registers your services as commands, event subscribers, etc.
         autoconfigure: true
-        # this means you cannot fetch services directly from the container via $container->get()
-        # if you need to do this, you can override this setting on individual services
-        public: false
+        public: true
 
-    Nines\UserBundle\:
-        resource: '../../src/Nines/UserBundle/*'
-        # you can exclude directories or files
-        # but if a service is unused, it's removed anyway
-        exclude: '../../src/Nines/UserBundle/{Entity,Repository,Resources,Tests}'
-        
-    Nines\UtilBundle\:
-        resource: '../../src/Nines/UtilBundle/*'
-        # you can exclude directories or files
-        # but if a service is unused, it's removed anyway
-        exclude: '../../src/Nines/UtilBundle/{Entity,Repository,Resources,Tests}'
-        
     Nines\UserBundle\Menu\Builder:
         tags:
             - { name: knp_menu.menu_builder, method: userNavMenu, alias: user}
@@ -54,3 +37,7 @@ services:
         tags:
             - { name: knp_menu.menu_builder, method: mainMenu, alias: main}
             
+    AppBundle\Services\:
+        resource: '../../src/AppBundle/Services'
+        public: true
+

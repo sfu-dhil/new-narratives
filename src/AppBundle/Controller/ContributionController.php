@@ -13,19 +13,18 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/contribution")
  */
-class ContributionController extends Controller
-{
+class ContributionController extends Controller {
+
     /**
      * Lists all Contribution entities.
      *
      * @Route("/", name="contribution_index")
      * @Method("GET")
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function indexAction(Request $request)
-    {
-        if( ! $this->isGranted('ROLE_CONTENT_ADMIN')) {
+    public function indexAction(Request $request) {
+        if (!$this->isGranted('ROLE_CONTENT_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -39,4 +38,5 @@ class ContributionController extends Controller
             'contributions' => $contributions,
         );
     }
+
 }

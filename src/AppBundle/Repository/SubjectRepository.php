@@ -13,8 +13,8 @@ class SubjectRepository extends \Doctrine\ORM\EntityRepository {
     public function searchQuery($data) {
         $qb = $this->createQueryBuilder('e');
         if(isset($data['q']) && $data['q']) {
-            $qb->addSelect("MATCH_AGAINST (e.label, e.description, :q 'IN BOOLEAN MODE') as HIDDEN score");
-            $qb->andWhere("MATCH_AGAINST (e.label, e.description, :q 'IN BOOLEAN MODE') > 0");
+            $qb->addSelect("MATCH (e.label, e.description) AGAINST (:q BOOLEAN) as HIDDEN score");
+            $qb->andWhere("MATCH (e.label, e.description) AGAINST (:q BOOLEAN) > 0");
             $qb->setParameter('q', $data['q']);
             $qb->orderBy('score', 'desc');
         }

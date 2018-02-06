@@ -123,7 +123,7 @@ class PersonController extends Controller {
      * @param Request $request
      */
     public function newAction(Request $request) {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -171,7 +171,7 @@ class PersonController extends Controller {
      * @param Person $person
      */
     public function editAction(Request $request, Person $person) {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -200,7 +200,7 @@ class PersonController extends Controller {
      * @param Person $person
      */
     public function deleteAction(Request $request, Person $person) {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }

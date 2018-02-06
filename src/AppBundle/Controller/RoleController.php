@@ -15,18 +15,17 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/role")
  */
-class RoleController extends Controller
-{
+class RoleController extends Controller {
+
     /**
      * Lists all Role entities.
      *
      * @Route("/", name="role_index")
      * @Method("GET")
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function indexAction(Request $request)
-    {
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Role e ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -44,11 +43,10 @@ class RoleController extends Controller
      * @Route("/new", name="role_new")
      * @Method({"GET", "POST"})
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function newAction(Request $request)
-    {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+    public function newAction(Request $request) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -77,10 +75,9 @@ class RoleController extends Controller
      * @Route("/{id}", name="role_show")
      * @Method("GET")
      * @Template()
-	 * @param Role $role
+     * @param Role $role
      */
-    public function showAction(Role $role)
-    {
+    public function showAction(Role $role) {
 
         return array(
             'role' => $role,
@@ -93,12 +90,11 @@ class RoleController extends Controller
      * @Route("/{id}/edit", name="role_edit")
      * @Method({"GET", "POST"})
      * @Template()
-	 * @param Request $request
-	 * @param Role $role
+     * @param Request $request
+     * @param Role $role
      */
-    public function editAction(Request $request, Role $role)
-    {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+    public function editAction(Request $request, Role $role) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -123,12 +119,11 @@ class RoleController extends Controller
      *
      * @Route("/{id}/delete", name="role_delete")
      * @Method("GET")
-	 * @param Request $request
-	 * @param Role $role
+     * @param Request $request
+     * @param Role $role
      */
-    public function deleteAction(Request $request, Role $role)
-    {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+    public function deleteAction(Request $request, Role $role) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -139,4 +134,5 @@ class RoleController extends Controller
 
         return $this->redirectToRoute('role_index');
     }
+
 }

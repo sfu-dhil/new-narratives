@@ -14,7 +14,7 @@ class WorkRepository extends \Doctrine\ORM\EntityRepository {
         $qb = $this->createQueryBuilder('e');
         $qb->distinct();
         if (isset($data['title'])) {
-            $qb->andWhere("MATCH_AGAINST (e.title, :title 'IN BOOLEAN MODE') > 0");
+            $qb->andWhere("MATCH (e.title) AGAINST (:title BOOLEAN) > 0");
             $qb->setParameter('title', $data['title']);
         }
         if (isset($data['category']) && count($data['category']) > 0) {
@@ -40,18 +40,18 @@ class WorkRepository extends \Doctrine\ORM\EntityRepository {
                     $qb->setParameter(":role_{$idx}", $filter['role']);
                 }
                 if (isset($filter['name']) && $filter['name']) {
-                    $qb->andWhere("MATCH_AGAINST({$pAlias}.fullName, :name_{$idx} 'IN BOOLEAN MODE') > 0");
+                    $qb->andWhere("MATCH ({$pAlias}.fullName) AGAINST (:name_{$idx} BOOLEAN) > 0");
                     $qb->setParameter("name_{$idx}", $filter['name']);
                 }
             }
         }
         if (isset($data['publicationPlace'])) {
-            $qb->andWhere("MATCH_AGAINST (e.publicationPlace, :publicationPlace 'IN BOOLEAN MODE') > 0");
+            $qb->andWhere("MATCH (e.publicationPlace) AGAINST (:publicationPlace BOOLEAN) > 0");
             $qb->setParameter('publicationPlace', $data['publicationPlace']);
         }
         if (isset($data['publisher'])) {
             $qb->innerJoin('e.publisher', 'p');
-            $qb->andWhere("MATCH_AGAINST (p.name, :publisher 'IN BOOLEAN MODE') > 0");
+            $qb->andWhere("MATCH (p.name) AGAINST (:publisher BOOLEAN) > 0");
             $qb->setParameter('publisher', $data['publisher']);
         }
         if (isset($data['illustrations']) && count($data['illustrations']) > 0) {
@@ -63,12 +63,12 @@ class WorkRepository extends \Doctrine\ORM\EntityRepository {
             $qb->setParameter('frontispiece', $data['frontispiece']);
         }
         if (isset($data['dedication'])) {
-            $qb->andWhere("MATCH_AGAINST (e.dedication, :dedication 'IN BOOLEAN MODE') > 0");
+            $qb->andWhere("MATCH (e.dedication) AGAINST (:dedication BOOLEAN) > 0");
             $qb->setParameter('dedication', $data['dedication']);
         }
         if (isset($data['subject'])) {
             $qb->innerJoin('e.subjects', 's');
-            $qb->andWhere("MATCH_AGAINST(s.label, :subject 'IN BOOLEAN MODE') > 0");
+            $qb->andWhere("MATCH (s.label) AGAINST (:subject BOOLEAN) > 0");
             $qb->setParameter('subject', $data['subject']);
         }
         if (isset($data['genre']) && count($data['genre']) > 0) {

@@ -15,18 +15,17 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/genre")
  */
-class GenreController extends Controller
-{
+class GenreController extends Controller {
+
     /**
      * Lists all Genre entities.
      *
      * @Route("/", name="genre_index")
      * @Method("GET")
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function indexAction(Request $request)
-    {
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:Genre e ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -44,11 +43,10 @@ class GenreController extends Controller
      * @Route("/new", name="genre_new")
      * @Method({"GET", "POST"})
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function newAction(Request $request)
-    {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+    public function newAction(Request $request) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -77,10 +75,9 @@ class GenreController extends Controller
      * @Route("/{id}", name="genre_show")
      * @Method("GET")
      * @Template()
-	 * @param Genre $genre
+     * @param Genre $genre
      */
-    public function showAction(Genre $genre)
-    {
+    public function showAction(Genre $genre) {
 
         return array(
             'genre' => $genre,
@@ -93,12 +90,11 @@ class GenreController extends Controller
      * @Route("/{id}/edit", name="genre_edit")
      * @Method({"GET", "POST"})
      * @Template()
-	 * @param Request $request
-	 * @param Genre $genre
+     * @param Request $request
+     * @param Genre $genre
      */
-    public function editAction(Request $request, Genre $genre)
-    {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+    public function editAction(Request $request, Genre $genre) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -123,12 +119,11 @@ class GenreController extends Controller
      *
      * @Route("/{id}/delete", name="genre_delete")
      * @Method("GET")
-	 * @param Request $request
-	 * @param Genre $genre
+     * @param Request $request
+     * @param Genre $genre
      */
-    public function deleteAction(Request $request, Genre $genre)
-    {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+    public function deleteAction(Request $request, Genre $genre) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -139,4 +134,5 @@ class GenreController extends Controller
 
         return $this->redirectToRoute('genre_index');
     }
+
 }

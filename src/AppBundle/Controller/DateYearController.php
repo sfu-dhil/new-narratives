@@ -13,19 +13,18 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/date")
  */
-class DateYearController extends Controller
-{
+class DateYearController extends Controller {
+
     /**
      * Lists all DateYear entities.
      *
      * @Route("/", name="date_index")
      * @Method("GET")
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function indexAction(Request $request)
-    {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+    public function indexAction(Request $request) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -39,4 +38,5 @@ class DateYearController extends Controller
             'dateYears' => $dateYears,
         );
     }
+
 }

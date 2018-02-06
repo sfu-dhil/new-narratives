@@ -6,6 +6,8 @@ use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class to build some menus for navigation.
@@ -14,37 +16,34 @@ class Builder implements ContainerAwareInterface {
 
     use ContainerAwareTrait;
 
-    /**
-     * Build a search menu.
-     * 
-     * @param FactoryInterface $factory
-     * @param array $options
-     * @return ItemInterface
-     */
-    public function searchMenu(FactoryInterface $factory, array $options) {
-        $menu = $factory->createItem('root');
-        $menu->setChildrenAttributes(array(
-            'class' => 'dropdown-menu',
-        ));
-        $menu->setAttribute('dropdown', true);
+    const CARET = ' ▾'; // U+25BE, black down-pointing small triangle.
 
-        $menu->addChild('search_advanced', array(
-            'label' => 'Advanced Search',
-            'route' => 'work_search',
-        ));
-        $menu->addChild('search_person', array(
-            'label' => 'Person Search',
-            'route' => 'person_search',
-        ));
-        $menu->addChild('search_publisher', array(
-            'label' => 'Publisher Search',
-            'route' => 'publisher_search',
-        ));
-        $menu->addChild('search_subject', array(
-            'label' => 'Subject Search',
-            'route' => 'subject_search',
-        ));
-        return $menu;
+    /**
+     * @var FactoryInterface
+     */
+    private $factory;
+
+    /**
+     * @var AuthorizationCheckerInterface
+     */
+    private $authChecker;
+
+    /**
+     * @var TokenStorageInterface
+     */
+    private $tokenStorage;
+    
+    public function __construct(FactoryInterface $factory, AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage) {
+        $this->factory = $factory;
+        $this->authChecker = $authChecker;
+        $this->tokenStorage = $tokenStorage;
+    }
+
+    private function hasRole($role) {
+        if (!$this->tokenStorage->getToken()) {
+            return false;
+        }
+        return $this->authChecker->isGranted($role);
     }
     
     /**
@@ -54,64 +53,103 @@ class Builder implements ContainerAwareInterface {
      * @param array $options
      * @return ItemInterface
      */
-    public function navMenu(FactoryInterface $factory, array $options) {
-        $menu = $factory->createItem('root');
+    public function mainMenu(array $options) {
+        $menu = $this->factory->createItem('root');
         $menu->setChildrenAttributes(array(
-            'class' => 'dropdown-menu',
+            'class' => 'nav navbar-nav',
         ));
-        $menu->setAttribute('dropdown', true);
+        
+        $menu->addChild('home', array(
+            'label' => 'Home',
+            'route' => 'homepage',
+        ));
+        
+        $search = $menu->addChild('search', array(
+            'uri' => '#',
+            'label' => 'Search ' . self::CARET,
+        ));
+        $search->setAttribute('dropdown', true);
+        $search->setLinkAttribute('class', 'dropdown-toggle');
+        $search->setLinkAttribute('data-toggle', 'dropdown');
+        $search->setChildrenAttribute('class', 'dropdown-menu');
+        
+       $search->addChild('search_advanced', array(
+            'label' => 'Advanced Search',
+            'route' => 'work_search',
+        ));
+        $search->addChild('search_person', array(
+            'label' => 'Person Search',
+            'route' => 'person_search',
+        ));
+        $search->addChild('search_publisher', array(
+            'label' => 'Publisher Search',
+            'route' => 'publisher_search',
+        ));
+        $search->addChild('search_subject', array(
+            'label' => 'Subject Search',
+            'route' => 'subject_search',
+        ));
+        
+        $browse = $menu->addChild('browse', array(
+            'uri' => '#',
+            'label' => 'Browse ' . self::CARET,
+        ));
+        $browse->setAttribute('dropdown', true);
+        $browse->setLinkAttribute('class', 'dropdown-toggle');
+        $browse->setLinkAttribute('data-toggle', 'dropdown');
+        $browse->setChildrenAttribute('class', 'dropdown-menu');
 
-        $menu->addChild('date_category', array(
+        $browse->addChild('date_category', array(
             'label' => 'Date Categories',
             'route' => 'date_category_index',
         ));
-        $menu->addChild('genre', array(
+        $browse->addChild('genre', array(
             'label' => 'Genres',
             'route' => 'genre_index',
         ));
-        $menu->addChild('person', array(
+        $browse->addChild('person', array(
             'label' => 'People',
             'route' => 'person_index',
         ));
-        $menu->addChild('publisher', array(
+        $browse->addChild('publisher', array(
             'label' => 'Publishers',
             'route' => 'publisher_index',
         ));
-        $menu->addChild('role', array(
+        $browse->addChild('role', array(
             'label' => 'Roles',
             'route' => 'role_index',
         ));
-        $menu->addChild('subject', array(
+        $browse->addChild('subject', array(
             'label' => 'Subjects',
             'route' => 'subject_index',
         ));
-        $menu->addChild('subject_source', array(
+        $browse->addChild('subject_source', array(
             'label' => 'Subject Sources',
             'route' => 'subject_source_index',
         ));
-        $menu->addChild('work', array(
+        $browse->addChild('work', array(
             'label' => 'Works',
             'route' => 'work_index',
         ));
-        $menu->addChild('work_category', array(
+        $browse->addChild('work_category', array(
             'label' => 'Work Categories',
             'route' => 'work_category_index',
         ));
 
-        if ($this->container->get('security.token_storage')->getToken() && $this->container->get('security.authorization_checker')->isGranted('ROLE_CONTENT_ADMIN')) {
-            $menu->addChild('divider', array(
+        if ($this->hasRole('ROLE_CONTENT_ADMIN')) {
+            $browse->addChild('divider', array(
                 'label' => '',
             ));
-            $menu['divider']->setAttributes(array(
+            $browse['divider']->setAttributes(array(
                 'role' => 'separator',
                 'class' => 'divider',
             ));
             
-            $menu->addChild('contribution', array(
+            $browse->addChild('contribution', array(
                 'label' => 'Contributions',
                 'route' => 'contribution_index',
             ));
-            $menu->addChild('date', array(
+            $browse->addChild('date', array(
                 'label' => 'Dates',
                 'route' => 'date_index',
             ));

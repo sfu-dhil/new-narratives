@@ -15,18 +15,17 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/date_category")
  */
-class DateCategoryController extends Controller
-{
+class DateCategoryController extends Controller {
+
     /**
      * Lists all DateCategory entities.
      *
      * @Route("/", name="date_category_index")
      * @Method("GET")
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function indexAction(Request $request)
-    {
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT e FROM AppBundle:DateCategory e ORDER BY e.id';
         $query = $em->createQuery($dql);
@@ -44,11 +43,10 @@ class DateCategoryController extends Controller
      * @Route("/new", name="date_category_new")
      * @Method({"GET", "POST"})
      * @Template()
-	 * @param Request $request
+     * @param Request $request
      */
-    public function newAction(Request $request)
-    {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+    public function newAction(Request $request) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -77,10 +75,9 @@ class DateCategoryController extends Controller
      * @Route("/{id}", name="date_category_show")
      * @Method("GET")
      * @Template()
-	 * @param DateCategory $dateCategory
+     * @param DateCategory $dateCategory
      */
-    public function showAction(DateCategory $dateCategory)
-    {
+    public function showAction(DateCategory $dateCategory) {
 
         return array(
             'dateCategory' => $dateCategory,
@@ -93,12 +90,11 @@ class DateCategoryController extends Controller
      * @Route("/{id}/edit", name="date_category_edit")
      * @Method({"GET", "POST"})
      * @Template()
-	 * @param Request $request
-	 * @param DateCategory $dateCategory
+     * @param Request $request
+     * @param DateCategory $dateCategory
      */
-    public function editAction(Request $request, DateCategory $dateCategory)
-    {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+    public function editAction(Request $request, DateCategory $dateCategory) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -123,12 +119,11 @@ class DateCategoryController extends Controller
      *
      * @Route("/{id}/delete", name="date_category_delete")
      * @Method("GET")
-	 * @param Request $request
-	 * @param DateCategory $dateCategory
+     * @param Request $request
+     * @param DateCategory $dateCategory
      */
-    public function deleteAction(Request $request, DateCategory $dateCategory)
-    {
-        if( ! $this->isGranted('ROLE_BLOG_ADMIN')) {
+    public function deleteAction(Request $request, DateCategory $dateCategory) {
+        if (!$this->isGranted('ROLE_BLOG_ADMIN')) {
             $this->addFlash('danger', 'You must login to access this page.');
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -139,4 +134,5 @@ class DateCategoryController extends Controller
 
         return $this->redirectToRoute('date_category_index');
     }
+
 }
