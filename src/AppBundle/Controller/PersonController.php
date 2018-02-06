@@ -193,6 +193,8 @@ class PersonController extends Controller {
      *
      * @Route("/{id}/delete", name="person_delete")
      * @Method("GET")
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * 
      * @param Request $request
      * @param Person $person
      */

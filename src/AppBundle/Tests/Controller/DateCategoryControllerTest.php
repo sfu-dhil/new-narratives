@@ -19,28 +19,28 @@ class DateCategoryControllerTest extends BaseTestCase
     
     public function testAnonIndex() {
         $client = $this->makeClient();
-        $crawler = $client->request('GET', '/datecategory/');
+        $crawler = $client->request('GET', '/date_category/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('New')->count());
     }
     
     public function testUserIndex() {
         $client = $this->makeClient(LoadUser::USER);
-        $crawler = $client->request('GET', '/datecategory/');
+        $crawler = $client->request('GET', '/date_category/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('New')->count());
     }
     
     public function testAdminIndex() {
         $client = $this->makeClient(LoadUser::ADMIN);
-        $crawler = $client->request('GET', '/datecategory/');
+        $crawler = $client->request('GET', '/date_category/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(1, $crawler->selectLink('New')->count());
     }
     
     public function testAnonShow() {
         $client = $this->makeClient();
-        $crawler = $client->request('GET', '/datecategory/1');
+        $crawler = $client->request('GET', '/date_category/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('Edit')->count());
         $this->assertEquals(0, $crawler->selectLink('Delete')->count());
@@ -48,7 +48,7 @@ class DateCategoryControllerTest extends BaseTestCase
     
     public function testUserShow() {
         $client = $this->makeClient(LoadUser::USER);
-        $crawler = $client->request('GET', '/datecategory/1');
+        $crawler = $client->request('GET', '/date_category/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('Edit')->count());
         $this->assertEquals(0, $crawler->selectLink('Delete')->count());
@@ -56,28 +56,26 @@ class DateCategoryControllerTest extends BaseTestCase
     
     public function testAdminShow() {
         $client = $this->makeClient(LoadUser::ADMIN);
-        $crawler = $client->request('GET', '/datecategory/1');
+        $crawler = $client->request('GET', '/date_category/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(1, $crawler->selectLink('Edit')->count());
         $this->assertEquals(1, $crawler->selectLink('Delete')->count());
     }
     public function testAnonEdit() {
         $client = $this->makeClient();
-        $crawler = $client->request('GET', '/datecategory/1/edit');
+        $crawler = $client->request('GET', '/date_category/1/edit');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
     
     public function testUserEdit() {
         $client = $this->makeClient(LoadUser::USER);
-        $crawler = $client->request('GET', '/datecategory/1/edit');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
+        $crawler = $client->request('GET', '/date_category/1/edit');
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
     
     public function testAdminEdit() {
         $client = $this->makeClient(LoadUser::ADMIN);
-        $formCrawler = $client->request('GET', '/datecategory/1/edit');
+        $formCrawler = $client->request('GET', '/date_category/1/edit');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         
         $this->markTestIncomplete(
@@ -85,11 +83,11 @@ class DateCategoryControllerTest extends BaseTestCase
         );        
         $form = $formCrawler->selectButton('Update')->form([
             // DO STUFF HERE.
-            // 'datecategorys[FIELDNAME]' => 'FIELDVALUE',
+            // 'date_categorys[FIELDNAME]' => 'FIELDVALUE',
         ]);
         
         $client->submit($form);
-        $this->assertTrue($client->getResponse()->isRedirect('/datecategory/1'));
+        $this->assertTrue($client->getResponse()->isRedirect('/date_category/1'));
         $responseCrawler = $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         // $this->assertEquals(1, $responseCrawler->filter('td:contains("FIELDVALUE")')->count());
@@ -97,21 +95,19 @@ class DateCategoryControllerTest extends BaseTestCase
     
     public function testAnonNew() {
         $client = $this->makeClient();
-        $crawler = $client->request('GET', '/datecategory/new');
+        $crawler = $client->request('GET', '/date_category/new');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
     
     public function testUserNew() {
         $client = $this->makeClient(LoadUser::USER);
-        $crawler = $client->request('GET', '/datecategory/new');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
+        $crawler = $client->request('GET', '/date_category/new');
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
 
     public function testAdminNew() {
         $client = $this->makeClient(LoadUser::ADMIN);
-        $formCrawler = $client->request('GET', '/datecategory/new');
+        $formCrawler = $client->request('GET', '/date_category/new');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         
         $this->markTestIncomplete(
@@ -119,7 +115,7 @@ class DateCategoryControllerTest extends BaseTestCase
         );        
         $form = $formCrawler->selectButton('Create')->form([
             // DO STUFF HERE.
-            // 'datecategorys[FIELDNAME]' => 'FIELDVALUE',
+            // 'date_categorys[FIELDNAME]' => 'FIELDVALUE',
         ]);
         
         $client->submit($form);
@@ -131,22 +127,20 @@ class DateCategoryControllerTest extends BaseTestCase
     
     public function testAnonDelete() {
         $client = $this->makeClient();
-        $crawler = $client->request('GET', '/datecategory/1/delete');
+        $crawler = $client->request('GET', '/date_category/1/delete');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
     
     public function testUserDelete() {
         $client = $this->makeClient(LoadUser::USER);
-        $crawler = $client->request('GET', '/datecategory/1/delete');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
+        $crawler = $client->request('GET', '/date_category/1/delete');
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
 
     public function testAdminDelete() {
         $preCount = count($this->em->getRepository(DateCategory::class)->findAll());
         $client = $this->makeClient(LoadUser::ADMIN);
-        $crawler = $client->request('GET', '/datecategory/1/delete');
+        $crawler = $client->request('GET', '/date_category/1/delete');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
         $this->assertTrue($client->getResponse()->isRedirect());
         $responseCrawler = $client->followRedirect();

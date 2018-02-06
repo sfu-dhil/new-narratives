@@ -22,7 +22,6 @@ class LoadSubject extends Fixture implements DependentFixtureInterface {
             $fixture->setLabel('Subject ' . $i);
             $fixture->setDescription('Subject description ' . $i);
             $fixture->setSubjectsource($this->getReference('subjectsource.1'));
-            $fixture->setWorks($this->getReference('works.1'));
 
             $em->persist($fixture);
             $this->setReference('subject.' . $i, $fixture);

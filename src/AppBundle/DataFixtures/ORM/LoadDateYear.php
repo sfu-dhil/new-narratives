@@ -19,7 +19,7 @@ class LoadDateYear extends Fixture implements DependentFixtureInterface {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new DateYear();
             $fixture->setValue(1900 + $i);
-            $fixture->setDatecategory($this->getReference('dateCategory.1'));
+            $fixture->setDatecategory($this->getReference('datecategory.1'));
             $fixture->setWork($this->getReference('work.1'));
 
             $em->persist($fixture);

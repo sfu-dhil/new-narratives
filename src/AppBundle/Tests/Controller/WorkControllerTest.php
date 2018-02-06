@@ -13,7 +13,7 @@ class WorkControllerTest extends BaseTestCase
     protected function getFixtures() {
         return [
             LoadUser::class,
-            LoadWork::class
+            LoadWork::class,
         ];
     }
     
@@ -58,21 +58,19 @@ class WorkControllerTest extends BaseTestCase
         $client = $this->makeClient(LoadUser::ADMIN);
         $crawler = $client->request('GET', '/work/1');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->selectLink('Edit')->count());
+        $this->assertEquals(3, $crawler->selectLink('Edit')->count());
         $this->assertEquals(1, $crawler->selectLink('Delete')->count());
     }
     public function testAnonEdit() {
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/work/1/edit');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
     
     public function testUserEdit() {
         $client = $this->makeClient(LoadUser::USER);
         $crawler = $client->request('GET', '/work/1/edit');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
     
     public function testAdminEdit() {
@@ -99,14 +97,12 @@ class WorkControllerTest extends BaseTestCase
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/work/new');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
     
     public function testUserNew() {
         $client = $this->makeClient(LoadUser::USER);
         $crawler = $client->request('GET', '/work/new');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
 
     public function testAdminNew() {
@@ -133,14 +129,12 @@ class WorkControllerTest extends BaseTestCase
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/work/1/delete');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
     
     public function testUserDelete() {
         $client = $this->makeClient(LoadUser::USER);
         $crawler = $client->request('GET', '/work/1/delete');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
 
     public function testAdminDelete() {

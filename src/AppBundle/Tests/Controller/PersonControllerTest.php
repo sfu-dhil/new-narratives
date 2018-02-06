@@ -65,14 +65,12 @@ class PersonControllerTest extends BaseTestCase
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/person/1/edit');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
     
     public function testUserEdit() {
         $client = $this->makeClient(LoadUser::USER);
         $crawler = $client->request('GET', '/person/1/edit');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
     
     public function testAdminEdit() {
@@ -99,14 +97,12 @@ class PersonControllerTest extends BaseTestCase
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/person/new');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
     
     public function testUserNew() {
         $client = $this->makeClient(LoadUser::USER);
         $crawler = $client->request('GET', '/person/new');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
 
     public function testAdminNew() {
@@ -133,14 +129,12 @@ class PersonControllerTest extends BaseTestCase
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/person/1/delete');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
     
     public function testUserDelete() {
         $client = $this->makeClient(LoadUser::USER);
         $crawler = $client->request('GET', '/person/1/delete');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
 
     public function testAdminDelete() {
