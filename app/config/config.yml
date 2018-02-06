@@ -111,6 +111,9 @@ fos_user:
     change_password:
         form:
             type: Nines\UserBundle\Form\PasswordType
+    from_email:
+        address:        noreply@'%router.request_context.host%'
+        sender_name:    Do Not Reply
             
 ivory_ck_editor:
     input_sync: true

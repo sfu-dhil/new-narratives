@@ -2,3 +2,11 @@
 	path = src/Nines
 	url = git@github.com:ubermichael/nines-bundles.git
 	branch = master
+[submodule "docs"]
+	path = docs
+	url = git@github.com:sfu-dhil/new-narratives-docs.git
+	branch = master
+[submodule "app/Resources/SensioGeneratorBundle/skeleton"]
+	path = app/Resources/SensioGeneratorBundle/skeleton
+	url = git@github.com:ubermichael/skeleton.git
+	branch = master
