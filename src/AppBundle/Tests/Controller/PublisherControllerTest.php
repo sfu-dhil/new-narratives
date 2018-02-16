@@ -77,20 +77,16 @@ class PublisherControllerTest extends BaseTestCase
         $client = $this->makeClient(LoadUser::ADMIN);
         $formCrawler = $client->request('GET', '/publisher/1/edit');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );        
+              
         $form = $formCrawler->selectButton('Update')->form([
-            // DO STUFF HERE.
-            // 'publishers[FIELDNAME]' => 'FIELDVALUE',
+            'publisher[name]' => 'Book Publisher'
         ]);
         
         $client->submit($form);
         $this->assertTrue($client->getResponse()->isRedirect('/publisher/1'));
         $responseCrawler = $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        // $this->assertEquals(1, $responseCrawler->filter('td:contains("FIELDVALUE")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("Book Publisher")')->count());
     }
     
     public function testAnonNew() {
@@ -108,21 +104,16 @@ class PublisherControllerTest extends BaseTestCase
     public function testAdminNew() {
         $client = $this->makeClient(LoadUser::ADMIN);
         $formCrawler = $client->request('GET', '/publisher/new');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );        
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());       
         $form = $formCrawler->selectButton('Create')->form([
-            // DO STUFF HERE.
-            // 'publishers[FIELDNAME]' => 'FIELDVALUE',
+            'publisher[name]' => 'Book Publisher'
         ]);
         
         $client->submit($form);
         $this->assertTrue($client->getResponse()->isRedirect());
         $responseCrawler = $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        // $this->assertEquals(1, $responseCrawler->filter('td:contains("FIELDVALUE")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("Book Publisher")')->count());
     }
     
     public function testAnonDelete() {

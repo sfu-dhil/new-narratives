@@ -77,20 +77,16 @@ class PersonControllerTest extends BaseTestCase
         $client = $this->makeClient(LoadUser::ADMIN);
         $formCrawler = $client->request('GET', '/person/1/edit');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );        
+                
         $form = $formCrawler->selectButton('Update')->form([
-            // DO STUFF HERE.
-            // 'persons[FIELDNAME]' => 'FIELDVALUE',
+            'person[fullName]' => 'Test Name'
         ]);
         
         $client->submit($form);
         $this->assertTrue($client->getResponse()->isRedirect('/person/1'));
         $responseCrawler = $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        // $this->assertEquals(1, $responseCrawler->filter('td:contains("FIELDVALUE")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("Test Name")')->count());
     }
     
     public function testAnonNew() {
@@ -109,20 +105,16 @@ class PersonControllerTest extends BaseTestCase
         $client = $this->makeClient(LoadUser::ADMIN);
         $formCrawler = $client->request('GET', '/person/new');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );        
+              
         $form = $formCrawler->selectButton('Create')->form([
-            // DO STUFF HERE.
-            // 'persons[FIELDNAME]' => 'FIELDVALUE',
+            'person[fullName]' => 'Test User'
         ]);
         
         $client->submit($form);
         $this->assertTrue($client->getResponse()->isRedirect());
         $responseCrawler = $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        // $this->assertEquals(1, $responseCrawler->filter('td:contains("FIELDVALUE")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("Test User")')->count());
     }
     
     public function testAnonDelete() {
