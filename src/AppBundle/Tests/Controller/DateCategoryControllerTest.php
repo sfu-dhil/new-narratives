@@ -76,21 +76,19 @@ class DateCategoryControllerTest extends BaseTestCase
     public function testAdminEdit() {
         $client = $this->makeClient(LoadUser::ADMIN);
         $formCrawler = $client->request('GET', '/date_category/1/edit');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());       
         
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );        
         $form = $formCrawler->selectButton('Update')->form([
-            // DO STUFF HERE.
-            // 'date_categorys[FIELDNAME]' => 'FIELDVALUE',
+            'date_category[name]' => 'cheese.',
+            'date_category[label]' => 'cheese label',
+            'date_category[description]' => 'this is a good cheese'
         ]);
         
         $client->submit($form);
         $this->assertTrue($client->getResponse()->isRedirect('/date_category/1'));
         $responseCrawler = $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        // $this->assertEquals(1, $responseCrawler->filter('td:contains("FIELDVALUE")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("cheese.")')->count());
     }
     
     public function testAnonNew() {
@@ -110,19 +108,17 @@ class DateCategoryControllerTest extends BaseTestCase
         $formCrawler = $client->request('GET', '/date_category/new');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );        
         $form = $formCrawler->selectButton('Create')->form([
-            // DO STUFF HERE.
-            // 'date_categorys[FIELDNAME]' => 'FIELDVALUE',
+            'date_category[name]' => 'cheese.',
+            'date_category[label]' => 'cheese label',
+            'date_category[description]' => 'this is a good cheese'
         ]);
         
         $client->submit($form);
         $this->assertTrue($client->getResponse()->isRedirect());
         $responseCrawler = $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        // $this->assertEquals(1, $responseCrawler->filter('td:contains("FIELDVALUE")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("cheese.")')->count());
     }
     
     public function testAnonDelete() {

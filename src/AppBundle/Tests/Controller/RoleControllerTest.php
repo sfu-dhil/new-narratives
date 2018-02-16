@@ -78,19 +78,17 @@ class RoleControllerTest extends BaseTestCase
         $formCrawler = $client->request('GET', '/role/1/edit');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );        
         $form = $formCrawler->selectButton('Update')->form([
-            // DO STUFF HERE.
-            // 'roles[FIELDNAME]' => 'FIELDVALUE',
+            'role[name]' => 'cheese.',
+            'role[label]' => 'cheese',
+            'role[description]' => 'it is cheese'
         ]);
         
         $client->submit($form);
         $this->assertTrue($client->getResponse()->isRedirect('/role/1'));
         $responseCrawler = $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        // $this->assertEquals(1, $responseCrawler->filter('td:contains("FIELDVALUE")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("cheese.")')->count());
     }
     
     public function testAnonNew() {
@@ -109,20 +107,18 @@ class RoleControllerTest extends BaseTestCase
         $client = $this->makeClient(LoadUser::ADMIN);
         $formCrawler = $client->request('GET', '/role/new');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );        
+       
         $form = $formCrawler->selectButton('Create')->form([
-            // DO STUFF HERE.
-            // 'roles[FIELDNAME]' => 'FIELDVALUE',
+            'role[name]' => 'cheese.',
+            'role[label]' => 'cheese',
+            'role[description]' => 'it is cheese'
         ]);
         
         $client->submit($form);
         $this->assertTrue($client->getResponse()->isRedirect());
         $responseCrawler = $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        // $this->assertEquals(1, $responseCrawler->filter('td:contains("FIELDVALUE")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("cheese.")')->count());
     }
     
     public function testAnonDelete() {

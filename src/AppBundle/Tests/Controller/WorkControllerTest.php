@@ -77,20 +77,34 @@ class WorkControllerTest extends BaseTestCase
         $client = $this->makeClient(LoadUser::ADMIN);
         $formCrawler = $client->request('GET', '/work/1/edit');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );        
+      
         $form = $formCrawler->selectButton('Update')->form([
-            // DO STUFF HERE.
-            // 'works[FIELDNAME]' => 'FIELDVALUE',
+            'work[title]' => 'cheese.',
+            'work[workCategory]' => 1,
+            'work[edition]' => 1,
+            'work[volume]' => 1,
+            'work[publicationPlace]' => 'London',
+            'work[publisher]' => 1,
+            'work[physicalDescription]' => 'looks like cheese',
+            'work[illustrations]' => 1,
+            'work[frontispiece]' => 1,
+            'work[translationDescription]' => 'translated cheese',
+            'work[dedication]' => 'to cheese',
+            'work[worldcatUrl]' => 'https://www.worldcat.org',
+            'work[subjects]' => 1,
+            'work[genre]' => 1,
+            'work[transcription]' => 1,
+            'work[physicalLocations]' => 'London',
+            'work[digitalLocations]' => 'SFU',
+            'work[digitalUrl]' => 'http://library.sfu.ca',
+            'work[notes]' => 'it is cheese'
         ]);
         
         $client->submit($form);
         $this->assertTrue($client->getResponse()->isRedirect('/work/1'));
         $responseCrawler = $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        // $this->assertEquals(1, $responseCrawler->filter('td:contains("FIELDVALUE")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("cheese.")')->count());
     }
     
     public function testAnonNew() {
@@ -109,20 +123,34 @@ class WorkControllerTest extends BaseTestCase
         $client = $this->makeClient(LoadUser::ADMIN);
         $formCrawler = $client->request('GET', '/work/new');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );        
+     
         $form = $formCrawler->selectButton('Create')->form([
-            // DO STUFF HERE.
-            // 'works[FIELDNAME]' => 'FIELDVALUE',
+            'work[title]' => 'cheese.',
+            'work[workCategory]' => 1,
+            'work[edition]' => 1,
+            'work[volume]' => 1,
+            'work[publicationPlace]' => 'London',
+            'work[publisher]' => 1,
+            'work[physicalDescription]' => 'looks like cheese',
+            'work[illustrations]' => 1,
+            'work[frontispiece]' => 1,
+            'work[translationDescription]' => 'translated cheese',
+            'work[dedication]' => 'to cheese',
+            'work[worldcatUrl]' => 'https://www.worldcat.org',
+            'work[subjects]' => 1,
+            'work[genre]' => 1,
+            'work[transcription]' => 1,
+            'work[physicalLocations]' => 'London',
+            'work[digitalLocations]' => 'SFU',
+            'work[digitalUrl]' => 'http://library.sfu.ca',
+            'work[notes]' => 'it is cheese'
         ]);
         
         $client->submit($form);
         $this->assertTrue($client->getResponse()->isRedirect());
         $responseCrawler = $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        // $this->assertEquals(1, $responseCrawler->filter('td:contains("FIELDVALUE")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("cheese.")')->count());
     }
     
     public function testAnonDelete() {
