@@ -64,3 +64,331 @@ div.checkbox, div.radio {
     float: left;
 }
 
+/* Changes to make visual style match New Narratives website */
+
+/* General text styling */
+body {
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.5em;
+    color: #666666;
+    -webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+a {
+    color: #2a92e5;
+    text-decoration: none;
+}
+a:hover {
+    color: #2180cc;
+}
+a img, a:hover img {
+    border: none;
+}
+h1, h2 {
+    color: #333333;
+    font-family: 'Raleway', serif;
+    font-weight: 400;
+    line-height: 1.2em;
+}
+
+/* Styling for front page text over main image */
+.jumbotron {
+    height: 600px;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: cover;
+}
+.jumbotron > .container {
+    /* position: relative; */
+    padding: 90px 25px;
+    text-align: center;
+}
+.jumbotron > .container > h1 {
+    color: #ffffff;
+}
+/* Styling for header on small screen sizes */
+@media (max-width: 767px) {
+    .jumbotron > .container {
+        padding: 90px 0px 90px 10px;
+    }
+}
+
+/* Navbar and dropdown styling (for all sizes) */
+.navbar-default .navbar-brand {
+    color:#ffffff;
+    text-shadow: none;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: #ffffff;
+}
+.navbar-default {
+    color: #ffffff;
+    background: #232323;
+    border-color: transparent;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+color: #ffffff;
+background-color: #0a0a0a;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+    color: #ffffff;
+    background: #0a0a0a;
+}
+
+/* Styling for navbar and dropdown-menu at larger size (min-width >= 768px) */
+@media (min-width: 768px) {
+    /* dropdown-menu styles */
+    .dropdown-menu {
+        background: #232323;
+    }
+    .dropdown-menu > li > a {
+        color: #ffffff;
+        text-transform: uppercase;
+    }
+    .dropdown-menu > li > a:hover,
+    .dropdown-menu > li > a:focus {
+    color: #ffffff;
+    background: #0a0a0a;
+    }
+    .dropdown-menu > .active > a,
+    .dropdown-menu > .active > a:hover,
+    .dropdown-menu > .active > a:focus {
+    color: #fff;
+    }
+
+    /* navbar styles */
+    #navbar {
+        padding-top: 5px;
+    }
+    .navbar-default .navbar-nav > li > a {
+        color: #ffffff;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-shadow: none;
+        letter-spacing: 0.05em;
+        padding: 10px;
+    }
+    .navbar-default .navbar-nav > li > a:hover,
+    .navbar-default .navbar-nav > li > a:focus {
+        color: #ffffff;
+        padding: 7px;
+        border: 2px solid #ffffff;
+        border-radius: 2px;
+        margin: 1px;
+    } 
+}
+
+/* Styling for navbar and dropdown-menu at smaller size (max-width <= 767px) */
+@media (max-width: 767px) {
+    #navbar {
+        padding: inherit;
+    }
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+        color: #ffffff;
+        text-transform: uppercase;
+    }
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #ffffff;
+        background-color: #0a0a0a;
+        padding: none;
+        border: none;
+        border-radius: none;
+        margin: none;
+    }
+    .navbar-default .navbar-toggle:hover,
+    .navbar-default .navbar-toggle:focus {
+        background-color: #0a0a0a;
+    }
+    .navbar-default .navbar-toggle .icon-bar {
+        background-color: #ffffff;
+    }
+    .navbar-default .navbar-nav > li > a {
+        color: #ffffff;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-shadow: none;
+        letter-spacing: 0.05em;
+    }
+    .navbar-default .navbar-nav > li >a:focus,
+    .navbar-default .navbar-nav > li >a:hover {
+        color: #ffffff;
+        background-color: #0a0a0a;
+    }
+    .navbar-collapse .navbar-nav {
+        padding-left: 15px;
+    }
+}
+
+/* Panel styling */
+.panel {
+    border-radius: 2px;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+.panel-default > .panel-heading {
+    color: #666666;
+    font-weight: 600;
+    background-image: none;
+    border-radius: inherit;
+    border: none;
+}
+
+/* Button styling */
+
+/* .btn-danger */
+.btn-danger {
+    color: #ffffff;
+    background: #d9534f;
+    text-shadow: none;
+    border: 2px solid #d9534f;
+    border-radius: 2px;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+.btn-danger:focus,
+.btn-danger.focus,
+.btn-danger:hover,
+.btn-danger:active,
+.btn-danger.active {
+    color: #a1a1a1;
+    background: #ffffff;
+}
+
+.btn-danger:active:hover {
+    color: #666666;
+    border-color: #666666;
+    background: #ffffff;
+}
+
+/* .btn-default */
+.btn-default {
+    color: #ffffff;
+    background: #a1a1a1;
+    text-shadow: none;
+    border: 2px solid #a1a1a1;
+    border-radius: 2px;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+.btn-default:focus,
+.btn-default.focus,
+.btn-default:hover,
+.btn-default:active,
+.btn-default.active {
+    color: #a1a1a1;
+    background: #ffffff;
+}
+
+.btn-default:active:hover {
+    color: #666666;
+    border-color: #666666;
+    background: #ffffff;
+}
+
+/* .btn-primary */
+.btn-primary {
+    color: #ffffff;
+    background: #337ab7;
+    text-shadow: none;
+    border: 2px solid #337ab7;
+    border-radius: 2px;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+.btn-primary:focus,
+.btn-primary.focus,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary.active {
+    color: #a1a1a1;
+    background: #ffffff;
+}
+
+.btn-primary:active:hover {
+    color: #666666;
+    border-color: #666666;
+    background: #ffffff;
+}
+
+/* .btn-success */
+.btn-success {
+    color: #ffffff;
+    background: #5cb85c;
+    text-shadow: none;
+    border: 2px solid #5cb85c;
+    border-radius: 2px;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+.btn-success:focus,
+.btn-success.focus,
+.btn-success:hover,
+.btn-success:active,
+.btn-success.active {
+    color: #a1a1a1;
+    background: #ffffff;
+}
+
+.btn-success:active:hover {
+    color: #666666;
+    border-color: #666666;
+    background: #ffffff;
+}
+
+/* .btn-warning */
+.btn-warning {
+    color: #ffffff;
+    background: #f0ad4e;
+    text-shadow: none;
+    border: 2px solid #f0ad4e;
+    border-radius: 2px;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+.btn-warning:focus,
+.btn-warning.focus,
+.btn-warning:hover,
+.btn-warning:active,
+.btn-warning.active {
+    color: #a1a1a1;
+    background: #ffffff;
+}
+
+.btn-warning:active:hover {
+    color: #666666;
+    border-color: #666666;
+    background: #ffffff;
+}
+
+.btn-danger.active, 
+.btn-danger:active, 
+.btn-default.active, 
+.btn-default:active, 
+.btn-info.active, 
+.btn-info:active, 
+.btn-primary.active, 
+.btn-primary:active, 
+.btn-success.active, 
+.btn-success:active, 
+.btn-warning.active, 
+.btn-warning:active {
+    -webkit-box-shadow: inherit;
+    box-shadow: inherit;
+}
