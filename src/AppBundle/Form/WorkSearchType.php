@@ -45,13 +45,17 @@ class WorkSearchType extends AbstractType {
             'required' => false,
         ));
         $builder->add('contributor', CollectionType::class, array(
+            'label' => 'Contributors',
             'required' => false,
-            'entry_type' => ContributionFilterType::class,
             'allow_add' => true,
             'allow_delete' => true,
-            'required' => false,
+            'delete_empty' => true,
+            'entry_type' => ContributionFilterType::class,
+            'entry_options' => array(
+                'label' => false,
+            ),
             'attr' => array(
-                'group_class' => 'collection'
+                'class' => 'collection collection-complex'
             ),
         ));
         $builder->add('publicationPlace', TextType::class, array(
