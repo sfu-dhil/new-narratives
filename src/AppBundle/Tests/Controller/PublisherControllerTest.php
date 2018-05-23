@@ -21,21 +21,21 @@ class PublisherControllerTest extends BaseTestCase
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/publisher/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('New')->count());
+        $this->assertEquals(0, $crawler->selectLink('New')->filter('.btn')->count());
     }
     
     public function testUserIndex() {
         $client = $this->makeClient(LoadUser::USER);
         $crawler = $client->request('GET', '/publisher/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(0, $crawler->selectLink('New')->count());
+        $this->assertEquals(0, $crawler->selectLink('New')->filter('.btn')->count());
     }
     
     public function testAdminIndex() {
         $client = $this->makeClient(LoadUser::ADMIN);
         $crawler = $client->request('GET', '/publisher/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->selectLink('New')->count());
+        $this->assertEquals(1, $crawler->selectLink('New')->filter('.btn')->count());
     }
     
     public function testAnonShow() {
