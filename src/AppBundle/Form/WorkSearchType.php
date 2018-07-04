@@ -44,6 +44,14 @@ class WorkSearchType extends AbstractType {
         $builder->add('volume', IntegerType::class, array(
             'required' => false,
         ));
+        $builder->add('digitalEdition', ChoiceType::class, array(
+            'required' => false,
+            'expanded' => true,
+            'multiple' => true,
+            'choices' => array(
+                'Yes' => 1,
+            ),
+        ));
         $builder->add('contributor', CollectionType::class, array(
             'label' => 'Contributors',
             'required' => false,

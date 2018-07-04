@@ -29,6 +29,9 @@ class WorkRepository extends \Doctrine\ORM\EntityRepository {
             $qb->andWhere('e.volume = :volume');
             $qb->setParameter('volume', $data['volume']);
         }
+        if (isset($data['digitalEdition']) && count($data['digitalEdition']) > 0) {
+            $qb->andWhere('e.digitalUrl IS NOT NULL');
+        }
         if (isset($data['contributor']) && count($data['contributor']) > 0) {
             foreach ($data['contributor'] as $idx => $filter) {
                 $cAlias = 'c_' . $idx;
@@ -74,7 +77,7 @@ class WorkRepository extends \Doctrine\ORM\EntityRepository {
         if (isset($data['genre']) && count($data['genre']) > 0) {
             $qb->andWhere('e.genre IN (:genres)');
             $qb->setParameter('genres', $data['genre']);
-        }        
+        }
         if (isset($data['transcription']) && count($data['transcription']) > 0) {
             $qb->andWhere('e.transcription IN (:transcription)');
             $qb->setParameter('transcription', $data['transcription']);
