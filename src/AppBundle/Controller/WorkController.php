@@ -74,8 +74,8 @@ class WorkController extends Controller {
      * @Route("/new", name="work_new")
      * @Method({"GET", "POST"})
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * 
+     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     *
      * @param Request $request
      */
     public function newAction(Request $request) {
@@ -119,8 +119,8 @@ class WorkController extends Controller {
      * @Route("/{id}/edit", name="work_edit")
      * @Method({"GET", "POST"})
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * 
+     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     *
      * @param Request $request
      * @param Work $work
      */
@@ -146,8 +146,8 @@ class WorkController extends Controller {
      *
      * @Route("/{id}/delete", name="work_delete")
      * @Method("GET")
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * 
+     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     *
      * @param Request $request
      * @param Work $work
      */
@@ -162,12 +162,12 @@ class WorkController extends Controller {
 
     /**
      * Add/remove dates to a work.
-     * 
+     *
      * @Route("/{id}/dates", name="work_dates")
      * @Method({"GET", "POST"})
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * 
+     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     *
      * @param Request $request
      * @param Work $work
      */
@@ -191,12 +191,12 @@ class WorkController extends Controller {
 
     /**
      * Add contributions to a work.
-     * 
+     *
      * @Route("/{id}/contributions", name="work_contributions")
      * @Method({"GET", "POST"})
      * @Template()
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * 
+     *
      * @param Request $request
      * @param Work $work
      */

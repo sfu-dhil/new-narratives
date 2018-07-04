@@ -23,7 +23,7 @@ class DateYearController extends Controller {
      * @Method("GET")
      * @Template()
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * 
+     *
      * @param Request $request
      */
     public function indexAction(Request $request) {

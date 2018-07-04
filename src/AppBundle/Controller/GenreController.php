@@ -44,8 +44,8 @@ class GenreController extends Controller {
      * @Route("/new", name="genre_new")
      * @Method({"GET", "POST"})
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * 
+     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     *
      * @param Request $request
      */
     public function newAction(Request $request) {
@@ -89,8 +89,8 @@ class GenreController extends Controller {
      * @Route("/{id}/edit", name="genre_edit")
      * @Method({"GET", "POST"})
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * 
+     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     *
      * @param Request $request
      * @param Genre $genre
      */
@@ -117,7 +117,7 @@ class GenreController extends Controller {
      * @Route("/{id}/delete", name="genre_delete")
      * @Method("GET")
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * 
+     *
      * @param Request $request
      * @param Genre $genre
      */

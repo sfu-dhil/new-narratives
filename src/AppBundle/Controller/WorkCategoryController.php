@@ -44,8 +44,8 @@ class WorkCategoryController extends Controller {
      * @Route("/new", name="work_category_new")
      * @Method({"GET", "POST"})
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * 
+     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     *
      * @param Request $request
      */
     public function newAction(Request $request) {
@@ -89,8 +89,8 @@ class WorkCategoryController extends Controller {
      * @Route("/{id}/edit", name="work_category_edit")
      * @Method({"GET", "POST"})
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * 
+     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     *
      * @param Request $request
      * @param WorkCategory $workCategory
      */
@@ -117,7 +117,7 @@ class WorkCategoryController extends Controller {
      * @Route("/{id}/delete", name="work_category_delete")
      * @Method("GET")
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * 
+     *
      * @param Request $request
      * @param WorkCategory $workCategory
      */

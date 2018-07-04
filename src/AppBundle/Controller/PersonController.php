@@ -65,7 +65,7 @@ class PersonController extends Controller {
 
     /**
      * Typeahead info for people.
-     * 
+     *
      * @Route("/typeahead", name="person_typeahead")
      * @Method("GET")
      * @param Request $request
@@ -121,8 +121,8 @@ class PersonController extends Controller {
      * @Route("/new", name="person_new")
      * @Method({"GET", "POST"})
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * 
+     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     *
      * @param Request $request
      */
     public function newAction(Request $request) {
@@ -166,8 +166,8 @@ class PersonController extends Controller {
      * @Route("/{id}/edit", name="person_edit")
      * @Method({"GET", "POST"})
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * 
+     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     *
      * @param Request $request
      * @param Person $person
      */
@@ -194,7 +194,7 @@ class PersonController extends Controller {
      * @Route("/{id}/delete", name="person_delete")
      * @Method("GET")
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * 
+     *
      * @param Request $request
      * @param Person $person
      */

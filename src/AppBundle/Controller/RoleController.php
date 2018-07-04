@@ -44,8 +44,8 @@ class RoleController extends Controller {
      * @Route("/new", name="role_new")
      * @Method({"GET", "POST"})
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * 
+     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     *
      * @param Request $request
      */
     public function newAction(Request $request) {
@@ -89,8 +89,8 @@ class RoleController extends Controller {
      * @Route("/{id}/edit", name="role_edit")
      * @Method({"GET", "POST"})
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * 
+     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     *
      * @param Request $request
      * @param Role $role
      */
@@ -117,7 +117,7 @@ class RoleController extends Controller {
      * @Route("/{id}/delete", name="role_delete")
      * @Method("GET")
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * 
+     *
      * @param Request $request
      * @param Role $role
      */

@@ -44,8 +44,8 @@ class DateCategoryController extends Controller {
      * @Route("/new", name="date_category_new")
      * @Method({"GET", "POST"})
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * 
+     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     *
      * @param Request $request
      */
     public function newAction(Request $request) {
@@ -89,8 +89,8 @@ class DateCategoryController extends Controller {
      * @Route("/{id}/edit", name="date_category_edit")
      * @Method({"GET", "POST"})
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * 
+     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     *
      * @param Request $request
      * @param DateCategory $dateCategory
      */
@@ -117,7 +117,7 @@ class DateCategoryController extends Controller {
      * @Route("/{id}/delete", name="date_category_delete")
      * @Method("GET")
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * 
+     *
      * @param Request $request
      * @param DateCategory $dateCategory
      */

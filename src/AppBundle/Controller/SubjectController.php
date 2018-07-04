@@ -71,8 +71,8 @@ class SubjectController extends Controller {
      * @Route("/new", name="subject_new")
      * @Method({"GET", "POST"})
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * 
+     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     *
      * @param Request $request
      */
     public function newAction(Request $request) {
@@ -116,8 +116,8 @@ class SubjectController extends Controller {
      * @Route("/{id}/edit", name="subject_edit")
      * @Method({"GET", "POST"})
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * 
+     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     *
      * @param Request $request
      * @param Subject $subject
      */
@@ -144,7 +144,7 @@ class SubjectController extends Controller {
      * @Route("/{id}/delete", name="subject_delete")
      * @Method("GET")
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     * 
+     *
      * @param Request $request
      * @param Subject $subject
      */
