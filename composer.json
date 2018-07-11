@@ -17,7 +17,7 @@
         "doctrine/doctrine-bundle": "^1.8",
         "doctrine/doctrine-cache-bundle": "^1.2",
         "doctrine/orm": "^2.5",
-        "egeloen/ckeditor-bundle": "^6.0",
+        "friendsofsymfony/ckeditor-bundle": "^1.1",
         "friendsofsymfony/user-bundle": "^2.0",
         "incenteev/composer-parameter-handler": "^2.0",
         "knplabs/knp-menu-bundle": "^2.2",
