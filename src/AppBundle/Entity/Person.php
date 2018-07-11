@@ -24,21 +24,22 @@ class Person extends AbstractEntity {
      * @Groups({"shallow"})
      */
     private $fullName;
-    
+
     /**
      * @var Collection|Contribution[]
      * @ORM\OneToMany(targetEntity="Contribution", mappedBy="person")
      * @Groups({"contributions"})
      */
     private $contributions;
-    
+
     public function __construct() {
+        parent::__construct();
         $this->contributions = new ArrayCollection();
     }
-    
+
     /**
      * Return a string representation.
-     * 
+     *
      * @return string
      */
     public function __toString() {

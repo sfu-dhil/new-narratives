@@ -14,14 +14,15 @@ use Nines\UtilBundle\Entity\AbstractTerm;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\RoleRepository")
  */
 class Role extends AbstractTerm {
-    
+
     /**
      * @var Collection|Contribution[]
      * @ORM\OneToMany(targetEntity="Contribution", mappedBy="role")
      */
     private $contributions;
-    
+
     public function __construct() {
+        parent::__construct();
         $this->contributions = new ArrayCollection();
     }
 

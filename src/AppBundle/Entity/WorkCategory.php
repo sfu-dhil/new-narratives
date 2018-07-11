@@ -22,6 +22,7 @@ class WorkCategory extends AbstractTerm {
     private $works;
 
     public function __construct() {
+        parent::__construct();
         $this->works = new ArrayCollection();
     }
 

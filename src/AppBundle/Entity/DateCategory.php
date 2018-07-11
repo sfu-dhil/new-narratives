@@ -14,14 +14,15 @@ use Nines\UtilBundle\Entity\AbstractTerm;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\DateCategoryRepository")
  */
 class DateCategory extends AbstractTerm {
-    
+
     /**
      * @var Collection|DateYear[]
      * @ORM\OneToMany(targetEntity="DateYear", mappedBy="dateCategory")
      */
     private $dates;
-    
+
     public function __construct() {
+        parent::__construct();
         $this->dates = new ArrayCollection();
     }
 

@@ -22,20 +22,21 @@ class Publisher extends AbstractEntity {
      * @ORM\Column(type="string", length=600)
      */
     private $name;
-    
+
     /**
      * @var Collection|Work[]
      * @ORM\OneToMany(targetEntity="Work", mappedBy="publisher")
      */
     private $works;
-    
+
     public function __construct() {
+        parent::__construct();
         $this->works = new ArrayCollection();
     }
-    
+
     /**
      * Return a string representation.
-     * 
+     *
      * @return string
      */
     public function __toString() {

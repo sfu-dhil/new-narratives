@@ -14,14 +14,15 @@ use Nines\UtilBundle\Entity\AbstractTerm;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\SubjectSourceRepository")
  */
 class SubjectSource extends AbstractTerm {
-    
+
     /**
      * @var Collection|Subject[]
      * @ORM\OneToMany(targetEntity="Subject", mappedBy="subjectSource")
      */
     private $subjects;
-    
+
     public function __construct() {
+        parent::__construct();
         $this->subjects = new ArrayCollection();
     }
 

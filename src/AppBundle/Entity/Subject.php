@@ -14,24 +14,25 @@ use Nines\UtilBundle\Entity\AbstractTerm;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\SubjectRepository")
  */
 class Subject extends AbstractTerm {
-    
+
     /**
      * @var SubjectSource
      * @ORM\ManyToOne(targetEntity="SubjectSource", inversedBy="subjects")
      * @ORM\JoinColumn(nullable=false)
      */
     private $subjectSource;
-    
+
     /**
      * @var Collection|Work[]
      * @ORM\ManyToMany(targetEntity="Work", mappedBy="subjects")
      */
     private $works;
-    
+
     public function __construct() {
+        parent::__construct();
         $this->works = new ArrayCollection();
     }
-    
+
 
     /**
      * Set subjectSource
