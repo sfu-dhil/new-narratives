@@ -21,3 +21,4 @@
 .idea
 etc
 app/config/deploy.yml
+phpcs.xml

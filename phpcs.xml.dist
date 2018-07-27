@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<ruleset name="Custom Standard" namespace="LOM2">
+
+    <description>DHIL Coding Standards</description>
+
+    <file>src/AppBundle</file>
+  
+    <exclude-pattern>src/AppBundle/Test</exclude-pattern>
+
+    <arg name="extensions" value="php,js,css,twig"/>
+    <arg value="s"/>
+    <arg value="p"/>
+  
+    <ini name="memory_limit" value="-1"/>
+
+    <config name="installed_paths" value="vendor/drupal/coder/coder_sniffer"/>
+    
+    <!-- 
+    <config name="php_path" value="/usr/local/bin/php"/>
+    <config name="csslint_path" value="/usr/local/bin/csslint"/>
+    <config name="jslint_path" value="/usr/local/bin/jslint"/>
+  	-->
+  	
+    <autoload>vendor/autoload.php</autoload>
+
+    <rule ref="PSR2">
+        <exclude name="PSR2.Classes.ClassDeclaration.CloseBraceAfterBody"/>
+        <exclude name="PSR2.Classes.ClassDeclaration.OpenBraceNewLine"/>
+        <exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace"/>
+        <exclude name="Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine"/>
+    </rule>
+  
+    <rule ref="Squiz.CSS.Indentation">
+        <properties>
+            <property name="indent" value="4" />
+        </properties>
+    </rule>
+    
+    <rule ref="vendor/drupal/coder/coder_sniffer/Drupal/ruleset.xml">
+        <exclude name="Drupal.Array.Array.ArrayIndentation"/>
+        <exclude name="Drupal.WhiteSpace.ScopeClosingBrace.BreakIndent"/>
+        <exclude name="Drupal.Classes.UnusedUseStatement.UnusedUse"/>
+        <exclude name="Drupal.ControlStructures.ControlSignature.NewlineAfterCloseBrace"/>
+        <exclude name="Drupal.Commenting.DataTypeNamespace.DataTypeNamespace"/>
+        <exclude name="Drupal.Commenting.FileComment.NamespaceNoFileDoc"/>
+        <exclude name="Drupal.Commenting.FunctionComment.MissingParamComment" />
+        <exclude name="Drupal.Commenting.FunctionComment.MissingReturnComment" />
+        <exclude name="Generic.PHP.UpperCaseConstant.Found"/>        
+    </rule>
+  
+    <rule ref="Drupal.WhiteSpace.ScopeIndent">
+        <properties>
+            <property name="indent" value="4"/>
+        </properties>
+    </rule>
+  
+    <rule ref="Generic.Strings.UnnecessaryStringConcat">
+        <properties>
+            <property name="allowMultiline" value="true" />
+        </properties>
+    </rule>
+
+    <!-- PHP keywords MUST be in lower case. -->
+    <rule ref="Generic.PHP.LowerCaseKeyword"/>
+  
+    <!-- The PHP constants true, false, and null MUST be in lower case. -->
+    <rule ref="Generic.PHP.LowerCaseConstant"/>
+  
+    <rule ref="Generic.Commenting.Todo.CommentFound">
+        <message>Please review this TODO comment: %s</message>
+    </rule>
+  
+    <rule ref="Generic.WhiteSpace.ScopeIndent">
+        <properties>
+            <property name="indent" value="4"/>
+        </properties>
+    </rule>
+    
+</ruleset>
