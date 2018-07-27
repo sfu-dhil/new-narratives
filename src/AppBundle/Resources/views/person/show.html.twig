@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block pageheader %} 
+{% block pageheader %}
     <h1>Person</h1>
-{% endblock %} 
+{% endblock %}
 
 {% block body %}
 
@@ -49,5 +49,6 @@
         </ul>
     {% endif %}
 
+    {% include 'NinesFeedbackBundle:comment:comment-interface.html.twig' with { 'entity': person } %}
 
 {% endblock %}
