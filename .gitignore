@@ -20,3 +20,4 @@
 /nbproject
 .idea
 etc
+app/config/deploy.yml
