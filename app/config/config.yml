@@ -109,7 +109,7 @@ fos_user:
         form:
             type: Nines\UserBundle\Form\PasswordType
     from_email:
-        address:        noreply@'%router.request_context.host%'
+        address:        noreply@dhil.lib.sfu.ca
         sender_name:    Do Not Reply
 
 fos_ck_editor:
