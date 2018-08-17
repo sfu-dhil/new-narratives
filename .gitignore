@@ -22,3 +22,4 @@
 etc
 app/config/deploy.yml
 phpcs.xml
+.DS_Store
