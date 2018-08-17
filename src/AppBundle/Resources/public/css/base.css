@@ -38,10 +38,10 @@ a[href ^= 'mailto:']::after {
     font-weight: 400;
     line-height: 1;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;    
+    -moz-osx-font-smoothing: grayscale;
 }
 
-a[href ^= 'http://']::after, 
+a[href ^= 'http://']::after,
 a[href ^= 'https://']::after {
     content: "\e164";
 
@@ -54,10 +54,10 @@ a[href ^= 'https://']::after {
     font-weight: 400;
     line-height: 1;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;        
+    -moz-osx-font-smoothing: grayscale;
 }
 
-/* Collection form pages. */ 
+/* Collection form pages. */
 /* make the search form checkboxes less bad. */
 div.checkbox, div.radio {
     width: 30%;
@@ -69,12 +69,12 @@ div.checkbox, div.radio {
 /* General text styling */
 body {
     font-family: "Open Sans", Helvetica, Arial, sans-serif;
-    font-weight: 300;
+    font-weight: 400;
     font-size: 16px;
     line-height: 1.5em;
     color: #666666;
     -webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+	  -moz-osx-font-smoothing: grayscale;
 }
 a {
     color: #2a92e5;
@@ -191,7 +191,7 @@ background-color: #0a0a0a;
         border: 2px solid #ffffff;
         border-radius: 2px;
         margin: 1px;
-    } 
+    }
 }
 
 /* Styling for navbar and dropdown-menu at smaller size (max-width <= 767px) */
@@ -231,9 +231,14 @@ background-color: #0a0a0a;
         color: #ffffff;
         background-color: #0a0a0a;
     }
+
     .navbar-collapse .navbar-nav {
         padding-left: 15px;
     }
+}
+
+.navbar-nav li li > a {
+    text-transform: none !important;
 }
 
 /* Panel styling */
@@ -377,17 +382,17 @@ background-color: #0a0a0a;
     background: #ffffff;
 }
 
-.btn-danger.active, 
-.btn-danger:active, 
-.btn-default.active, 
-.btn-default:active, 
-.btn-info.active, 
-.btn-info:active, 
-.btn-primary.active, 
-.btn-primary:active, 
-.btn-success.active, 
-.btn-success:active, 
-.btn-warning.active, 
+.btn-danger.active,
+.btn-danger:active,
+.btn-default.active,
+.btn-default:active,
+.btn-info.active,
+.btn-info:active,
+.btn-primary.active,
+.btn-primary:active,
+.btn-success.active,
+.btn-success:active,
+.btn-warning.active,
 .btn-warning:active {
     -webkit-box-shadow: inherit;
     box-shadow: inherit;
