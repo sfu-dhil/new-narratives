@@ -34,6 +34,9 @@ class WorkRepository extends \Doctrine\ORM\EntityRepository {
         }
         if (isset($data['contributor']) && count($data['contributor']) > 0) {
             foreach ($data['contributor'] as $idx => $filter) {
+                if($filter['name'] === null && $filter['role']->count() === 0) {
+                    continue;
+                }
                 $cAlias = 'c_' . $idx;
                 $pAlias = 'p_' . $idx;
                 $qb->innerJoin('e.contributions', $cAlias)
@@ -82,7 +85,7 @@ class WorkRepository extends \Doctrine\ORM\EntityRepository {
             $qb->andWhere('e.transcription IN (:transcription)');
             $qb->setParameter('transcription', $data['transcription']);
         }
-
+        dump($data);
         return $qb->getQuery();
     }
 
