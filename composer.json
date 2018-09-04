@@ -11,6 +11,11 @@
             "app/AppCache.php"
         ]
     },
+    "autoload-dev": {
+        "files": [
+            "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php"
+        ]
+    },
     "require": {
         "php": ">=7.1.0",
         "beberlei/DoctrineExtensions": "^1.0",

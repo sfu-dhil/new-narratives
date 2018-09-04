@@ -117,6 +117,7 @@ fos_ck_editor:
     default_config: newn_config
     configs:
         newn_config:
+            entities: false
             toolbar:
                 - [ Source, -, Cut, Copy, Paste, PasteText, PasteFromWord, -, Undo, Redo ]
                 - [ Link, Unlink, Anchor, -, SpecialChar ]
