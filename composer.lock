@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e008e6476554243598303486673e3edf",
+    "content-hash": "4eb424648b48efcc6b24a5d2f5242b3c",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -3263,42 +3263,68 @@
             "time": "2017-12-04T20:26:38+00:00"
         },
         {
+            "name": "drupal/coder",
+            "version": "8.2.9",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/coder.git",
+                "reference": "b08682bd939cf7d3ac7034bee792aa17f80e19d7"
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=5.4.0",
+                "squizlabs/php_codesniffer": ">=2.7.0",
+                "symfony/yaml": ">=2.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=3.7"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "description": "Coder is a library to review Drupal code.",
+            "homepage": "https://www.drupal.org/project/coder",
+            "keywords": [
+                "code review",
+                "phpcs",
+                "standards"
+            ],
+            "time": "2016-09-17T16:49:15+00:00"
+        },
+        {
             "name": "liip/functional-test-bundle",
-            "version": "1.9.3",
+            "version": "2.0.0-alpha6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipFunctionalTestBundle.git",
-                "reference": "80329104370eabebc10df69c15e98f585773884d"
+                "reference": "15ec5ab579a604e2b69bc468263db1412ce92c1d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipFunctionalTestBundle/zipball/80329104370eabebc10df69c15e98f585773884d",
-                "reference": "80329104370eabebc10df69c15e98f585773884d",
+                "url": "https://api.github.com/repos/liip/LiipFunctionalTestBundle/zipball/15ec5ab579a604e2b69bc468263db1412ce92c1d",
+                "reference": "15ec5ab579a604e2b69bc468263db1412ce92c1d",
                 "shasum": ""
             },
             "require": {
-                "doctrine/common": "~2.0",
-                "php": "^5.6|^7.0",
-                "symfony/browser-kit": "^2.7|^3.0|^4.0",
-                "symfony/framework-bundle": "^2.7|^3.0|^4.0"
+                "doctrine/common": "^2.0",
+                "php": "^7.1",
+                "symfony/browser-kit": "^3.4 || ^4.0",
+                "symfony/framework-bundle": "^3.4 || ^4.0"
             },
             "require-dev": {
-                "brianium/paratest": "~0.12.0|~0.13.2",
-                "doctrine/data-fixtures": "1.2.2",
-                "doctrine/doctrine-fixtures-bundle": "~2.3",
-                "doctrine/orm": "~2.5",
-                "doctrine/phpcr-bundle": "~1.3",
-                "doctrine/phpcr-odm": "~1.3",
-                "hautelook/alice-bundle": "~0.2|~1.2",
-                "jackalope/jackalope-doctrine-dbal": "1.1.*|1.2.*",
-                "nelmio/alice": "~1.7|~2.0",
-                "phpunit/phpunit": "^4.8.35|^5.7|^6.1",
-                "symfony/assetic-bundle": "^2.7|^3.0|^4.0",
-                "symfony/console": "^2.7|^3.0|^4.0",
-                "symfony/monolog-bundle": "^2.7|^3.0|^4.0",
-                "symfony/phpunit-bridge": "^2.7|^3.0|^4.0",
-                "symfony/symfony": "^2.7.1|^3.3|^4.0",
-                "twig/twig": "~1.12|~2.0"
+                "doctrine/data-fixtures": "^1.3",
+                "doctrine/doctrine-bundle": "^1.8",
+                "doctrine/doctrine-fixtures-bundle": "^3.0.2",
+                "doctrine/orm": "^2.6",
+                "jackalope/jackalope-doctrine-dbal": "^1.3",
+                "phpunit/phpunit": "^6.1 || ^7.0",
+                "symfony/monolog-bundle": "^3.1",
+                "symfony/phpunit-bridge": "^3.4 || ^4.0",
+                "symfony/symfony": "^3.4 || ^4.0",
+                "theofidry/alice-data-fixtures": "^1.0.1",
+                "twig/twig": "^2.0"
             },
             "suggest": {
                 "brianium/paratest": "Required when using paratest to parallelize tests",
@@ -3306,18 +3332,17 @@
                 "doctrine/doctrine-fixtures-bundle": "Required when using the fixture loading functionality",
                 "doctrine/orm": "Required when using the fixture loading functionality with an ORM and SQLite",
                 "hautelook/alice-bundle": "Required when using loadFixtureFiles functionality with custom providers",
-                "nelmio/alice": "Required when using loadFixtureFiles functionality",
-                "symfony/framework-bundle": "To use assertStatusCode and assertValidationErrors ~2.5"
+                "theofidry/alice-data-fixtures": "Required when using loadFixtureFiles functionality"
             },
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.x-dev"
+                    "dev-master": "2.x-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Liip\\FunctionalTestBundle\\": ""
+                    "Liip\\FunctionalTestBundle\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3338,7 +3363,7 @@
             "keywords": [
                 "Symfony2"
             ],
-            "time": "2018-02-02T23:34:47+00:00"
+            "time": "2018-07-17T21:10:38+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -3956,16 +3981,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.3.3",
+            "version": "7.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "1bd5629cccfb2c0a9ef5474b4ff772349e1ec898"
+                "reference": "0356331bf62896dc56e3a15030b23b73f38b2935"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1bd5629cccfb2c0a9ef5474b4ff772349e1ec898",
-                "reference": "1bd5629cccfb2c0a9ef5474b4ff772349e1ec898",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0356331bf62896dc56e3a15030b23b73f38b2935",
+                "reference": "0356331bf62896dc56e3a15030b23b73f38b2935",
                 "shasum": ""
             },
             "require": {
@@ -4036,7 +4061,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-09-01T15:49:55+00:00"
+            "time": "2018-09-05T09:58:53+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -4656,6 +4681,57 @@
             "time": "2017-12-07T15:36:41+00:00"
         },
         {
+            "name": "squizlabs/php_codesniffer",
+            "version": "3.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
+                "reference": "628a481780561150481a9ec74709092b9759b3ec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/628a481780561150481a9ec74709092b9759b3ec",
+                "reference": "628a481780561150481a9ec74709092b9759b3ec",
+                "shasum": ""
+            },
+            "require": {
+                "ext-simplexml": "*",
+                "ext-tokenizer": "*",
+                "ext-xmlwriter": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
+            },
+            "bin": [
+                "bin/phpcs",
+                "bin/phpcbf"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Greg Sherwood",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
+            "homepage": "http://www.squizlabs.com/php-codesniffer",
+            "keywords": [
+                "phpcs",
+                "standards"
+            ],
+            "time": "2018-07-26T23:47:18+00:00"
+        },
+        {
             "name": "symfony/phpunit-bridge",
             "version": "v4.1.4",
             "source": {
@@ -4814,7 +4890,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "liip/functional-test-bundle": 15
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
