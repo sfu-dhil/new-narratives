@@ -117,6 +117,7 @@ fos_ck_editor:
     default_config: newn_config
     configs:
         newn_config:
+            entities: false
             toolbar:
                 - [ Source, -, Cut, Copy, Paste, PasteText, PasteFromWord, -, Undo, Redo ]
                 - [ Link, Unlink, Anchor, -, SpecialChar ]
@@ -137,10 +138,10 @@ nines_feedback:
             class: AppBundle\Entity\Person
             route: person_show
         blog_post:
-            class: Nines\BlogBundle\Post
+            class: Nines\BlogBundle\Entity\Post
             route: post_show
         blog_page:
-            class: Nines\BlogBundle\Page
+            class: Nines\BlogBundle\Entity\Page
             route: page_show
 
 nines_blog:
@@ -148,4 +149,4 @@ nines_blog:
     default_category: none
 
 nines_user:
-    permission_levels: [ ROLE_ADMIN, ROLE_BLOG_ADMIN, ROLE_COMMENT_ADMIN, ROLE_CONTENT_ADMIN, ROLE_CONTENT_EDITOR ]
+    permission_levels: [ ROLE_ADMIN, ROLE_BLOG_ADMIN, ROLE_COMMENT_ADMIN, ROLE_CONTENT_ADMIN, ROLE_CONTENT_EDITOR, ROLE_DC_EDITOR ]

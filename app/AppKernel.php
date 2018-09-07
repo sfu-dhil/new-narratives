@@ -26,6 +26,7 @@ class AppKernel extends Kernel
 
             new Nines\UserBundle\NinesUserBundle(),
             new Nines\FeedbackBundle\NinesFeedbackBundle(),
+            new Nines\DublinCoreBundle\NinesDublinCoreBundle(),
             new Nines\BlogBundle\NinesBlogBundle(),
             new Nines\UtilBundle\NinesUtilBundle(),
         ];
