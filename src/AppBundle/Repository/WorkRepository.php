@@ -85,7 +85,7 @@ class WorkRepository extends \Doctrine\ORM\EntityRepository {
             $qb->andWhere('e.transcription IN (:transcription)');
             $qb->setParameter('transcription', $data['transcription']);
         }
-        dump($data);
+        $qb->orderBy('e.title');
         return $qb->getQuery();
     }
 
