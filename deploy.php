@@ -38,7 +38,7 @@ task('dhil:phpunit', function() {
 })->desc('Run phpunit.');
 
 task('dhil:clear:test-cache', function(){
-    $output = run('{{bin/php}} {{bin/console}} cache:clear {{console_options}} --env=test');
+    $output = run('{{bin/php}} {{bin/console}} cache:clear --env=test');
     writeln($output);
 });
 
