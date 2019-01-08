@@ -4,14 +4,14 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="google" content="notranslate" />        
+        <meta name="google" content="notranslate" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">        
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
         <link rel="stylesheet" href="{{ asset('bower/bootstrap/dist/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('bower/bootstrap/dist/css/bootstrap-theme.min.css') }}">
         <link rel="stylesheet" href="{{ asset('bundles/app/css/base.css') }}">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:200,300,400,700&amp;subset=latin-ext" rel="stylesheet">        
-        <script src="{{ asset('bower/jquery/dist/jquery.min.js') }}"></script>        
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:200,300,400,700&amp;subset=latin-ext" rel="stylesheet">
+        <script src="{{ asset('bower/jquery/dist/jquery.min.js') }}"></script>
         {% block styles %}
         {% endblock %}
     </head>
@@ -43,11 +43,11 @@
                                     <li><a href="{{ path('admin_comment_index') }}">Comments</a></li>
                                     <li><a href="{{ path('admin_comment_note_index') }}">Comment Notes</a></li>
                                     <li><a href="{{ path('admin_comment_status_index') }}">Comment Statuses</a></li>
-                                    <li role="separator" class="divider"></li>										
+                                    <li role="separator" class="divider"></li>
                                     <li><a href="{{ path('post_index') }}">Blog Posts</a></li>
                                     <li><a href="{{ path('post_status_index') }}">Post Statuses</a></li>
                                     <li><a href="{{ path('post_category_index') }}">Post Categories</a></li>
-                                    <li role="separator" class="divider"></li>										
+                                    <li role="separator" class="divider"></li>
                                     <li>
                                         <a href="{{ path('user') }}">
                                             Users
@@ -117,23 +117,47 @@
             {% endblock %}
         </div>
 
+        <footer class="footer">
+            <div class="container">
+                <p>
+                    <b>New Narratives in the History of Philosophy</b>
+                    <br/>
+                    <a href="docs/build/html/index.html">Documentation</a> |
+                    <a href="{{ path('privacy') }}">Privacy</a> |
+                    <a href="https://github.com/sfu-dhil/newn">GitHub</a>
+                </p>
+            </div>
+        </footer>
+
         <script src="{{ asset('bower/bootstrap/dist/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('bundles/app/js/form.js') }}"></script>
         {% block javascripts %}
         {% endblock %}
+
+        {% if piwik_enabled %}
         <!-- Piwik -->
         <script type="text/javascript">
             var _paq = _paq || [];
+            _paq.push(["setDomains", ["{{ piwik_domain }}"]]);
+            _paq.push(["setDoNotTrack", true]);
             _paq.push(['trackPageView']);
             _paq.push(['enableLinkTracking']);
             (function () {
-                var u = "//piwik.lib.sfu.ca/piwik/";
+                var u = "{{ piwik_url }}";
                 _paq.push(['setTrackerUrl', u + 'piwik.php']);
-                _paq.push(['setSiteId', '34']);
+                _paq.push(['setSiteId', '{{ piwik_siteid }}']);
                 var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
-                g.type = 'text/javascript'; g.async = true; g.defer = true; g.src = u + 'piwik.js'; s.parentNode.insertBefore(g, s);
+                g.type = 'text/javascript';
+                g.async = true;
+                g.defer = true;
+                g.src = u + 'piwik.js';
+                s.parentNode.insertBefore(g, s);
             })();
         </script>
+        <noscript>
+        <p><img src="{{ piwik_url }}piwik.php?idsite={{ piwik_siteid }}" style="border:0;" alt="" /></p>
+        </noscript>
         <!-- End Piwik Code -->
+        {% endif %}
     </body>
 </html>

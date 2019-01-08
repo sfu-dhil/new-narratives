@@ -55,6 +55,10 @@ twig:
     exception_controller:  NinesUtilBundle:Error:showException
     globals:
         comment_service: "@feedback.comment"
+        piwik_enabled: '%dhil.piwik_enabled%'
+        piwik_url: '%dhil.piwik_url%'
+        piwik_siteid: '%dhil.piwik_siteid%'
+        piwik_domain: '%dhil.piwik_domain%'
     date:
         format: d.m.Y, H:i:s
         interval_format: '%%d days'
