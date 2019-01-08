@@ -33,3 +33,18 @@ parameters:
     nines_feedback.sender: ~
     nines_feedback.recipient: ~
     nines_feedback.subject: New feedback received
+
+    # tracking configuration
+    # true or false
+    dhil.piwik_enabled: false
+
+    # protocol-relative url to the base piwik install
+    # like "//analytics.example.com/piwik/"
+    dhil.piwik_url: ~
+
+    # A number.
+    dhil.piwik_siteid: ~
+
+    # Where the application lives
+    # eg. "*.example.com/application"
+    dhil.piwik_domain: ~
