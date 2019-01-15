@@ -33,9 +33,13 @@ monolog:
     use_microseconds: false
     handlers:
         main:
-            type: stream
-            path: '%kernel.logs_dir%/%kernel.environment%.log'
-            level: error
+            type: rotating_file
+            max_files: 10
+            path: "%kernel.logs_dir%/%kernel.environment%.log"
+            level: warning
+            channels: ['!event', '!doctrine', '!console', '!translation']
+        console:
+            type:   console
             channels: ['!event', '!doctrine', '!console', '!translation']
 
 web_profiler:
