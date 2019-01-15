@@ -1,7 +1,6 @@
 imports:
     - { resource: config_dev.yml }
-    - { resource: services_test.yml }
-    
+
 liip_functional_test:
     cache_db:
         sqlite: liip_functional_test.services_database_backup.sqlite
@@ -15,14 +14,14 @@ doctrine:
                 path:     %kernel.cache_dir%/test.db
                 logging:  false
                 profiling: false
-                
+
 security:
     encoders:
         FOS\UserBundle\Model\UserInterface: plaintext
     firewalls:
         main:
             http_basic: ~
-            
+
 framework:
     test: ~
     session:
@@ -38,7 +37,7 @@ monolog:
             path: '%kernel.logs_dir%/%kernel.environment%.log'
             level: error
             channels: ['!event', '!doctrine', '!console', '!translation']
-            
+
 web_profiler:
     toolbar: false
     intercept_redirects: false
