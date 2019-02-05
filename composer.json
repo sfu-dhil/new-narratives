@@ -18,7 +18,7 @@
     },
     "require": {
         "php": ">=7.1.0",
-        "beberlei/DoctrineExtensions": "^1.0",
+        "beberlei/doctrineextensions": "^1.0",
         "doctrine/doctrine-bundle": "^1.8",
         "doctrine/orm": "^2.5",
         "friendsofsymfony/ckeditor-bundle": "^1.1",
