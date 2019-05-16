@@ -27,6 +27,11 @@ services:
         # but if a service is unused, it's removed anyway
         exclude: '../../src/AppBundle/{Entity,Repository,Resources,Tests}'
 
+    AppBundle\Command\UpdateSubjectsCommand:
+        arguments:
+            $key: '%oclc.key%'
+            $secret: '%oclc.secret%'
+
     # controllers are imported separately to make sure they're public
     # and have a tag that allows actions to type-hint services
     AppBundle\Controller\:

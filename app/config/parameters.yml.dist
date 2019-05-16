@@ -35,6 +35,10 @@ parameters:
     nines_feedback.recipient: ~
     nines_feedback.subject: New feedback received
 
+    # Getting subjects from OCLC.
+    oclc.key: ~
+    oclc.secret: ~
+
     # tracking configuration
     # true or false
     dhil.piwik_enabled: false
