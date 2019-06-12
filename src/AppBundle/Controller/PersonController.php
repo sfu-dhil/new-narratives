@@ -5,8 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Person;
 use AppBundle\Form\PersonType;
 use Doctrine\Common\Annotations\AnnotationReader;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -31,8 +31,8 @@ class PersonController extends Controller {
     /**
      * Lists all Person entities.
      *
-     * @Route("/", name="person_index")
-     * @Method("GET")
+     * @Route("/", name="person_index", methods={"GET"})
+     *
      * @Template()
      * @param Request $request
      */
@@ -66,8 +66,8 @@ class PersonController extends Controller {
     /**
      * Typeahead info for people.
      *
-     * @Route("/typeahead", name="person_typeahead")
-     * @Method("GET")
+     * @Route("/typeahead", name="person_typeahead", methods={"GET"})
+     *
      * @param Request $request
      * @return JsonResponse
      */
@@ -91,8 +91,8 @@ class PersonController extends Controller {
     /**
      * Full text search for Person entities.
      *
-     * @Route("/search", name="person_search")
-     * @Method("GET")
+     * @Route("/search", name="person_search", methods={"GET"})
+     *
      * @Template()
      * @param Request $request
      * @return array
@@ -118,8 +118,8 @@ class PersonController extends Controller {
     /**
      * Creates a new Person entity.
      *
-     * @Route("/new", name="person_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="person_new", methods={"GET","POST"})
+     *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
      *
@@ -148,8 +148,8 @@ class PersonController extends Controller {
     /**
      * Finds and displays a Person entity.
      *
-     * @Route("/{id}", name="person_show")
-     * @Method("GET")
+     * @Route("/{id}", name="person_show", methods={"GET"})
+     *
      * @Template()
      * @param Person $person
      */
@@ -163,8 +163,8 @@ class PersonController extends Controller {
     /**
      * Displays a form to edit an existing Person entity.
      *
-     * @Route("/{id}/edit", name="person_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="person_edit", methods={"GET","POST"})
+     *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
      *
@@ -191,8 +191,8 @@ class PersonController extends Controller {
     /**
      * Deletes a Person entity.
      *
-     * @Route("/{id}/delete", name="person_delete")
-     * @Method("GET")
+     * @Route("/{id}/delete", name="person_delete", methods={"GET"})
+     *
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      *
      * @param Request $request

@@ -4,8 +4,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Genre;
 use AppBundle\Form\GenreType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -21,8 +21,8 @@ class GenreController extends Controller {
     /**
      * Lists all Genre entities.
      *
-     * @Route("/", name="genre_index")
-     * @Method("GET")
+     * @Route("/", name="genre_index", methods={"GET"})
+     *
      * @Template()
      * @param Request $request
      */
@@ -41,8 +41,8 @@ class GenreController extends Controller {
     /**
      * Creates a new Genre entity.
      *
-     * @Route("/new", name="genre_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="genre_new", methods={"GET","POST"})
+     *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
      *
@@ -71,8 +71,8 @@ class GenreController extends Controller {
     /**
      * Finds and displays a Genre entity.
      *
-     * @Route("/{id}", name="genre_show")
-     * @Method("GET")
+     * @Route("/{id}", name="genre_show", methods={"GET"})
+     *
      * @Template()
      * @param Genre $genre
      */
@@ -86,8 +86,8 @@ class GenreController extends Controller {
     /**
      * Displays a form to edit an existing Genre entity.
      *
-     * @Route("/{id}/edit", name="genre_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="genre_edit", methods={"GET","POST"})
+     *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
      *
@@ -114,8 +114,8 @@ class GenreController extends Controller {
     /**
      * Deletes a Genre entity.
      *
-     * @Route("/{id}/delete", name="genre_delete")
-     * @Method("GET")
+     * @Route("/{id}/delete", name="genre_delete", methods={"GET"})
+     *
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      *
      * @param Request $request

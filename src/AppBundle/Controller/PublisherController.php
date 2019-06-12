@@ -4,8 +4,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Publisher;
 use AppBundle\Form\PublisherType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -21,8 +21,8 @@ class PublisherController extends Controller {
     /**
      * Lists all Publisher entities.
      *
-     * @Route("/", name="publisher_index")
-     * @Method("GET")
+     * @Route("/", name="publisher_index", methods={"GET"})
+     *
      * @Template()
      * @param Request $request
      */
@@ -41,8 +41,8 @@ class PublisherController extends Controller {
     /**
      * Full text search for Publisher entities.
      *
-     * @Route("/search", name="publisher_search")
-     * @Method("GET")
+     * @Route("/search", name="publisher_search", methods={"GET"})
+     *
      * @Template()
      * @param Request $request
      * @return array
@@ -68,8 +68,8 @@ class PublisherController extends Controller {
     /**
      * Creates a new Publisher entity.
      *
-     * @Route("/new", name="publisher_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="publisher_new", methods={"GET","POST"})
+     *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
      *
@@ -98,8 +98,8 @@ class PublisherController extends Controller {
     /**
      * Finds and displays a Publisher entity.
      *
-     * @Route("/{id}", name="publisher_show")
-     * @Method("GET")
+     * @Route("/{id}", name="publisher_show", methods={"GET"})
+     *
      * @Template()
      * @param Publisher $publisher
      */
@@ -113,8 +113,8 @@ class PublisherController extends Controller {
     /**
      * Displays a form to edit an existing Publisher entity.
      *
-     * @Route("/{id}/edit", name="publisher_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="publisher_edit", methods={"GET","POST"})
+     *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
      *
@@ -141,8 +141,8 @@ class PublisherController extends Controller {
     /**
      * Deletes a Publisher entity.
      *
-     * @Route("/{id}/delete", name="publisher_delete")
-     * @Method("GET")
+     * @Route("/{id}/delete", name="publisher_delete", methods={"GET"})
+     *
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      *
      * @param Request $request

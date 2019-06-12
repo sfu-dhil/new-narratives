@@ -2,8 +2,8 @@
 
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,8 +19,8 @@ class DateYearController extends Controller {
     /**
      * Lists all DateYear entities.
      *
-     * @Route("/", name="date_index")
-     * @Method("GET")
+     * @Route("/", name="date_index", methods={"GET"})
+     *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      *

@@ -7,8 +7,8 @@ use AppBundle\Form\WorkContributionsType;
 use AppBundle\Form\WorkDatesType;
 use AppBundle\Form\WorkSearchType;
 use AppBundle\Form\WorkType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -24,8 +24,8 @@ class WorkController extends Controller {
     /**
      * Lists all Work entities.
      *
-     * @Route("/", name="work_index")
-     * @Method("GET")
+     * @Route("/", name="work_index", methods={"GET"})
+     *
      * @Template()
      * @param Request $request
      */
@@ -44,8 +44,8 @@ class WorkController extends Controller {
     /**
      * Full text search for Work entities.
      *
-     * @Route("/search", name="work_search")
-     * @Method("GET")
+     * @Route("/search", name="work_search", methods={"GET"})
+     *
      * @Template()
      * @param Request $request
      * @return array
@@ -71,8 +71,8 @@ class WorkController extends Controller {
     /**
      * Creates a new Work entity.
      *
-     * @Route("/new", name="work_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="work_new", methods={"GET","POST"})
+     *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
      *
@@ -101,8 +101,8 @@ class WorkController extends Controller {
     /**
      * Finds and displays a Work entity.
      *
-     * @Route("/{id}", name="work_show")
-     * @Method("GET")
+     * @Route("/{id}", name="work_show", methods={"GET"})
+     *
      * @Template()
      * @param Work $work
      */
@@ -116,8 +116,8 @@ class WorkController extends Controller {
     /**
      * Displays a form to edit an existing Work entity.
      *
-     * @Route("/{id}/edit", name="work_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="work_edit", methods={"GET","POST"})
+     *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
      *
@@ -144,8 +144,8 @@ class WorkController extends Controller {
     /**
      * Deletes a Work entity.
      *
-     * @Route("/{id}/delete", name="work_delete")
-     * @Method("GET")
+     * @Route("/{id}/delete", name="work_delete", methods={"GET"})
+     *
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
      *
      * @param Request $request
@@ -164,7 +164,7 @@ class WorkController extends Controller {
      * Add/remove dates to a work.
      *
      * @Route("/{id}/dates", name="work_dates")
-     * @Method({"GET", "POST"})
+     *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
      *
@@ -193,7 +193,7 @@ class WorkController extends Controller {
      * Add contributions to a work.
      *
      * @Route("/{id}/contributions", name="work_contributions")
-     * @Method({"GET", "POST"})
+     *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      *

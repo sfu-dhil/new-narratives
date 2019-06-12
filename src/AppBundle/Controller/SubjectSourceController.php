@@ -4,8 +4,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\SubjectSource;
 use AppBundle\Form\SubjectSourceType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -21,8 +21,8 @@ class SubjectSourceController extends Controller {
     /**
      * Lists all SubjectSource entities.
      *
-     * @Route("/", name="subject_source_index")
-     * @Method("GET")
+     * @Route("/", name="subject_source_index", methods={"GET"})
+     *
      * @Template()
      * @param Request $request
      */
@@ -41,8 +41,8 @@ class SubjectSourceController extends Controller {
     /**
      * Creates a new SubjectSource entity.
      *
-     * @Route("/new", name="subject_source_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="subject_source_new", methods={"GET","POST"})
+     *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
      *
@@ -71,8 +71,8 @@ class SubjectSourceController extends Controller {
     /**
      * Finds and displays a SubjectSource entity.
      *
-     * @Route("/{id}", name="subject_source_show")
-     * @Method("GET")
+     * @Route("/{id}", name="subject_source_show", methods={"GET"})
+     *
      * @Template()
      * @param SubjectSource $subjectSource
      */
@@ -86,8 +86,8 @@ class SubjectSourceController extends Controller {
     /**
      * Displays a form to edit an existing SubjectSource entity.
      *
-     * @Route("/{id}/edit", name="subject_source_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="subject_source_edit", methods={"GET","POST"})
+     *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
      *
@@ -114,8 +114,8 @@ class SubjectSourceController extends Controller {
     /**
      * Deletes a SubjectSource entity.
      *
-     * @Route("/{id}/delete", name="subject_source_delete")
-     * @Method("GET")
+     * @Route("/{id}/delete", name="subject_source_delete", methods={"GET"})
+     *
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      *
      * @param Request $request

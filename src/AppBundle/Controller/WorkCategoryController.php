@@ -4,8 +4,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\WorkCategory;
 use AppBundle\Form\WorkCategoryType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -21,8 +21,8 @@ class WorkCategoryController extends Controller {
     /**
      * Lists all WorkCategory entities.
      *
-     * @Route("/", name="work_category_index")
-     * @Method("GET")
+     * @Route("/", name="work_category_index", methods={"GET"})
+     *
      * @Template()
      * @param Request $request
      */
@@ -41,8 +41,8 @@ class WorkCategoryController extends Controller {
     /**
      * Creates a new WorkCategory entity.
      *
-     * @Route("/new", name="work_category_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="work_category_new", methods={"GET","POST"})
+     *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
      *
@@ -71,8 +71,8 @@ class WorkCategoryController extends Controller {
     /**
      * Finds and displays a WorkCategory entity.
      *
-     * @Route("/{id}", name="work_category_show")
-     * @Method("GET")
+     * @Route("/{id}", name="work_category_show", methods={"GET"})
+     *
      * @Template()
      * @param WorkCategory $workCategory
      */
@@ -86,8 +86,8 @@ class WorkCategoryController extends Controller {
     /**
      * Displays a form to edit an existing WorkCategory entity.
      *
-     * @Route("/{id}/edit", name="work_category_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="work_category_edit", methods={"GET","POST"})
+     *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
      *
@@ -114,8 +114,8 @@ class WorkCategoryController extends Controller {
     /**
      * Deletes a WorkCategory entity.
      *
-     * @Route("/{id}/delete", name="work_category_delete")
-     * @Method("GET")
+     * @Route("/{id}/delete", name="work_category_delete", methods={"GET"})
+     *
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      *
      * @param Request $request

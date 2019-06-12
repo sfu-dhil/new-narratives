@@ -5,8 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Subject;
 use AppBundle\Form\SubjectSearchType;
 use AppBundle\Form\SubjectType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -22,8 +22,8 @@ class SubjectController extends Controller {
     /**
      * Lists all Subject entities.
      *
-     * @Route("/", name="subject_index")
-     * @Method("GET")
+     * @Route("/", name="subject_index", methods={"GET"})
+     *
      * @Template()
      * @param Request $request
      */
@@ -42,8 +42,8 @@ class SubjectController extends Controller {
     /**
      * Search for Subject entities.
      *
-     * @Route("/search", name="subject_search")
-     * @Method("GET")
+     * @Route("/search", name="subject_search", methods={"GET"})
+     *
      * @Template()
      * @param Request $request
      */
@@ -68,8 +68,8 @@ class SubjectController extends Controller {
     /**
      * Creates a new Subject entity.
      *
-     * @Route("/new", name="subject_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="subject_new", methods={"GET","POST"})
+     *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
      *
@@ -98,8 +98,8 @@ class SubjectController extends Controller {
     /**
      * Finds and displays a Subject entity.
      *
-     * @Route("/{id}", name="subject_show")
-     * @Method("GET")
+     * @Route("/{id}", name="subject_show", methods={"GET"})
+     *
      * @Template()
      * @param Subject $subject
      */
@@ -113,8 +113,8 @@ class SubjectController extends Controller {
     /**
      * Displays a form to edit an existing Subject entity.
      *
-     * @Route("/{id}/edit", name="subject_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="subject_edit", methods={"GET","POST"})
+     *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
      *
@@ -141,8 +141,8 @@ class SubjectController extends Controller {
     /**
      * Deletes a Subject entity.
      *
-     * @Route("/{id}/delete", name="subject_delete")
-     * @Method("GET")
+     * @Route("/{id}/delete", name="subject_delete", methods={"GET"})
+     *
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      *
      * @param Request $request
