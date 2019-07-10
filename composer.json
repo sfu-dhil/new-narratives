@@ -16,6 +16,16 @@
             "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php"
         ]
     },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/OCLC-Developer-Network/oclc-auth-php.git"
+        },
+        {
+            "type": "github",
+            "url": "https://github.com/ubermichael/nines-bundles.git"
+        }
+    ],
     "require": {
         "php": ">=7.1.0",
         "beberlei/doctrineextensions": "^1.0",
@@ -26,7 +36,7 @@
         "guzzlehttp/guzzle": "^6.3",
         "incenteev/composer-parameter-handler": "^2.0",
         "knplabs/knp-menu-bundle": "^2.2",
-        "knplabs/knp-paginator-bundle": "^2.7",
+        "knplabs/knp-paginator-bundle": "^4.0",
         "oclc/auth" : ">=3.0",
         "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^5.0.0",
@@ -37,7 +47,8 @@
         "symfony/templating": "^3.4",
         "tetranz/select2entity-bundle": "^2.9",
         "twig/extensions": "^1.5",
-        "twig/twig": "^2.5"
+        "twig/twig": "^2.5",
+        "ubermichael/nines": "1.x-dev"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.0",
@@ -48,14 +59,6 @@
         "squizlabs/php_codesniffer": "^3.3",
         "symfony/phpunit-bridge": "^4.1"
     },
-
-    "repositories": [
-        {
-            "type": "git",
-            "url": "https://github.com/OCLC-Developer-Network/oclc-auth-php.git"
-        }
-    ],
-
     "scripts": {
         "symfony-scripts": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
