@@ -50,8 +50,8 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     paths:
-        '%kernel.project_dir%/src/Nines/UtilBundle/Resources/views': NinesUtilBundle
-        '%kernel.project_dir%/src/Nines/UserBundle/Resources/views': NinesUser
+        '%kernel.project_dir%/vendor/ubermichael/nines/UtilBundle/Resources/views': NinesUtilBundle
+        '%kernel.project_dir%/vendor/ubermichael/nines/UserBundle/Resources/views': NinesUser
     globals:
         comment_service: '@Nines\FeedbackBundle\Services\CommentService'
         text_service: '@Nines\UtilBundle\Services\Text'
