@@ -53,3 +53,6 @@ parameters:
     # Where the application lives
     # eg. "*.example.com/application"
     dhil.piwik_domain: ~
+
+    oclc.key: ~
+    oclc.secret: ~
