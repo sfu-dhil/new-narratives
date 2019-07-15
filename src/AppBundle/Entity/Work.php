@@ -684,6 +684,17 @@ class Work extends AbstractEntity {
         return $this->subjects;
     }
 
+    public function setSubjects($subjects) {
+        if( ! $subjects) {
+            $this->subjects = new ArrayCollection();
+        } else if(is_array($subjects)) {
+            $this->subjects = new ArrayCollection($subjects);
+        } else {
+            $this->subjects = $subjects;
+        }
+        return $this;
+    }
+
     /**
      * Add checkedBy
      *
