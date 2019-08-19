@@ -39,6 +39,12 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
+    AppBundle\EventListener\RequestListener:
+        arguments:
+            $allowLogins: '%dhil.allow_logins%'
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
+
     AppBundle\Menu\Builder:
         tags:
             - { name: knp_menu.menu_builder, method: mainMenu, alias: main}

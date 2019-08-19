@@ -54,5 +54,8 @@ parameters:
     # eg. "*.example.com/application"
     dhil.piwik_domain: ~
 
+    # Prevent logins by setting this to false
+    dhil.allow_logins: true
+
     oclc.key: ~
     oclc.secret: ~
