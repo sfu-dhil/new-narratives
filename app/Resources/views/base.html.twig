@@ -31,7 +31,7 @@
                     <ul class="nav navbar-nav">
                         {{ knp_menu_render('main') }}
                         <li>
-                            <a href="{{ asset('docs/html/index.html') }}">Help &amp; Docs</a>
+                            <a href="{{ asset('docs/sphinx/index.html') }}">Help &amp; Docs</a>
                         </li>
 
                         {% if app.user is not null and is_granted('ROLE_ADMIN') %}
@@ -122,9 +122,9 @@
                 <p>
                     <b>New Narratives in the History of Philosophy</b>
                     <br/>
-                    <a href="docs/build/html/index.html">Documentation</a> |
+                    <a href="docs/sphinx/index.html">Documentation</a> |
                     <a href="{{ path('privacy') }}">Privacy</a> |
-                    <a href="https://github.com/sfu-dhil/newn">GitHub</a>
+                    <a href="https://github.com/sfu-dhil/new-narratives">GitHub</a>
                 </p>
             </div>
         </footer>
