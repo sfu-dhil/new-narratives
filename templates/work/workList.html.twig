@@ -1,0 +1,10 @@
+{% if works|length > 0 %}
+    <h2>Works</h2>
+    <ul>
+        {% for work in works %}
+            <li>
+                {% include 'work/workBrief.html.twig' with {'work': work } %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

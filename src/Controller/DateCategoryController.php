@@ -1,0 +1,132 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\DateCategory;
+use App\Form\DateCategoryType;
+
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
+use Nines\UtilBundle\Controller\PaginatorTrait;
+use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+
+/**
+ * DateCategory controller.
+ *
+ * @Route("/date_category")
+ */
+class DateCategoryController extends AbstractController  implements PaginatorAwareInterface {
+    use PaginatorTrait;
+
+    /**
+     * Lists all DateCategory entities.
+     *
+     * @Route("/", name="date_category_index", methods={"GET"})
+     *
+     * @Template()
+     * @param Request $request
+     */
+    public function indexAction(Request $request, EntityManagerInterface $em) {
+        $dql = 'SELECT e FROM App:DateCategory e ORDER BY e.id';
+        $query = $em->createQuery($dql);
+        $dateCategories = $this->paginator->paginate($query, $request->query->getint('page', 1), 25);
+
+        return array(
+            'dateCategories' => $dateCategories,
+        );
+    }
+
+    /**
+     * Creates a new DateCategory entity.
+     *
+     * @Route("/new", name="date_category_new", methods={"GET","POST"})
+     *
+     * @Template()
+     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     *
+     * @param Request $request
+     */
+    public function newAction(Request $request, EntityManagerInterface $em) {
+        $dateCategory = new DateCategory();
+        $form = $this->createForm(DateCategoryType::class, $dateCategory);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($dateCategory);
+            $em->flush();
+
+            $this->addFlash('success', 'The new dateCategory was created.');
+            return $this->redirectToRoute('date_category_show', array('id' => $dateCategory->getId()));
+        }
+
+        return array(
+            'dateCategory' => $dateCategory,
+            'form' => $form->createView(),
+        );
+    }
+
+    /**
+     * Finds and displays a DateCategory entity.
+     *
+     * @Route("/{id}", name="date_category_show", methods={"GET"})
+     *
+     * @Template()
+     * @param DateCategory $dateCategory
+     */
+    public function showAction(DateCategory $dateCategory) {
+
+        return array(
+            'dateCategory' => $dateCategory,
+        );
+    }
+
+    /**
+     * Displays a form to edit an existing DateCategory entity.
+     *
+     * @Route("/{id}/edit", name="date_category_edit", methods={"GET","POST"})
+     *
+     * @Template()
+     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     *
+     * @param Request $request
+     * @param DateCategory $dateCategory
+     */
+    public function editAction(Request $request, DateCategory $dateCategory, EntityManagerInterface $em) {
+        $editForm = $this->createForm(DateCategoryType::class, $dateCategory);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $em->flush();
+            $this->addFlash('success', 'The dateCategory has been updated.');
+            return $this->redirectToRoute('date_category_show', array('id' => $dateCategory->getId()));
+        }
+
+        return array(
+            'dateCategory' => $dateCategory,
+            'edit_form' => $editForm->createView(),
+        );
+    }
+
+    /**
+     * Deletes a DateCategory entity.
+     *
+     * @Route("/{id}/delete", name="date_category_delete", methods={"GET"})
+     *
+     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     *
+     * @param Request $request
+     * @param DateCategory $dateCategory
+     */
+    public function deleteAction(Request $request, DateCategory $dateCategory, EntityManagerInterface $em) {
+        $em->remove($dateCategory);
+        $em->flush();
+        $this->addFlash('success', 'The dateCategory was deleted.');
+
+        return $this->redirectToRoute('date_category_index');
+    }
+
+}

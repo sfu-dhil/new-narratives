@@ -1,0 +1,6 @@
+nines_user:
+  roles: [ ROLE_ADMIN, ROLE_BLOG_ADMIN, ROLE_COMMENT_ADMIN, ROLE_CONTENT_ADMIN, ROLE_CONTENT_EDITOR, ROLE_DC_EDITOR ]
+  after_login_route: homepage
+  after_request_route: homepage
+  after_reset_route: homepage
+  after_logout_route: homepage

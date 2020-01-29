@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block pageheader %}
+    <h1>Person</h1>
+{% endblock %}
+
+{% block body %}
+
+    <div class="btn-toolbar">
+        <div class="btn-group pull-right">
+            <a href="{{ path('person_index') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-arrow-left"></span> Back
+            </a>
+            {% if is_granted('ROLE_CONTENT_ADMIN') %}
+                <a href="{{ path('person_edit', { 'id': person.id }) }}" class="btn btn-default">
+                    <span class='glyphicon glyphicon-edit'></span> Edit
+                </a>
+                <a href="{{ path('person_delete', { 'id': person.id }) }}" class="btn btn-default" data-confirm="Are you sure you want to delete this Person?">
+                    <span class='glyphicon glyphicon-remove'></span> Delete
+                </a>
+            {% endif %}
+        </div>
+    </div>
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <tbody>
+            <tr>
+                <th>Full Name</th>
+                <td>{{ person.fullName }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{% if person.created %}{{ person.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updated</th>
+                <td>{% if person.updated %}{{ person.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {% if person.contributions|length > 0 %}
+        <h2>Works</h2>
+        <ul>
+            {% for contribution in person.contributions %}
+                <li>
+                    {% include 'work/workBrief.html.twig' with {'work': contribution.work} %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% include '@NinesFeedback/comment/comment-interface.html.twig' with { 'entity': person } %}
+
+{% endblock %}

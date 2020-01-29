@@ -8,10 +8,10 @@ $dir = __DIR__;
 
 $config = array(
 //    'theme'                => 'symfony',
-    'title'                => 'Circus Internal API',
+    'title'                => 'New Narratives Internal API',
     'build_dir'            => $dir . '/web/docs/api',
     'cache_dir'            => $dir . '/var/cache/sami',
-    'remote_repository'    => new GitHubRemoteRepository('ubermichael/circus', $dir),
+    'remote_repository'    => new GitHubRemoteRepository('ubermichael/newn', $dir),
     'default_opened_level' => 2,
 );
 
