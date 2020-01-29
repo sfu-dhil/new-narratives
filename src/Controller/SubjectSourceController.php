@@ -1,25 +1,32 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller;
 
 use App\Entity\SubjectSource;
 use App\Form\SubjectSourceType;
-
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * SubjectSource controller.
  *
  * @Route("/subject_source")
  */
-class SubjectSourceController extends AbstractController  implements PaginatorAwareInterface {
+class SubjectSourceController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
@@ -28,17 +35,16 @@ class SubjectSourceController extends AbstractController  implements PaginatorAw
      * @Route("/", name="subject_source_index", methods={"GET"})
      *
      * @Template()
-     * @param Request $request
      */
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:SubjectSource e ORDER BY e.id';
         $query = $em->createQuery($dql);
-        ;
+
         $subjectSources = $this->paginator->paginate($query, $request->query->getint('page', 1), 25);
 
-        return array(
+        return [
             'subjectSources' => $subjectSources,
-        );
+        ];
     }
 
     /**
@@ -48,8 +54,6 @@ class SubjectSourceController extends AbstractController  implements PaginatorAw
      *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
-     *
-     * @param Request $request
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
         $subjectSource = new SubjectSource();
@@ -61,13 +65,14 @@ class SubjectSourceController extends AbstractController  implements PaginatorAw
             $em->flush();
 
             $this->addFlash('success', 'The new subjectSource was created.');
-            return $this->redirectToRoute('subject_source_show', array('id' => $subjectSource->getId()));
+
+            return $this->redirectToRoute('subject_source_show', ['id' => $subjectSource->getId()]);
         }
 
-        return array(
+        return [
             'subjectSource' => $subjectSource,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -76,13 +81,11 @@ class SubjectSourceController extends AbstractController  implements PaginatorAw
      * @Route("/{id}", name="subject_source_show", methods={"GET"})
      *
      * @Template()
-     * @param SubjectSource $subjectSource
      */
     public function showAction(SubjectSource $subjectSource) {
-
-        return array(
+        return [
             'subjectSource' => $subjectSource,
-        );
+        ];
     }
 
     /**
@@ -92,9 +95,6 @@ class SubjectSourceController extends AbstractController  implements PaginatorAw
      *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
-     *
-     * @param Request $request
-     * @param SubjectSource $subjectSource
      */
     public function editAction(Request $request, SubjectSource $subjectSource, EntityManagerInterface $em) {
         $editForm = $this->createForm(SubjectSourceType::class, $subjectSource);
@@ -103,13 +103,14 @@ class SubjectSourceController extends AbstractController  implements PaginatorAw
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em->flush();
             $this->addFlash('success', 'The subjectSource has been updated.');
-            return $this->redirectToRoute('subject_source_show', array('id' => $subjectSource->getId()));
+
+            return $this->redirectToRoute('subject_source_show', ['id' => $subjectSource->getId()]);
         }
 
-        return array(
+        return [
             'subjectSource' => $subjectSource,
             'edit_form' => $editForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -118,9 +119,6 @@ class SubjectSourceController extends AbstractController  implements PaginatorAw
      * @Route("/{id}/delete", name="subject_source_delete", methods={"GET"})
      *
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     *
-     * @param Request $request
-     * @param SubjectSource $subjectSource
      */
     public function deleteAction(Request $request, SubjectSource $subjectSource, EntityManagerInterface $em) {
         $em->remove($subjectSource);
@@ -129,5 +127,4 @@ class SubjectSourceController extends AbstractController  implements PaginatorAw
 
         return $this->redirectToRoute('subject_source_index');
     }
-
 }

@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller;
 
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
@@ -9,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class DefaultController extends AbstractController  implements PaginatorAwareInterface {
+class DefaultController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
@@ -25,8 +33,6 @@ class DefaultController extends AbstractController  implements PaginatorAwareInt
      * @Route("/privacy", name="privacy")
      * @Template()
      */
-    public function privacyAction(Request $request) {
-
+    public function privacyAction(Request $request) : void {
     }
-
 }

@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\DataFixtures;
 
 use App\Entity\DateYear;
@@ -11,11 +19,10 @@ use Doctrine\Persistence\ObjectManager;
  * LoadDateYear form.
  */
 class DateYearFixtures extends Fixture implements DependentFixtureInterface {
-
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function load(ObjectManager $em) {
+    public function load(ObjectManager $em) : void {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new DateYear();
             $fixture->setValue(1900 + $i);
@@ -29,11 +36,10 @@ class DateYearFixtures extends Fixture implements DependentFixtureInterface {
         $em->flush();
     }
 
-    function getDependencies() {
+    public function getDependencies() {
         return [
             DateCategoryFixtures::class,
             WorkFixtures::class,
         ];
     }
-
 }

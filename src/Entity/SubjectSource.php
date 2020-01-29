@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -8,13 +16,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Nines\UtilBundle\Entity\AbstractTerm;
 
 /**
- * SubjectSource
+ * SubjectSource.
  *
  * @ORM\Table(name="subject_source")
  * @ORM\Entity(repositoryClass="App\Repository\SubjectSourceRepository")
  */
 class SubjectSource extends AbstractTerm {
-
     /**
      * @var Collection|Subject[]
      * @ORM\OneToMany(targetEntity="Subject", mappedBy="subjectSource")
@@ -27,36 +34,29 @@ class SubjectSource extends AbstractTerm {
     }
 
     /**
-     * Add subject
-     *
-     * @param Subject $subject
+     * Add subject.
      *
      * @return SubjectSource
      */
-    public function addSubject(Subject $subject)
-    {
+    public function addSubject(Subject $subject) {
         $this->subjects[] = $subject;
 
         return $this;
     }
 
     /**
-     * Remove subject
-     *
-     * @param Subject $subject
+     * Remove subject.
      */
-    public function removeSubject(Subject $subject)
-    {
+    public function removeSubject(Subject $subject) : void {
         $this->subjects->removeElement($subject);
     }
 
     /**
-     * Get subjects
+     * Get subjects.
      *
      * @return Collection
      */
-    public function getSubjects()
-    {
+    public function getSubjects() {
         return $this->subjects;
     }
 }

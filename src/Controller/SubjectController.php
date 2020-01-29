@@ -1,27 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Subject;
 use App\Form\SubjectSearchType;
 use App\Form\SubjectType;
-
 use App\Repository\SubjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Subject controller.
  *
  * @Route("/subject")
  */
-class SubjectController extends AbstractController  implements PaginatorAwareInterface {
+class SubjectController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
@@ -30,17 +37,16 @@ class SubjectController extends AbstractController  implements PaginatorAwareInt
      * @Route("/", name="subject_index", methods={"GET"})
      *
      * @Template()
-     * @param Request $request
      */
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Subject e ORDER BY e.id';
         $query = $em->createQuery($dql);
-        ;
+
         $subjects = $this->paginator->paginate($query, $request->query->getint('page', 1), 25);
 
-        return array(
+        return [
             'subjects' => $subjects,
-        );
+        ];
     }
 
     /**
@@ -49,21 +55,20 @@ class SubjectController extends AbstractController  implements PaginatorAwareInt
      * @Route("/search", name="subject_search", methods={"GET"})
      *
      * @Template()
-     * @param Request $request
      */
     public function searchAction(Request $request, SubjectRepository $repo) {
         $form = $this->createForm(SubjectSearchType::class);
-        $subjects = array();
+        $subjects = [];
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $query = $repo->searchQuery($form->getData());
             $subjects = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
         }
 
-        return array(
+        return [
             'search_form' => $form->createView(),
             'subjects' => $subjects,
-        );
+        ];
     }
 
     /**
@@ -73,8 +78,6 @@ class SubjectController extends AbstractController  implements PaginatorAwareInt
      *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
-     *
-     * @param Request $request
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
         $subject = new Subject();
@@ -86,13 +89,14 @@ class SubjectController extends AbstractController  implements PaginatorAwareInt
             $em->flush();
 
             $this->addFlash('success', 'The new subject was created.');
-            return $this->redirectToRoute('subject_show', array('id' => $subject->getId()));
+
+            return $this->redirectToRoute('subject_show', ['id' => $subject->getId()]);
         }
 
-        return array(
+        return [
             'subject' => $subject,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -101,13 +105,11 @@ class SubjectController extends AbstractController  implements PaginatorAwareInt
      * @Route("/{id}", name="subject_show", methods={"GET"})
      *
      * @Template()
-     * @param Subject $subject
      */
     public function showAction(Subject $subject) {
-
-        return array(
+        return [
             'subject' => $subject,
-        );
+        ];
     }
 
     /**
@@ -117,9 +119,6 @@ class SubjectController extends AbstractController  implements PaginatorAwareInt
      *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
-     *
-     * @param Request $request
-     * @param Subject $subject
      */
     public function editAction(Request $request, Subject $subject, EntityManagerInterface $em) {
         $editForm = $this->createForm(SubjectType::class, $subject);
@@ -128,13 +127,14 @@ class SubjectController extends AbstractController  implements PaginatorAwareInt
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em->flush();
             $this->addFlash('success', 'The subject has been updated.');
-            return $this->redirectToRoute('subject_show', array('id' => $subject->getId()));
+
+            return $this->redirectToRoute('subject_show', ['id' => $subject->getId()]);
         }
 
-        return array(
+        return [
             'subject' => $subject,
             'edit_form' => $editForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -143,9 +143,6 @@ class SubjectController extends AbstractController  implements PaginatorAwareInt
      * @Route("/{id}/delete", name="subject_delete", methods={"GET"})
      *
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     *
-     * @param Request $request
-     * @param Subject $subject
      */
     public function deleteAction(Request $request, Subject $subject, EntityManagerInterface $em) {
         $em->remove($subject);
@@ -154,5 +151,4 @@ class SubjectController extends AbstractController  implements PaginatorAwareInt
 
         return $this->redirectToRoute('subject_index');
     }
-
 }

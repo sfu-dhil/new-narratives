@@ -1,25 +1,32 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Role;
 use App\Form\RoleType;
-
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Role controller.
  *
  * @Route("/role")
  */
-class RoleController extends AbstractController  implements PaginatorAwareInterface {
+class RoleController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
@@ -28,17 +35,16 @@ class RoleController extends AbstractController  implements PaginatorAwareInterf
      * @Route("/", name="role_index", methods={"GET"})
      *
      * @Template()
-     * @param Request $request
      */
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Role e ORDER BY e.id';
         $query = $em->createQuery($dql);
-        ;
+
         $roles = $this->paginator->paginate($query, $request->query->getint('page', 1), 25);
 
-        return array(
+        return [
             'roles' => $roles,
-        );
+        ];
     }
 
     /**
@@ -48,8 +54,6 @@ class RoleController extends AbstractController  implements PaginatorAwareInterf
      *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
-     *
-     * @param Request $request
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
         $role = new Role();
@@ -61,13 +65,14 @@ class RoleController extends AbstractController  implements PaginatorAwareInterf
             $em->flush();
 
             $this->addFlash('success', 'The new role was created.');
-            return $this->redirectToRoute('role_show', array('id' => $role->getId()));
+
+            return $this->redirectToRoute('role_show', ['id' => $role->getId()]);
         }
 
-        return array(
+        return [
             'role' => $role,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -76,13 +81,11 @@ class RoleController extends AbstractController  implements PaginatorAwareInterf
      * @Route("/{id}", name="role_show", methods={"GET"})
      *
      * @Template()
-     * @param Role $role
      */
     public function showAction(Role $role) {
-
-        return array(
+        return [
             'role' => $role,
-        );
+        ];
     }
 
     /**
@@ -92,9 +95,6 @@ class RoleController extends AbstractController  implements PaginatorAwareInterf
      *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
-     *
-     * @param Request $request
-     * @param Role $role
      */
     public function editAction(Request $request, Role $role, EntityManagerInterface $em) {
         $editForm = $this->createForm(RoleType::class, $role);
@@ -103,13 +103,14 @@ class RoleController extends AbstractController  implements PaginatorAwareInterf
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em->flush();
             $this->addFlash('success', 'The role has been updated.');
-            return $this->redirectToRoute('role_show', array('id' => $role->getId()));
+
+            return $this->redirectToRoute('role_show', ['id' => $role->getId()]);
         }
 
-        return array(
+        return [
             'role' => $role,
             'edit_form' => $editForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -118,9 +119,6 @@ class RoleController extends AbstractController  implements PaginatorAwareInterf
      * @Route("/{id}/delete", name="role_delete", methods={"GET"})
      *
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     *
-     * @param Request $request
-     * @param Role $role
      */
     public function deleteAction(Request $request, Role $role, EntityManagerInterface $em) {
         $em->remove($role);
@@ -129,5 +127,4 @@ class RoleController extends AbstractController  implements PaginatorAwareInterf
 
         return $this->redirectToRoute('role_index');
     }
-
 }

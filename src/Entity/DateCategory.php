@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -8,13 +16,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Nines\UtilBundle\Entity\AbstractTerm;
 
 /**
- * DateCategory
+ * DateCategory.
  *
  * @ORM\Table(name="date_category")
  * @ORM\Entity(repositoryClass="App\Repository\DateCategoryRepository")
  */
 class DateCategory extends AbstractTerm {
-
     /**
      * @var Collection|DateYear[]
      * @ORM\OneToMany(targetEntity="DateYear", mappedBy="dateCategory")
@@ -27,36 +34,29 @@ class DateCategory extends AbstractTerm {
     }
 
     /**
-     * Add date
-     *
-     * @param DateYear $date
+     * Add date.
      *
      * @return DateCategory
      */
-    public function addDate(DateYear $date)
-    {
+    public function addDate(DateYear $date) {
         $this->dates[] = $date;
 
         return $this;
     }
 
     /**
-     * Remove date
-     *
-     * @param DateYear $date
+     * Remove date.
      */
-    public function removeDate(DateYear $date)
-    {
+    public function removeDate(DateYear $date) : void {
         $this->dates->removeElement($date);
     }
 
     /**
-     * Get dates
+     * Get dates.
      *
      * @return Collection
      */
-    public function getDates()
-    {
+    public function getDates() {
         return $this->dates;
     }
 }

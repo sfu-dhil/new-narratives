@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\DataFixtures;
 
 use App\Entity\WorkCategory;
@@ -9,14 +17,12 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * LoadWorkCategory form.
  */
-class WorkCategoryFixtures extends Fixture
-{
+class WorkCategoryFixtures extends Fixture {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function load(ObjectManager $em)
-    {
-        for($i = 0; $i < 4; $i++) {
+    public function load(ObjectManager $em) : void {
+        for ($i = 0; $i < 4; $i++) {
             $fixture = new WorkCategory();
             $fixture->setName('work_' . $i);
             $fixture->setLabel('Work ' . $i);
@@ -24,9 +30,7 @@ class WorkCategoryFixtures extends Fixture
             $em->persist($fixture);
             $this->setReference('workcategory.' . $i, $fixture);
         }
-        
+
         $em->flush();
-        
-    }    
-        
+    }
 }

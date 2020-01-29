@@ -1,25 +1,32 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Genre;
 use App\Form\GenreType;
-
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Genre controller.
  *
  * @Route("/genre")
  */
-class GenreController extends AbstractController  implements PaginatorAwareInterface {
+class GenreController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
@@ -28,17 +35,16 @@ class GenreController extends AbstractController  implements PaginatorAwareInter
      * @Route("/", name="genre_index", methods={"GET"})
      *
      * @Template()
-     * @param Request $request
      */
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Genre e ORDER BY e.id';
         $query = $em->createQuery($dql);
-        ;
+
         $genres = $this->paginator->paginate($query, $request->query->getint('page', 1), 25);
 
-        return array(
+        return [
             'genres' => $genres,
-        );
+        ];
     }
 
     /**
@@ -48,8 +54,6 @@ class GenreController extends AbstractController  implements PaginatorAwareInter
      *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
-     *
-     * @param Request $request
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
         $genre = new Genre();
@@ -61,13 +65,14 @@ class GenreController extends AbstractController  implements PaginatorAwareInter
             $em->flush();
 
             $this->addFlash('success', 'The new genre was created.');
-            return $this->redirectToRoute('genre_show', array('id' => $genre->getId()));
+
+            return $this->redirectToRoute('genre_show', ['id' => $genre->getId()]);
         }
 
-        return array(
+        return [
             'genre' => $genre,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -76,13 +81,11 @@ class GenreController extends AbstractController  implements PaginatorAwareInter
      * @Route("/{id}", name="genre_show", methods={"GET"})
      *
      * @Template()
-     * @param Genre $genre
      */
     public function showAction(Genre $genre) {
-
-        return array(
+        return [
             'genre' => $genre,
-        );
+        ];
     }
 
     /**
@@ -92,9 +95,6 @@ class GenreController extends AbstractController  implements PaginatorAwareInter
      *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
-     *
-     * @param Request $request
-     * @param Genre $genre
      */
     public function editAction(Request $request, Genre $genre, EntityManagerInterface $em) {
         $editForm = $this->createForm(GenreType::class, $genre);
@@ -103,13 +103,14 @@ class GenreController extends AbstractController  implements PaginatorAwareInter
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em->flush();
             $this->addFlash('success', 'The genre has been updated.');
-            return $this->redirectToRoute('genre_show', array('id' => $genre->getId()));
+
+            return $this->redirectToRoute('genre_show', ['id' => $genre->getId()]);
         }
 
-        return array(
+        return [
             'genre' => $genre,
             'edit_form' => $editForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -118,9 +119,6 @@ class GenreController extends AbstractController  implements PaginatorAwareInter
      * @Route("/{id}/delete", name="genre_delete", methods={"GET"})
      *
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     *
-     * @param Request $request
-     * @param Genre $genre
      */
     public function deleteAction(Request $request, Genre $genre, EntityManagerInterface $em) {
         $em->remove($genre);
@@ -129,5 +127,4 @@ class GenreController extends AbstractController  implements PaginatorAwareInter
 
         return $this->redirectToRoute('genre_index');
     }
-
 }

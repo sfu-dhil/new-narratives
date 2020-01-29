@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Form;
 
 use App\Entity\SubjectSource;
@@ -10,39 +18,30 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SubjectSearchType extends AbstractType {
-
     public function getBlockPrefix() {
         return '';
     }
-    
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
+
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $builder->setMethod('GET');
-        $builder->add('q', TextType::class, array(
+        $builder->add('q', TextType::class, [
             'label' => 'Search query',
             'required' => false,
-        ));
-        $builder->add('source', EntityType::class, array(
+        ]);
+        $builder->add('source', EntityType::class, [
             'class' => SubjectSource::class,
             'choice_label' => 'label',
             'label' => 'Filter by source',
             'multiple' => true,
             'expanded' => true,
             'required' => false,
-        ));
+        ]);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver) {
-        $resolver->setDefaults(array(
+    public function configureOptions(OptionsResolver $resolver) : void {
+        $resolver->setDefaults([
             'data_class' => null,
-            'csrf_protection'   => false,
-        ));
+            'csrf_protection' => false,
+        ]);
     }
-
 }

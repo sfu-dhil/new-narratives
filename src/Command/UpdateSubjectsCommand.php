@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Command;
 
 use App\Entity\Subject;
@@ -9,25 +17,20 @@ use Doctrine\ORM\EntityManagerInterface;
 use DOMDocument;
 use DOMXPath;
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
 use OCLC\Auth\WSKey;
-use OCLC\User;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * UpdateSubjectsCommand command.
  */
 class UpdateSubjectsCommand extends ContainerAwareCommand {
-
-    const BATCH_SIZE = 100;
+    public const BATCH_SIZE = 100;
 
     // append oclcid and ?wskey=
-    const URL_PFX = 'http://www.worldcat.org/webservices/catalog/content/';
+    public const URL_PFX = 'http://www.worldcat.org/webservices/catalog/content/';
 
     private $key;
 
@@ -54,7 +57,7 @@ class UpdateSubjectsCommand extends ContainerAwareCommand {
     /**
      * Configure the command.
      */
-    protected function configure() {
+    protected function configure() : void {
         $this->setName('newn:update:subjects')->setDescription('Fetch subject data from OCLC');
     }
 
@@ -62,9 +65,9 @@ class UpdateSubjectsCommand extends ContainerAwareCommand {
         $url = self::URL_PFX . $oclcNumber;
 
         $client = new Client();
-        $response = $client->request('GET', $url . "?wskey={$this->key}", array('http_errors' => false,));
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception("Error: " . $response->getStatusCode() . ": " . $response->getReasonPhrase() . " " . $response->getBody());
+        $response = $client->request('GET', $url . "?wskey={$this->key}", ['http_errors' => false]);
+        if (200 !== $response->getStatusCode()) {
+            throw new \Exception('Error: ' . $response->getStatusCode() . ': ' . $response->getReasonPhrase() . ' ' . $response->getBody());
         }
 
         return $response->getBody()->getContents();
@@ -77,27 +80,28 @@ class UpdateSubjectsCommand extends ContainerAwareCommand {
         $xpath->registerNamespace('marc', 'http://www.loc.gov/MARC21/slim');
         $nodeList = $xpath->query('//marc:datafield[@tag="650"][@ind2="0"]');
         if ( ! $nodeList->length) {
-            return array();
+            return [];
         }
 
-        $subjects = array();
+        $subjects = [];
         for ($i = 0; $i < $nodeList->length; $i++) {
             // node is a datafield element.
             $node = $nodeList->item($i);
             $children = $node->childNodes;
-            if( ! $children->length) {
+            if ( ! $children->length) {
                 continue;
             }
             $subject = '';
-            for($j = 0; $j < $children->length; $j++) {
+            for ($j = 0; $j < $children->length; $j++) {
                 // child is a subfield element.
                 $child = $children->item($j);
-                if($child->nodeType === XML_TEXT_NODE) {
+                if (XML_TEXT_NODE === $child->nodeType) {
                     continue;
                 }
-                switch($child->getAttribute('code')) {
+                switch ($child->getAttribute('code')) {
                     case 'a':
                         $subject = $child->textContent;
+
                         break;
                     default:
                         $subject .= ' -- ' . $child->textContent;
@@ -105,6 +109,7 @@ class UpdateSubjectsCommand extends ContainerAwareCommand {
             }
             $subjects[] = $subject;
         }
+
         return $subjects;
     }
 
@@ -112,11 +117,11 @@ class UpdateSubjectsCommand extends ContainerAwareCommand {
      * Execute the command.
      *
      * @param InputInterface $input
-     *   Command input, as defined in the configure() method.
+     *                              Command input, as defined in the configure() method.
      * @param OutputInterface $output
-     *   Output destination.
+     *                                Output destination.
      */
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output) : void {
         $subjectRepo = $this->em->getRepository(Subject::class);
         $qb = $this->em->createQueryBuilder();
         $qb->select('w')->from(Work::class, 'w');
@@ -124,22 +129,22 @@ class UpdateSubjectsCommand extends ContainerAwareCommand {
         while ($row = $iterator->next()) {
             /** @var Work $work */
             $work = $row[0];
-            $matches = array();
+            $matches = [];
             if ( ! preg_match('{/(\d+)$}', $work->getWorldcatUrl(), $matches)) {
                 continue;
             }
             $content = $this->fetch($matches[1]);
             $parsedSubjects = $this->parse($content);
-            $wc = $this->em->getRepository(SubjectSource::class)->findOneBy(array('name' => 'wc',));
+            $wc = $this->em->getRepository(SubjectSource::class)->findOneBy(['name' => 'wc']);
 
-            foreach($parsedSubjects as $subject) {
+            foreach ($parsedSubjects as $subject) {
                 $name = preg_replace('[^a-zA-Z0-9-]', '', $subject);
                 $label = $subject;
-                $subject = $subjectRepo->findOneBy(array(
+                $subject = $subjectRepo->findOneBy([
                     'name' => $name,
                     'subjectSource' => $wc,
-                ));
-                if( ! $subject) {
+                ]);
+                if ( ! $subject) {
                     $subject = new Subject();
                     $subject->setName($name);
                     $subject->setLabel($label);
@@ -152,11 +157,10 @@ class UpdateSubjectsCommand extends ContainerAwareCommand {
             $this->em->flush();
             $this->em->clear();
             $output->writeln($work->getId() . '-' . $work->getTitle());
-            foreach($work->getSubjects() as $s) {
-                $output->writeln("    " . $s);
+            foreach ($work->getSubjects() as $s) {
+                $output->writeln('    ' . $s);
             }
             sleep(12);
         }
     }
-
 }

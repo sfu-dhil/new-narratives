@@ -1,43 +1,50 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Nines\UtilBundle\Entity\AbstractEntity;
 
-define('CIRCA_RE', "(c?)([1-9][0-9]{3})");
+define('CIRCA_RE', '(c?)([1-9][0-9]{3})');
 define('YEAR_RE', '/^' . CIRCA_RE . '$/');
 define('RANGE_RE', '/^(?:' . CIRCA_RE . ')?-(?:' . CIRCA_RE . ')?$/');
 
 /**
- * Date
+ * Date.
  *
  * @ORM\Table(name="date_year")
  * @ORM\Entity(repositoryClass="App\Repository\DateYearRepository")
  */
 class DateYear extends AbstractEntity {
-
     /**
-     * @var integer
+     * @var int
      * @ORM\Column(type="integer", nullable=true)
      */
     private $start;
 
     /**
-     * @var boolean
+     * @var bool
      * @ORM\Column(type="boolean")
      */
     private $startCirca;
 
     /**
-     * @var boolean
+     * @var bool
      * @ORM\Column(type="integer", nullable=true)
      */
     private $end;
 
     /**
-     * @var boolean
+     * @var bool
      * @ORM\Column(type="boolean")
      */
     private $endCirca;
@@ -63,16 +70,17 @@ class DateYear extends AbstractEntity {
         $this->end = null;
         $this->endCirca = false;
     }
-    
+
     /**
      * Return a string representation.
-     * 
+     *
      * @return string
      */
     public function __toString() {
         if (($this->startCirca === $this->endCirca) && ($this->start === $this->end)) {
             return ($this->startCirca ? 'c' : '') . $this->start;
         }
+
         return ($this->startCirca ? 'c' : '') . $this->start .
                 '-' .
                 ($this->endCirca ? 'c' : '') . $this->end;
@@ -83,70 +91,69 @@ class DateYear extends AbstractEntity {
     }
 
     public function setValue($value) {
-        $value = strtolower(preg_replace('/\s*/', '', (string)$value));
-        $matches = array();
-        if (strpos($value, '-') === false) {
+        $value = strtolower(preg_replace('/\s*/', '', (string) $value));
+        $matches = [];
+        if (false === strpos($value, '-')) {
             // not a range
             if (preg_match(YEAR_RE, $value, $matches)) {
-                $this->startCirca = ($matches[1] === 'c');
+                $this->startCirca = ('c' === $matches[1]);
                 $this->start = $matches[2];
                 $this->endCirca = $this->startCirca;
                 $this->end = $this->start;
             } else {
                 throw new Exception("Malformed date {$value}");
             }
+
             return $this;
         }
-        if (!preg_match(RANGE_RE, $value, $matches)) {
+        if ( ! preg_match(RANGE_RE, $value, $matches)) {
             throw new Exception("Malformed Date range '{$value}'");
         }
-        
-            $this->startCirca = ($matches[1] === 'c');
-            $this->start = $matches[2];
+
+        $this->startCirca = ('c' === $matches[1]);
+        $this->start = $matches[2];
         if (count($matches) > 3) {
-            $this->endCirca = ($matches[3] === 'c');
+            $this->endCirca = ('c' === $matches[3]);
             $this->end = $matches[4];
         }
+
         return $this;
     }
-    
+
     public function isRange() {
-        return 
+        return
             ($this->startCirca !== $this->endCirca) ||
             ($this->start !== $this->end);
-       
     }
-    
+
     public function hasStart() {
-        return $this->start !== null && $this->start !== '';
+        return null !== $this->start && '' !== $this->start;
     }
 
     /**
-     * Get start
+     * Get start.
      *
-     * @return integer
+     * @return int
      */
     public function getStart() {
         return ($this->startCirca ? 'c' : '') . $this->start;
     }
 
     public function hasEnd() {
-        return $this->end !== null && $this->end !== '';
+        return null !== $this->end && '' !== $this->end;
     }
-    
+
     /**
-     * Get end
+     * Get end.
      *
-     * @return integer
+     * @return int
      */
     public function getEnd() {
         return ($this->endCirca ? 'c' : '') . $this->end;
     }
 
     /**
-     * Set dateCategory
-     *
-     * @param DateCategory $dateCategory
+     * Set dateCategory.
      *
      * @return DateYear
      */
@@ -157,7 +164,7 @@ class DateYear extends AbstractEntity {
     }
 
     /**
-     * Get dateCategory
+     * Get dateCategory.
      *
      * @return DateCategory
      */
@@ -166,9 +173,7 @@ class DateYear extends AbstractEntity {
     }
 
     /**
-     * Set work
-     *
-     * @param Work $work
+     * Set work.
      *
      * @return DateYear
      */
@@ -179,12 +184,11 @@ class DateYear extends AbstractEntity {
     }
 
     /**
-     * Get work
+     * Get work.
      *
      * @return Work
      */
     public function getWork() {
         return $this->work;
     }
-
 }

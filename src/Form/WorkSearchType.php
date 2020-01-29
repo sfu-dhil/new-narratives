@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace App\Form;
@@ -20,108 +22,103 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Description of WorkSearchType
+ * Description of WorkSearchType.
  *
  * @author michael
  */
 class WorkSearchType extends AbstractType {
-
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $builder->setMethod('get');
-        $builder->add('title', TextType::class, array(
+        $builder->add('title', TextType::class, [
             'required' => false,
-        ));
-        $builder->add('category', EntityType::class, array(
+        ]);
+        $builder->add('category', EntityType::class, [
             'required' => false,
             'multiple' => true,
             'expanded' => true,
             'choice_label' => 'label',
             'class' => WorkCategory::class,
-        ));
-        $builder->add('edition', IntegerType::class, array(
+        ]);
+        $builder->add('edition', IntegerType::class, [
             'required' => false,
-        ));
-        $builder->add('volume', IntegerType::class, array(
+        ]);
+        $builder->add('volume', IntegerType::class, [
             'required' => false,
-        ));
-        $builder->add('digitalEdition', ChoiceType::class, array(
+        ]);
+        $builder->add('digitalEdition', ChoiceType::class, [
             'required' => false,
             'expanded' => true,
             'multiple' => true,
-            'choices' => array(
+            'choices' => [
                 'Yes' => 1,
-            ),
-        ));
-        $builder->add('contributor', CollectionType::class, array(
+            ],
+        ]);
+        $builder->add('contributor', CollectionType::class, [
             'label' => 'Contributors',
             'required' => false,
             'allow_add' => true,
             'allow_delete' => true,
             'delete_empty' => true,
             'entry_type' => ContributionFilterType::class,
-            'entry_options' => array(
+            'entry_options' => [
                 'label' => false,
-            ),
-            'attr' => array(
-                'class' => 'collection collection-complex'
-            ),
-        ));
-        $builder->add('publicationPlace', TextType::class, array(
+            ],
+            'attr' => [
+                'class' => 'collection collection-complex',
+            ],
+        ]);
+        $builder->add('publicationPlace', TextType::class, [
             'required' => false,
-        ));
-        $builder->add('publisher', TextType::class, array(
+        ]);
+        $builder->add('publisher', TextType::class, [
             'required' => false,
-        ));
-        $builder->add('illustrations', ChoiceType::class, array(
-            'required' => false,
-            'expanded' => true,
-            'multiple' => true,
-            'choices' => array(
-                'Yes' => 1,
-                'No' => 0,
-            ),
-        ));
-        $builder->add('frontispiece', ChoiceType::class, array(
+        ]);
+        $builder->add('illustrations', ChoiceType::class, [
             'required' => false,
             'expanded' => true,
             'multiple' => true,
-            'choices' => array(
+            'choices' => [
                 'Yes' => 1,
                 'No' => 0,
-            ),
-        ));
-        $builder->add('dedication', TextType::class, array(
+            ],
+        ]);
+        $builder->add('frontispiece', ChoiceType::class, [
             'required' => false,
-        ));
-        $builder->add('subject', TextType::class, array(
+            'expanded' => true,
+            'multiple' => true,
+            'choices' => [
+                'Yes' => 1,
+                'No' => 0,
+            ],
+        ]);
+        $builder->add('dedication', TextType::class, [
             'required' => false,
-        ));
-        $builder->add('genre', EntityType::class, array(
+        ]);
+        $builder->add('subject', TextType::class, [
+            'required' => false,
+        ]);
+        $builder->add('genre', EntityType::class, [
             'required' => false,
             'multiple' => true,
             'expanded' => true,
             'choice_label' => 'label',
             'class' => Genre::class,
-        ));
-        $builder->add('transcription', ChoiceType::class, array(
+        ]);
+        $builder->add('transcription', ChoiceType::class, [
             'required' => false,
             'expanded' => true,
             'multiple' => true,
-            'choices' => array(
+            'choices' => [
                 'Yes' => 1,
                 'No' => 0,
-            ),
-        ));
+            ],
+        ]);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver) {
-        $resolver->setDefaults(array(
+    public function configureOptions(OptionsResolver $resolver) : void {
+        $resolver->setDefaults([
             'data_class' => null,
             'csrf_protection' => false,
-        ));
+        ]);
     }
-
 }

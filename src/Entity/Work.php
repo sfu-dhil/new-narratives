@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -9,7 +17,7 @@ use Nines\UserBundle\Entity\User;
 use Nines\UtilBundle\Entity\AbstractEntity;
 
 /**
- * Work
+ * Work.
  *
  * @ORM\Table(name="work", indexes={
  *  @ORM\Index(columns={"title"}, flags={"fulltext"}),
@@ -19,7 +27,6 @@ use Nines\UtilBundle\Entity\AbstractEntity;
  * @ORM\Entity(repositoryClass="App\Repository\WorkRepository")
  */
 class Work extends AbstractEntity {
-
     /**
      * @var string
      * @ORM\Column(type="text")
@@ -27,13 +34,13 @@ class Work extends AbstractEntity {
     private $title;
 
     /**
-     * @var boolean
+     * @var bool
      * @ORM\Column(type="integer", nullable=true)
      */
     private $edition;
 
     /**
-     * @var boolean
+     * @var bool
      * @ORM\Column(type="integer", nullable=true)
      */
     private $volume;
@@ -51,13 +58,13 @@ class Work extends AbstractEntity {
     private $physicalDescription;
 
     /**
-     * @var boolean
+     * @var bool
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $illustrations;
 
     /**
-     * @var boolean
+     * @var bool
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $frontispiece;
@@ -81,7 +88,7 @@ class Work extends AbstractEntity {
     private $worldcatUrl;
 
     /**
-     * @var boolean
+     * @var bool
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $transcription;
@@ -109,7 +116,7 @@ class Work extends AbstractEntity {
      * @ORM\Column(type="text", nullable=true)
      */
     private $notes;
-    
+
     /**
      * @var string
      * @ORM\Column(type="text", nullable=true)
@@ -134,9 +141,9 @@ class Work extends AbstractEntity {
      * @ORM\JoinColumn(nullable=false)
      */
     private $workCategory;
-    
+
     /**
-     * @var boolean
+     * @var bool
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $complete;
@@ -178,7 +185,7 @@ class Work extends AbstractEntity {
 
     /**
      * Return a string representation.
-     * 
+     *
      * @return string
      */
     public function __toString() {
@@ -186,7 +193,7 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
      *
@@ -199,7 +206,7 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -208,9 +215,9 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Set edition
+     * Set edition.
      *
-     * @param integer $edition
+     * @param int $edition
      *
      * @return Work
      */
@@ -221,18 +228,18 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Get edition
+     * Get edition.
      *
-     * @return integer
+     * @return int
      */
     public function getEdition() {
         return $this->edition;
     }
 
     /**
-     * Set volume
+     * Set volume.
      *
-     * @param integer $volume
+     * @param int $volume
      *
      * @return Work
      */
@@ -243,16 +250,16 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Get volume
+     * Get volume.
      *
-     * @return integer
+     * @return int
      */
     public function getVolume() {
         return $this->volume;
     }
 
     /**
-     * Set publicationPlace
+     * Set publicationPlace.
      *
      * @param string $publicationPlace
      *
@@ -265,7 +272,7 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Get publicationPlace
+     * Get publicationPlace.
      *
      * @return string
      */
@@ -274,7 +281,7 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Set physicalDescription
+     * Set physicalDescription.
      *
      * @param string $physicalDescription
      *
@@ -287,7 +294,7 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Get physicalDescription
+     * Get physicalDescription.
      *
      * @return string
      */
@@ -296,9 +303,9 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Set illustrations
+     * Set illustrations.
      *
-     * @param boolean $illustrations
+     * @param bool $illustrations
      *
      * @return Work
      */
@@ -309,18 +316,18 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Get illustrations
+     * Get illustrations.
      *
-     * @return boolean
+     * @return bool
      */
     public function getIllustrations() {
         return $this->illustrations;
     }
 
     /**
-     * Set frontispiece
+     * Set frontispiece.
      *
-     * @param boolean $frontispiece
+     * @param bool $frontispiece
      *
      * @return Work
      */
@@ -331,16 +338,16 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Get frontispiece
+     * Get frontispiece.
      *
-     * @return boolean
+     * @return bool
      */
     public function getFrontispiece() {
         return $this->frontispiece;
     }
 
     /**
-     * Set translationDescription
+     * Set translationDescription.
      *
      * @param string $translationDescription
      *
@@ -353,7 +360,7 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Get translationDescription
+     * Get translationDescription.
      *
      * @return string
      */
@@ -362,7 +369,7 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Set dedication
+     * Set dedication.
      *
      * @param string $dedication
      *
@@ -375,7 +382,7 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Get dedication
+     * Get dedication.
      *
      * @return string
      */
@@ -384,7 +391,7 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Set worldcatUrl
+     * Set worldcatUrl.
      *
      * @param string $worldcatUrl
      *
@@ -397,7 +404,7 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Get worldcatUrl
+     * Get worldcatUrl.
      *
      * @return string
      */
@@ -406,9 +413,9 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Set transcription
+     * Set transcription.
      *
-     * @param boolean $transcription
+     * @param bool $transcription
      *
      * @return Work
      */
@@ -419,16 +426,16 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Get transcription
+     * Get transcription.
      *
-     * @return boolean
+     * @return bool
      */
     public function getTranscription() {
         return $this->transcription;
     }
 
     /**
-     * Set physicalLocations
+     * Set physicalLocations.
      *
      * @param string $physicalLocations
      *
@@ -441,7 +448,7 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Get physicalLocations
+     * Get physicalLocations.
      *
      * @return string
      */
@@ -450,7 +457,7 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Set digitalLocations
+     * Set digitalLocations.
      *
      * @param string $digitalLocations
      *
@@ -463,7 +470,7 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Get digitalLocations
+     * Get digitalLocations.
      *
      * @return string
      */
@@ -472,7 +479,7 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Set digitalUrl
+     * Set digitalUrl.
      *
      * @param string $digitalUrl
      *
@@ -485,7 +492,7 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Get digitalUrl
+     * Get digitalUrl.
      *
      * @return string
      */
@@ -494,7 +501,7 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Set notes
+     * Set notes.
      *
      * @param string $notes
      *
@@ -507,7 +514,7 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Get notes
+     * Get notes.
      *
      * @return string
      */
@@ -516,9 +523,7 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Set genre
-     *
-     * @param Genre $genre
+     * Set genre.
      *
      * @return Work
      */
@@ -529,7 +534,7 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Get genre
+     * Get genre.
      *
      * @return Genre
      */
@@ -538,9 +543,7 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Set publisher
-     *
-     * @param Publisher $publisher
+     * Set publisher.
      *
      * @return Work
      */
@@ -551,7 +554,7 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Get publisher
+     * Get publisher.
      *
      * @return Publisher
      */
@@ -560,9 +563,7 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Set workCategory
-     *
-     * @param WorkCategory $workCategory
+     * Set workCategory.
      *
      * @return Work
      */
@@ -573,7 +574,7 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Get workCategory
+     * Get workCategory.
      *
      * @return WorkCategory
      */
@@ -582,9 +583,7 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Add contribution
-     *
-     * @param Contribution $contribution
+     * Add contribution.
      *
      * @return Work
      */
@@ -595,16 +594,14 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Remove contribution
-     *
-     * @param Contribution $contribution
+     * Remove contribution.
      */
-    public function removeContribution(Contribution $contribution) {
+    public function removeContribution(Contribution $contribution) : void {
         $this->contributions->removeElement($contribution);
     }
 
     /**
-     * Get contributions
+     * Get contributions.
      *
      * @return Collection
      */
@@ -613,9 +610,7 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Add date
-     *
-     * @param DateYear $date
+     * Add date.
      *
      * @return Work
      */
@@ -626,16 +621,14 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Remove date
-     *
-     * @param DateYear $date
+     * Remove date.
      */
-    public function removeDate(DateYear $date) {
+    public function removeDate(DateYear $date) : void {
         $this->dates->removeElement($date);
     }
 
     /**
-     * Get dates
+     * Get dates.
      *
      * @return Collection
      */
@@ -644,19 +637,18 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Set dates
-     * 
+     * Set dates.
+     *
      * @param Collection|DateYear[] $dates
      */
     public function setDates($dates) {
         $this->dates = $dates;
+
         return $this;
     }
 
     /**
-     * Add subject
-     *
-     * @param Subject $subject
+     * Add subject.
      *
      * @return Work
      */
@@ -667,16 +659,14 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Remove subject
-     *
-     * @param Subject $subject
+     * Remove subject.
      */
-    public function removeSubject(Subject $subject) {
+    public function removeSubject(Subject $subject) : void {
         $this->subjects->removeElement($subject);
     }
 
     /**
-     * Get subjects
+     * Get subjects.
      *
      * @return Collection
      */
@@ -685,25 +675,26 @@ class Work extends AbstractEntity {
     }
 
     public function setSubjects($subjects) {
-        if( ! $subjects) {
+        if ( ! $subjects) {
             $this->subjects = new ArrayCollection();
-        } else if(is_array($subjects)) {
-            $this->subjects = new ArrayCollection($subjects);
         } else {
-            $this->subjects = $subjects;
+            if (is_array($subjects)) {
+                $this->subjects = new ArrayCollection($subjects);
+            } else {
+                $this->subjects = $subjects;
+            }
         }
+
         return $this;
     }
 
     /**
-     * Add checkedBy
-     *
-     * @param User $checkedBy
+     * Add checkedBy.
      *
      * @return Work
      */
     public function addCheckedBy(User $checkedBy) {
-        if (!$this->checkedBy->contains($checkedBy)) {
+        if ( ! $this->checkedBy->contains($checkedBy)) {
             $this->checkedBy->add($checkedBy);
         }
 
@@ -711,84 +702,76 @@ class Work extends AbstractEntity {
     }
 
     /**
-     * Remove checkedBy
-     *
-     * @param User $checkedBy
+     * Remove checkedBy.
      */
-    public function removeCheckedBy(User $checkedBy) {
+    public function removeCheckedBy(User $checkedBy) : void {
         $this->checkedBy->removeElement($checkedBy);
     }
 
     /**
-     * Get checkedBy
+     * Get checkedBy.
      *
      * @return Collection
      */
     public function getCheckedBy() {
         return $this->checkedBy;
     }
-    
+
     /**
      * @return Contribution
      */
     public function getFirstContribution() {
-        foreach($this->contributions as $contribution) {
-            if($contribution->getRole()->getName() === 'aut') {
+        foreach ($this->contributions as $contribution) {
+            if ('aut' === $contribution->getRole()->getName()) {
                 return $contribution;
             }
         }
-        if(count($this->contributions) > 0) {
+        if (count($this->contributions) > 0) {
             return $this->contributions[0];
         }
-        return null;
     }
 
-
     /**
-     * Set editorialNotes
+     * Set editorialNotes.
      *
      * @param string $editorialNotes
      *
      * @return Work
      */
-    public function setEditorialNotes($editorialNotes)
-    {
+    public function setEditorialNotes($editorialNotes) {
         $this->editorialNotes = $editorialNotes;
 
         return $this;
     }
 
     /**
-     * Get editorialNotes
+     * Get editorialNotes.
      *
      * @return string
      */
-    public function getEditorialNotes()
-    {
+    public function getEditorialNotes() {
         return $this->editorialNotes;
     }
 
     /**
-     * Set complete
+     * Set complete.
      *
-     * @param boolean $complete
+     * @param bool $complete
      *
      * @return Work
      */
-    public function setComplete($complete)
-    {
+    public function setComplete($complete) {
         $this->complete = $complete;
 
         return $this;
     }
 
     /**
-     * Get complete
+     * Get complete.
      *
-     * @return boolean
+     * @return bool
      */
-    public function getComplete()
-    {
+    public function getComplete() {
         return $this->complete;
     }
 }

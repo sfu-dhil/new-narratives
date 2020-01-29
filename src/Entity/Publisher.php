@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -8,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Nines\UtilBundle\Entity\AbstractEntity;
 
 /**
- * Publisher
+ * Publisher.
  *
  * @ORM\Table(name="publisher", indexes={
  *  @ORM\Index(columns={"name"}, flags={"fulltext"})
@@ -16,7 +24,6 @@ use Nines\UtilBundle\Entity\AbstractEntity;
  * @ORM\Entity(repositoryClass="App\Repository\PublisherRepository")
  */
 class Publisher extends AbstractEntity {
-
     /**
      * @var string
      * @ORM\Column(type="string", length=600)
@@ -43,62 +50,52 @@ class Publisher extends AbstractEntity {
         return $this->name;
     }
 
-
     /**
-     * Add work
-     *
-     * @param Work $work
+     * Add work.
      *
      * @return Publisher
      */
-    public function addWork(Work $work)
-    {
+    public function addWork(Work $work) {
         $this->works[] = $work;
 
         return $this;
     }
 
     /**
-     * Remove work
-     *
-     * @param Work $work
+     * Remove work.
      */
-    public function removeWork(Work $work)
-    {
+    public function removeWork(Work $work) : void {
         $this->works->removeElement($work);
     }
 
     /**
-     * Get works
+     * Get works.
      *
      * @return Collection
      */
-    public function getWorks()
-    {
+    public function getWorks() {
         return $this->works;
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
      * @return Publisher
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 }

@@ -1,25 +1,32 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller;
 
 use App\Entity\WorkCategory;
 use App\Form\WorkCategoryType;
-
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * WorkCategory controller.
  *
  * @Route("/work_category")
  */
-class WorkCategoryController extends AbstractController  implements PaginatorAwareInterface {
+class WorkCategoryController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
@@ -28,17 +35,16 @@ class WorkCategoryController extends AbstractController  implements PaginatorAwa
      * @Route("/", name="work_category_index", methods={"GET"})
      *
      * @Template()
-     * @param Request $request
      */
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:WorkCategory e ORDER BY e.id';
         $query = $em->createQuery($dql);
-        ;
+
         $workCategories = $this->paginator->paginate($query, $request->query->getint('page', 1), 25);
 
-        return array(
+        return [
             'workCategories' => $workCategories,
-        );
+        ];
     }
 
     /**
@@ -48,8 +54,6 @@ class WorkCategoryController extends AbstractController  implements PaginatorAwa
      *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
-     *
-     * @param Request $request
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
         $workCategory = new WorkCategory();
@@ -61,13 +65,14 @@ class WorkCategoryController extends AbstractController  implements PaginatorAwa
             $em->flush();
 
             $this->addFlash('success', 'The new workCategory was created.');
-            return $this->redirectToRoute('work_category_show', array('id' => $workCategory->getId()));
+
+            return $this->redirectToRoute('work_category_show', ['id' => $workCategory->getId()]);
         }
 
-        return array(
+        return [
             'workCategory' => $workCategory,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -76,13 +81,11 @@ class WorkCategoryController extends AbstractController  implements PaginatorAwa
      * @Route("/{id}", name="work_category_show", methods={"GET"})
      *
      * @Template()
-     * @param WorkCategory $workCategory
      */
     public function showAction(WorkCategory $workCategory) {
-
-        return array(
+        return [
             'workCategory' => $workCategory,
-        );
+        ];
     }
 
     /**
@@ -92,9 +95,6 @@ class WorkCategoryController extends AbstractController  implements PaginatorAwa
      *
      * @Template()
      * @Security("has_role('ROLE_CONTENT_EDITOR')")
-     *
-     * @param Request $request
-     * @param WorkCategory $workCategory
      */
     public function editAction(Request $request, WorkCategory $workCategory, EntityManagerInterface $em) {
         $editForm = $this->createForm(WorkCategoryType::class, $workCategory);
@@ -103,13 +103,14 @@ class WorkCategoryController extends AbstractController  implements PaginatorAwa
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em->flush();
             $this->addFlash('success', 'The workCategory has been updated.');
-            return $this->redirectToRoute('work_category_show', array('id' => $workCategory->getId()));
+
+            return $this->redirectToRoute('work_category_show', ['id' => $workCategory->getId()]);
         }
 
-        return array(
+        return [
             'workCategory' => $workCategory,
             'edit_form' => $editForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -118,9 +119,6 @@ class WorkCategoryController extends AbstractController  implements PaginatorAwa
      * @Route("/{id}/delete", name="work_category_delete", methods={"GET"})
      *
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
-     *
-     * @param Request $request
-     * @param WorkCategory $workCategory
      */
     public function deleteAction(Request $request, WorkCategory $workCategory, EntityManagerInterface $em) {
         $em->remove($workCategory);
@@ -129,5 +127,4 @@ class WorkCategoryController extends AbstractController  implements PaginatorAwa
 
         return $this->redirectToRoute('work_category_index');
     }
-
 }

@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -8,13 +16,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Nines\UtilBundle\Entity\AbstractTerm;
 
 /**
- * Subject
+ * Subject.
  *
  * @ORM\Table(name="subject")
  * @ORM\Entity(repositoryClass="App\Repository\SubjectRepository")
  */
 class Subject extends AbstractTerm {
-
     /**
      * @var SubjectSource
      * @ORM\ManyToOne(targetEntity="SubjectSource", inversedBy="subjects")
@@ -33,62 +40,50 @@ class Subject extends AbstractTerm {
         $this->works = new ArrayCollection();
     }
 
-
     /**
-     * Set subjectSource
-     *
-     * @param SubjectSource $subjectSource
+     * Set subjectSource.
      *
      * @return Subject
      */
-    public function setSubjectSource(SubjectSource $subjectSource)
-    {
+    public function setSubjectSource(SubjectSource $subjectSource) {
         $this->subjectSource = $subjectSource;
 
         return $this;
     }
 
     /**
-     * Get subjectSource
+     * Get subjectSource.
      *
      * @return SubjectSource
      */
-    public function getSubjectSource()
-    {
+    public function getSubjectSource() {
         return $this->subjectSource;
     }
 
     /**
-     * Add work
-     *
-     * @param Work $work
+     * Add work.
      *
      * @return Subject
      */
-    public function addWork(Work $work)
-    {
+    public function addWork(Work $work) {
         $this->works[] = $work;
 
         return $this;
     }
 
     /**
-     * Remove work
-     *
-     * @param Work $work
+     * Remove work.
      */
-    public function removeWork(Work $work)
-    {
+    public function removeWork(Work $work) : void {
         $this->works->removeElement($work);
     }
 
     /**
-     * Get works
+     * Get works.
      *
      * @return Collection
      */
-    public function getWorks()
-    {
+    public function getWorks() {
         return $this->works;
     }
 }
