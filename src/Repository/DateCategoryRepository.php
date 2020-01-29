@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\Entity\DateCategory;
 use App\Entity\DateYear;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -22,6 +23,6 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class DateCategoryRepository extends ServiceEntityRepository {
     public function __construct(ManagerRegistry $registry) {
-        parent::__construct($registry, DateYear::class);
+        parent::__construct($registry, DateCategory::class);
     }
 }

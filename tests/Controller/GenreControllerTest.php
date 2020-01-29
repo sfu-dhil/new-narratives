@@ -8,147 +8,147 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace AppBundle\Tests\Controller;
+namespace App\Tests\Controller;
 
-use AppBundle\DataFixtures\ORM\LoadGenre;
-use AppBundle\Entity\Genre;
-use Nines\UserBundle\DataFixtures\ORM\LoadUser;
-use Nines\UtilBundle\Tests\Util\BaseTestCase;
+use App\DataFixtures\GenreFixtures;
+use App\Entity\Genre;
+use Nines\UserBundle\DataFixtures\UserFixtures;
+use Nines\UtilBundle\Tests\ControllerBaseCase;
 
-class GenreControllerTest extends BaseTestCase {
-    protected function getFixtures() {
+class GenreControllerTest extends ControllerBaseCase {
+    protected function fixtures() : array {
         return [
-            LoadUser::class,
-            LoadGenre::class,
+            UserFixtures::class,
+            GenreFixtures::class,
         ];
     }
 
     public function testAnonIndex() : void {
-        $client = $this->makeClient();
-        $crawler = $client->request('GET', '/genre/');
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
+
+        $crawler = $this->client->request('GET', '/genre/');
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('New')->filter('.btn')->count());
     }
 
     public function testUserIndex() : void {
-        $client = $this->makeClient(LoadUser::USER);
-        $crawler = $client->request('GET', '/genre/');
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $this->login('user.user');
+        $crawler = $this->client->request('GET', '/genre/');
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('New')->filter('.btn')->count());
     }
 
     public function testAdminIndex() : void {
-        $client = $this->makeClient(LoadUser::ADMIN);
-        $crawler = $client->request('GET', '/genre/');
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $this->login('user.admin');
+        $crawler = $this->client->request('GET', '/genre/');
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(1, $crawler->selectLink('New')->filter('.btn')->count());
     }
 
     public function testAnonShow() : void {
-        $client = $this->makeClient();
-        $crawler = $client->request('GET', '/genre/1');
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
+
+        $crawler = $this->client->request('GET', '/genre/1');
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Edit')->count());
         $this->assertSame(0, $crawler->selectLink('Delete')->count());
     }
 
     public function testUserShow() : void {
-        $client = $this->makeClient(LoadUser::USER);
-        $crawler = $client->request('GET', '/genre/1');
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $this->login('user.user');
+        $crawler = $this->client->request('GET', '/genre/1');
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Edit')->count());
         $this->assertSame(0, $crawler->selectLink('Delete')->count());
     }
 
     public function testAdminShow() : void {
-        $client = $this->makeClient(LoadUser::ADMIN);
-        $crawler = $client->request('GET', '/genre/1');
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $this->login('user.admin');
+        $crawler = $this->client->request('GET', '/genre/1');
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(1, $crawler->selectLink('Edit')->count());
         $this->assertSame(1, $crawler->selectLink('Delete')->count());
     }
 
     public function testAnonEdit() : void {
-        $client = $this->makeClient();
-        $crawler = $client->request('GET', '/genre/1/edit');
-        $this->assertSame(302, $client->getResponse()->getStatusCode());
+
+        $crawler = $this->client->request('GET', '/genre/1/edit');
+        $this->assertSame(302, $this->client->getResponse()->getStatusCode());
     }
 
     public function testUserEdit() : void {
-        $client = $this->makeClient(LoadUser::USER);
-        $crawler = $client->request('GET', '/genre/1/edit');
-        $this->assertSame(403, $client->getResponse()->getStatusCode());
+        $this->login('user.user');
+        $crawler = $this->client->request('GET', '/genre/1/edit');
+        $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
 
     public function testAdminEdit() : void {
-        $client = $this->makeClient(LoadUser::ADMIN);
-        $formCrawler = $client->request('GET', '/genre/1/edit');
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $this->login('user.admin');
+        $formCrawler = $this->client->request('GET', '/genre/1/edit');
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Update')->form([
             'genre[name]' => 'cheese.',
             'genre[label]' => 'cheese label',
             'genre[description]' => 'a type of cheese',
         ]);
 
-        $client->submit($form);
-        $this->assertTrue($client->getResponse()->isRedirect('/genre/1'));
-        $responseCrawler = $client->followRedirect();
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $this->client->submit($form);
+        $this->assertTrue($this->client->getResponse()->isRedirect('/genre/1'));
+        $responseCrawler = $this->client->followRedirect();
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(1, $responseCrawler->filter('td:contains("cheese.")')->count());
     }
 
     public function testAnonNew() : void {
-        $client = $this->makeClient();
-        $crawler = $client->request('GET', '/genre/new');
-        $this->assertSame(302, $client->getResponse()->getStatusCode());
+
+        $crawler = $this->client->request('GET', '/genre/new');
+        $this->assertSame(302, $this->client->getResponse()->getStatusCode());
     }
 
     public function testUserNew() : void {
-        $client = $this->makeClient(LoadUser::USER);
-        $crawler = $client->request('GET', '/genre/new');
-        $this->assertSame(403, $client->getResponse()->getStatusCode());
+        $this->login('user.user');
+        $crawler = $this->client->request('GET', '/genre/new');
+        $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
 
     public function testAdminNew() : void {
-        $client = $this->makeClient(LoadUser::ADMIN);
-        $formCrawler = $client->request('GET', '/genre/new');
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $this->login('user.admin');
+        $formCrawler = $this->client->request('GET', '/genre/new');
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $form = $formCrawler->selectButton('Create')->form([
             'genre[name]' => 'cheese.',
             'genre[label]' => 'cheese label',
             'genre[description]' => 'a type of cheese',
         ]);
 
-        $client->submit($form);
-        $this->assertTrue($client->getResponse()->isRedirect());
-        $responseCrawler = $client->followRedirect();
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $this->client->submit($form);
+        $this->assertTrue($this->client->getResponse()->isRedirect());
+        $responseCrawler = $this->client->followRedirect();
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(1, $responseCrawler->filter('td:contains("cheese.")')->count());
     }
 
     public function testAnonDelete() : void {
-        $client = $this->makeClient();
-        $crawler = $client->request('GET', '/genre/1/delete');
-        $this->assertSame(302, $client->getResponse()->getStatusCode());
+
+        $crawler = $this->client->request('GET', '/genre/1/delete');
+        $this->assertSame(302, $this->client->getResponse()->getStatusCode());
     }
 
     public function testUserDelete() : void {
-        $client = $this->makeClient(LoadUser::USER);
-        $crawler = $client->request('GET', '/genre/1/delete');
-        $this->assertSame(403, $client->getResponse()->getStatusCode());
+        $this->login('user.user');
+        $crawler = $this->client->request('GET', '/genre/1/delete');
+        $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
 
     public function testAdminDelete() : void {
-        $preCount = count($this->em->getRepository(Genre::class)->findAll());
-        $client = $this->makeClient(LoadUser::ADMIN);
-        $crawler = $client->request('GET', '/genre/1/delete');
-        $this->assertSame(302, $client->getResponse()->getStatusCode());
-        $this->assertTrue($client->getResponse()->isRedirect());
-        $responseCrawler = $client->followRedirect();
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $preCount = count($this->entityManager->getRepository(Genre::class)->findAll());
+        $this->login('user.admin');
+        $crawler = $this->client->request('GET', '/genre/1/delete');
+        $this->assertSame(302, $this->client->getResponse()->getStatusCode());
+        $this->assertTrue($this->client->getResponse()->isRedirect());
+        $responseCrawler = $this->client->followRedirect();
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
 
-        $this->em->clear();
-        $postCount = count($this->em->getRepository(Genre::class)->findAll());
+        $this->entityManager->clear();
+        $postCount = count($this->entityManager->getRepository(Genre::class)->findAll());
         $this->assertSame($preCount - 1, $postCount);
     }
 }

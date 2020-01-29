@@ -125,7 +125,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      * @Route("/new", name="person_new", methods={"GET","POST"})
      *
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
         $person = new Person();
@@ -166,7 +166,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      * @Route("/{id}/edit", name="person_edit", methods={"GET","POST"})
      *
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function editAction(Request $request, Person $person, EntityManagerInterface $em) {
         $editForm = $this->createForm(PersonType::class, $person);
@@ -190,9 +190,10 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      *
      * @Route("/{id}/delete", name="person_delete", methods={"GET"})
      *
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      */
     public function deleteAction(Request $request, Person $person, EntityManagerInterface $em) {
+        $em->remove($person);
         $em->flush();
         $this->addFlash('success', 'The person was deleted.');
 

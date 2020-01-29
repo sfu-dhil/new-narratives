@@ -20,20 +20,23 @@ use App\Entity\Role;
 use App\Entity\Subject;
 use App\Entity\Work;
 use App\Entity\WorkCategory;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Exception;
 use Monolog\Logger;
 use Nines\UserBundle\Entity\User;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class ImportCsvCommand extends ContainerAwareCommand {
+class ImportCsvCommand extends Command {
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -54,9 +57,11 @@ class ImportCsvCommand extends ContainerAwareCommand {
 
     private $lineNumber;
 
-    public function __construct($name = null) {
+    public function __construct($name = null, EntityManagerInterface $em, LoggerInterface $logger) {
         parent::__construct($name);
         $this->commit = false;
+        $this->em = $em;
+        $this->logger = $logger;
     }
 
     private function persist($entity) : void {
@@ -381,12 +386,6 @@ break;
         } catch (\Exception $e) {
             $this->logger->critical($e->getMessage() . " in CSV file after line {$this->lineNumber}");
         }
-    }
-
-    public function setContainer(ContainerInterface $container = null) : void {
-        parent::setContainer($container);
-        $this->em = $container->get('doctrine')->getManager();
-        $this->logger = $container->get('logger');
     }
 
     public function importPublisher($work, $publisherCol) : void {

@@ -53,7 +53,7 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
      * @Route("/new", name="genre_new", methods={"GET","POST"})
      *
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
         $genre = new Genre();
@@ -94,7 +94,7 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
      * @Route("/{id}/edit", name="genre_edit", methods={"GET","POST"})
      *
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function editAction(Request $request, Genre $genre, EntityManagerInterface $em) {
         $editForm = $this->createForm(GenreType::class, $genre);
@@ -118,7 +118,7 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
      *
      * @Route("/{id}/delete", name="genre_delete", methods={"GET"})
      *
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      */
     public function deleteAction(Request $request, Genre $genre, EntityManagerInterface $em) {
         $em->remove($genre);

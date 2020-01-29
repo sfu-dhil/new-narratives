@@ -52,7 +52,7 @@ class DateCategoryController extends AbstractController implements PaginatorAwar
      * @Route("/new", name="date_category_new", methods={"GET","POST"})
      *
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
         $dateCategory = new DateCategory();
@@ -93,7 +93,7 @@ class DateCategoryController extends AbstractController implements PaginatorAwar
      * @Route("/{id}/edit", name="date_category_edit", methods={"GET","POST"})
      *
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function editAction(Request $request, DateCategory $dateCategory, EntityManagerInterface $em) {
         $editForm = $this->createForm(DateCategoryType::class, $dateCategory);
@@ -117,7 +117,7 @@ class DateCategoryController extends AbstractController implements PaginatorAwar
      *
      * @Route("/{id}/delete", name="date_category_delete", methods={"GET"})
      *
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      */
     public function deleteAction(Request $request, DateCategory $dateCategory, EntityManagerInterface $em) {
         $em->remove($dateCategory);

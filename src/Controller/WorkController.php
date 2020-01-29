@@ -82,7 +82,7 @@ class WorkController extends AbstractController implements PaginatorAwareInterfa
      * @Route("/new", name="work_new", methods={"GET","POST"})
      *
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
         $work = new Work();
@@ -123,7 +123,7 @@ class WorkController extends AbstractController implements PaginatorAwareInterfa
      * @Route("/{id}/edit", name="work_edit", methods={"GET","POST"})
      *
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function editAction(Request $request, Work $work, EntityManagerInterface $em) {
         $editForm = $this->createForm(WorkType::class, $work);
@@ -147,7 +147,7 @@ class WorkController extends AbstractController implements PaginatorAwareInterfa
      *
      * @Route("/{id}/delete", name="work_delete", methods={"GET"})
      *
-     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function deleteAction(Request $request, Work $work, EntityManagerInterface $em) {
         $em->remove($work);
@@ -163,7 +163,7 @@ class WorkController extends AbstractController implements PaginatorAwareInterfa
      * @Route("/{id}/dates", name="work_dates")
      *
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function workDatesAction(Request $request, Work $work, EntityManagerInterface $em) {
         $form = $this->createForm(WorkDatesType::class, $work, [
@@ -190,7 +190,7 @@ class WorkController extends AbstractController implements PaginatorAwareInterfa
      * @Route("/{id}/contributions", name="work_contributions")
      *
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      */
     public function workContributionsAction(Request $request, Work $work, EntityManagerInterface $em) {
         $form = $this->createForm(WorkContributionsType::class, $work, [

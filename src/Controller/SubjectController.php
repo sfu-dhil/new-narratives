@@ -77,7 +77,7 @@ class SubjectController extends AbstractController implements PaginatorAwareInte
      * @Route("/new", name="subject_new", methods={"GET","POST"})
      *
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
         $subject = new Subject();
@@ -118,7 +118,7 @@ class SubjectController extends AbstractController implements PaginatorAwareInte
      * @Route("/{id}/edit", name="subject_edit", methods={"GET","POST"})
      *
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function editAction(Request $request, Subject $subject, EntityManagerInterface $em) {
         $editForm = $this->createForm(SubjectType::class, $subject);
@@ -142,7 +142,7 @@ class SubjectController extends AbstractController implements PaginatorAwareInte
      *
      * @Route("/{id}/delete", name="subject_delete", methods={"GET"})
      *
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      */
     public function deleteAction(Request $request, Subject $subject, EntityManagerInterface $em) {
         $em->remove($subject);

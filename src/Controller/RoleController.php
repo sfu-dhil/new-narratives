@@ -53,7 +53,7 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
      * @Route("/new", name="role_new", methods={"GET","POST"})
      *
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
         $role = new Role();
@@ -94,7 +94,7 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
      * @Route("/{id}/edit", name="role_edit", methods={"GET","POST"})
      *
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function editAction(Request $request, Role $role, EntityManagerInterface $em) {
         $editForm = $this->createForm(RoleType::class, $role);
@@ -118,7 +118,7 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
      *
      * @Route("/{id}/delete", name="role_delete", methods={"GET"})
      *
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      */
     public function deleteAction(Request $request, Role $role, EntityManagerInterface $em) {
         $em->remove($role);

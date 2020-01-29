@@ -8,9 +8,9 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace AppBundle\Tests\Entity;
+namespace App\Tests\Entity;
 
-use AppBundle\Entity\DateYear;
+use App\Entity\DateYear;
 use PHPUnit\Framework\TestCase;
 
 class YearDateTest extends TestCase {
@@ -184,10 +184,10 @@ class YearDateTest extends TestCase {
             ['c1800', 'c1800'],
             ['c1799', 'C1799'],
 
-            [null, -1800],
-            [null, '-1800'],
-            [null, '-c1800'],
-            [null, '-C1800'],
+            ['', -1800],
+            ['', '-1800'],
+            ['', '-c1800'],
+            ['', '-C1800'],
 
             ['1800', '1800-'],
             ['c1800', 'c1800-'],
@@ -267,9 +267,9 @@ class YearDateTest extends TestCase {
             ['c1800', '-c1800'],
             ['c1800', '-C1800'],
 
-            [null, '1800-'],
-            [null, 'c1800-'],
-            [null, 'C1800-'],
+            ['', '1800-'],
+            ['', 'c1800-'],
+            ['', 'C1800-'],
 
             ['1805', '1800-1805'],
             ['1805', 'c1800-1805'],

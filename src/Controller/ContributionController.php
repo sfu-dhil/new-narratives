@@ -32,7 +32,7 @@ class ContributionController extends AbstractController implements PaginatorAwar
      *
      * @Route("/", name="contribution_index", methods={"GET"})
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      *
      * @return array
      */

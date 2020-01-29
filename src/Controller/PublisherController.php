@@ -78,7 +78,7 @@ class PublisherController extends AbstractController implements PaginatorAwareIn
      * @Route("/new", name="publisher_new", methods={"GET","POST"})
      *
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
         $publisher = new Publisher();
@@ -119,7 +119,7 @@ class PublisherController extends AbstractController implements PaginatorAwareIn
      * @Route("/{id}/edit", name="publisher_edit", methods={"GET","POST"})
      *
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function editAction(Request $request, Publisher $publisher, EntityManagerInterface $em) {
         $editForm = $this->createForm(PublisherType::class, $publisher);
@@ -143,7 +143,7 @@ class PublisherController extends AbstractController implements PaginatorAwareIn
      *
      * @Route("/{id}/delete", name="publisher_delete", methods={"GET"})
      *
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      */
     public function deleteAction(Request $request, Publisher $publisher, EntityManagerInterface $em) {
         $em->remove($publisher);

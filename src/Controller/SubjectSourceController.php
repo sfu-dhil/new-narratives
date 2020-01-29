@@ -53,7 +53,7 @@ class SubjectSourceController extends AbstractController implements PaginatorAwa
      * @Route("/new", name="subject_source_new", methods={"GET","POST"})
      *
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
         $subjectSource = new SubjectSource();
@@ -94,7 +94,7 @@ class SubjectSourceController extends AbstractController implements PaginatorAwa
      * @Route("/{id}/edit", name="subject_source_edit", methods={"GET","POST"})
      *
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function editAction(Request $request, SubjectSource $subjectSource, EntityManagerInterface $em) {
         $editForm = $this->createForm(SubjectSourceType::class, $subjectSource);
@@ -118,7 +118,7 @@ class SubjectSourceController extends AbstractController implements PaginatorAwa
      *
      * @Route("/{id}/delete", name="subject_source_delete", methods={"GET"})
      *
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      */
     public function deleteAction(Request $request, SubjectSource $subjectSource, EntityManagerInterface $em) {
         $em->remove($subjectSource);

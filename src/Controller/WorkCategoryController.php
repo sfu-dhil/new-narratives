@@ -53,7 +53,7 @@ class WorkCategoryController extends AbstractController implements PaginatorAwar
      * @Route("/new", name="work_category_new", methods={"GET","POST"})
      *
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
         $workCategory = new WorkCategory();
@@ -94,7 +94,7 @@ class WorkCategoryController extends AbstractController implements PaginatorAwar
      * @Route("/{id}/edit", name="work_category_edit", methods={"GET","POST"})
      *
      * @Template()
-     * @Security("has_role('ROLE_CONTENT_EDITOR')")
+     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function editAction(Request $request, WorkCategory $workCategory, EntityManagerInterface $em) {
         $editForm = $this->createForm(WorkCategoryType::class, $workCategory);
@@ -118,7 +118,7 @@ class WorkCategoryController extends AbstractController implements PaginatorAwar
      *
      * @Route("/{id}/delete", name="work_category_delete", methods={"GET"})
      *
-     * @Security("has_role('ROLE_CONTENT_ADMIN')")
+     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      */
     public function deleteAction(Request $request, WorkCategory $workCategory, EntityManagerInterface $em) {
         $em->remove($workCategory);
