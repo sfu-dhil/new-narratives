@@ -28,3 +28,4 @@ public/yarn
 # deployer configuration
 config/deploy.yaml
 jquery.collection.js
+public/docs
