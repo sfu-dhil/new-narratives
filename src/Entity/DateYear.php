@@ -76,7 +76,7 @@ class DateYear extends AbstractEntity {
      *
      * @return string
      */
-    public function __toString() {
+    public function __toString() : string {
         if (($this->startCirca === $this->endCirca) && ($this->start === $this->end)) {
             return ($this->startCirca ? 'c' : '') . $this->start;
         }

@@ -46,7 +46,7 @@ class Contribution extends AbstractEntity {
      *
      * @return string
      */
-    public function __toString() {
+    public function __toString() : string {
         return "{$this->role->getLabel()} . {$this->person->getFullName()}";
     }
 
