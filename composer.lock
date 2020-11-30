@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "18e8177ba7b9e287c20586f774b6ab46",
+    "content-hash": "81b501e89916ab270def1dd41ed47776",
     "packages": [
         {
             "name": "OCLC/Auth",
@@ -13,6 +13,12 @@
                 "type": "git",
                 "url": "https://github.com/OCLC-Developer-Network/oclc-auth-php.git",
                 "reference": "4325ec1c3bcf546a25ede715348f4f8630d57e31"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/OCLC-Developer-Network/oclc-auth-php/zipball/4325ec1c3bcf546a25ede715348f4f8630d57e31",
+                "reference": "4325ec1c3bcf546a25ede715348f4f8630d57e31",
+                "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
@@ -47,6 +53,10 @@
             "keywords": [
                 "OCLC"
             ],
+            "support": {
+                "source": "https://github.com/OCLC-Developer-Network/oclc-auth-php/tree/4.3.1",
+                "issues": "https://github.com/OCLC-Developer-Network/oclc-auth-php/issues"
+            },
             "time": "2019-02-21T00:36:49+00:00"
         },
         {

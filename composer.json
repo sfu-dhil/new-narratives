@@ -46,7 +46,7 @@
     },
     "repositories": [
         {
-            "type": "git",
+            "type": "github",
             "url": "https://github.com/OCLC-Developer-Network/oclc-auth-php.git"
         },
         {
