@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "81b501e89916ab270def1dd41ed47776",
+    "content-hash": "80de7754cb7b75416f93eea88417e980",
     "packages": [
         {
             "name": "OCLC/Auth",
@@ -702,37 +702,35 @@
         },
         {
             "name": "doctrine/doctrine-migrations-bundle",
-            "version": "3.0.1",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineMigrationsBundle.git",
-                "reference": "96e730b0ffa0bb39c0f913c1966213f1674bf249"
+                "reference": "955077b68c377310cf9538fc982be11d36ab75d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineMigrationsBundle/zipball/96e730b0ffa0bb39c0f913c1966213f1674bf249",
-                "reference": "96e730b0ffa0bb39c0f913c1966213f1674bf249",
+                "url": "https://api.github.com/repos/doctrine/DoctrineMigrationsBundle/zipball/955077b68c377310cf9538fc982be11d36ab75d4",
+                "reference": "955077b68c377310cf9538fc982be11d36ab75d4",
                 "shasum": ""
             },
             "require": {
                 "doctrine/doctrine-bundle": "~1.0|~2.0",
-                "doctrine/migrations": "~3.0",
-                "php": "^7.2",
+                "doctrine/migrations": "^2.2",
+                "php": "^7.1",
                 "symfony/framework-bundle": "~3.4|~4.0|~5.0"
             },
             "require-dev": {
                 "doctrine/coding-standard": "^5.0",
-                "doctrine/orm": "^2.6",
-                "phpstan/phpstan": "^0.11",
-                "phpstan/phpstan-deprecation-rules": "^0.11",
-                "phpstan/phpstan-phpunit": "^0.11",
-                "phpstan/phpstan-strict-rules": "^0.11",
+                "mikey179/vfsstream": "^1.6",
+                "phpstan/phpstan": "^0.9.2",
+                "phpstan/phpstan-strict-rules": "^0.9",
                 "phpunit/phpunit": "^6.4|^7.0"
             },
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0.x-dev"
+                    "dev-master": "2.1.x-dev"
                 }
             },
             "autoload": {
@@ -770,7 +768,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/DoctrineMigrationsBundle/issues",
-                "source": "https://github.com/doctrine/DoctrineMigrationsBundle/tree/3.0.x"
+                "source": "https://github.com/doctrine/DoctrineMigrationsBundle/tree/2.2.1"
             },
             "funding": [
                 {
@@ -786,7 +784,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-06-15T06:04:38+00:00"
+            "time": "2020-11-11T09:59:06+00:00"
         },
         {
             "name": "doctrine/event-manager",
@@ -1129,45 +1127,42 @@
         },
         {
             "name": "doctrine/migrations",
-            "version": "3.0.1",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/migrations.git",
-                "reference": "69eaf2ca5bc48357b43ddbdc31ccdffc0e2a0882"
+                "reference": "100e85a8509b521f010901890f042e9401a3043b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/migrations/zipball/69eaf2ca5bc48357b43ddbdc31ccdffc0e2a0882",
-                "reference": "69eaf2ca5bc48357b43ddbdc31ccdffc0e2a0882",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/100e85a8509b521f010901890f042e9401a3043b",
+                "reference": "100e85a8509b521f010901890f042e9401a3043b",
                 "shasum": ""
             },
             "require": {
-                "doctrine/dbal": "^2.10",
-                "doctrine/event-manager": "^1.0",
-                "ocramius/package-versions": "^1.3",
+                "composer/package-versions-deprecated": "^1.8",
+                "doctrine/dbal": "^2.9",
                 "ocramius/proxy-manager": "^2.0.2",
-                "php": "^7.2",
-                "psr/log": "^1.1.3",
+                "php": "^7.1",
                 "symfony/console": "^3.4||^4.0||^5.0",
                 "symfony/stopwatch": "^3.4||^4.0||^5.0"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^7.0",
+                "doctrine/coding-standard": "^6.0",
                 "doctrine/orm": "^2.6",
-                "doctrine/persistence": "^1.3||^2.0",
-                "doctrine/sql-formatter": "^1.0",
                 "ext-pdo_sqlite": "*",
-                "phpstan/phpstan": "^0.12",
-                "phpstan/phpstan-deprecation-rules": "^0.12",
-                "phpstan/phpstan-phpunit": "^0.12",
-                "phpstan/phpstan-strict-rules": "^0.12",
-                "phpstan/phpstan-symfony": "^0.12",
-                "phpunit/phpunit": "^8.4",
+                "jdorn/sql-formatter": "^1.1",
+                "mikey179/vfsstream": "^1.6",
+                "phpstan/phpstan": "^0.10",
+                "phpstan/phpstan-deprecation-rules": "^0.10",
+                "phpstan/phpstan-phpunit": "^0.10",
+                "phpstan/phpstan-strict-rules": "^0.10",
+                "phpunit/phpunit": "^7.0",
                 "symfony/process": "^3.4||^4.0||^5.0",
                 "symfony/yaml": "^3.4||^4.0||^5.0"
             },
             "suggest": {
-                "doctrine/sql-formatter": "Allows to generate formatted SQL with the diff command.",
+                "jdorn/sql-formatter": "Allows to generate formatted SQL with the diff command.",
                 "symfony/yaml": "Allows the use of yaml for migration configuration files."
             },
             "bin": [
@@ -1176,7 +1171,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0.x-dev"
+                    "dev-master": "2.2.x-dev"
                 }
             },
             "autoload": {
@@ -1212,7 +1207,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/migrations/issues",
-                "source": "https://github.com/doctrine/migrations/tree/3.0.1"
+                "source": "https://github.com/doctrine/migrations/tree/2.3.0"
             },
             "funding": [
                 {
@@ -1228,7 +1223,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-06-21T08:55:42+00:00"
+            "time": "2020-07-04T16:28:35+00:00"
         },
         {
             "name": "doctrine/orm",
@@ -5255,23 +5250,24 @@
         },
         {
             "name": "symfony/orm-pack",
-            "version": "v2.0.0",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/orm-pack.git",
-                "reference": "46aa731f213140388ee11ff3d2b6776a3b4a0d90"
+                "reference": "21ac491414b5815e5ebb7425908c1d1568d2e775"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/orm-pack/zipball/46aa731f213140388ee11ff3d2b6776a3b4a0d90",
-                "reference": "46aa731f213140388ee11ff3d2b6776a3b4a0d90",
+                "url": "https://api.github.com/repos/symfony/orm-pack/zipball/21ac491414b5815e5ebb7425908c1d1568d2e775",
+                "reference": "21ac491414b5815e5ebb7425908c1d1568d2e775",
                 "shasum": ""
             },
             "require": {
                 "composer/package-versions-deprecated": "*",
-                "doctrine/doctrine-bundle": "*",
-                "doctrine/doctrine-migrations-bundle": "*",
-                "doctrine/orm": "*"
+                "doctrine/common": "^2",
+                "doctrine/doctrine-bundle": "^2",
+                "doctrine/doctrine-migrations-bundle": "^2",
+                "doctrine/orm": "^2"
             },
             "type": "symfony-pack",
             "notification-url": "https://packagist.org/downloads/",
@@ -5281,7 +5277,7 @@
             "description": "A pack for the Doctrine ORM",
             "support": {
                 "issues": "https://github.com/symfony/orm-pack/issues",
-                "source": "https://github.com/symfony/orm-pack/tree/master"
+                "source": "https://github.com/symfony/orm-pack/tree/v1.2.0"
             },
             "funding": [
                 {
@@ -5297,7 +5293,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-07-14T14:34:28+00:00"
+            "time": "2020-08-31T10:20:18+00:00"
         },
         {
             "name": "symfony/polyfill-intl-grapheme",
