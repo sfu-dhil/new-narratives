@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b7f93e70d5657faaa550c7a1a6d454a3",
+    "content-hash": "18e8177ba7b9e287c20586f774b6ab46",
     "packages": [
         {
             "name": "OCLC/Auth",
