@@ -23,7 +23,7 @@
         "symfony/intl": "4.4.*",
         "symfony/mailer": "4.4.*",
         "symfony/monolog-bundle": "^3.1",
-        "symfony/orm-pack": "^2.0.0",
+        "symfony/orm-pack": "*",
         "symfony/process": "4.4.*",
         "symfony/security-bundle": "4.4.*",
         "symfony/serializer-pack": "1.0.*",
@@ -32,7 +32,7 @@
         "symfony/validator": "4.4.*",
         "symfony/web-link": "4.4.*",
         "symfony/yaml": "4.4.*",
-        "tetranz/select2entity-bundle": "^3.0",
+        "tetranz/select2entity-bundle": "^2.9",
         "twig/string-extra": "^3.0",
         "ubermichael/nines": "4.x-dev"
     },
