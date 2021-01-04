@@ -34,7 +34,7 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
      *
      * @Route("/", name="role_index", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Role e ORDER BY e.id';
@@ -50,9 +50,9 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
     /**
      * Creates a new Role entity.
      *
-     * @Route("/new", name="role_new", methods={"GET","POST"})
+     * @Route("/new", name="role_new", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
@@ -80,7 +80,7 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
      *
      * @Route("/{id}", name="role_show", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function showAction(Role $role) {
         return [
@@ -91,9 +91,9 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
     /**
      * Displays a form to edit an existing Role entity.
      *
-     * @Route("/{id}/edit", name="role_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="role_edit", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function editAction(Request $request, Role $role, EntityManagerInterface $em) {

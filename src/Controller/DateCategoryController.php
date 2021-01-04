@@ -34,7 +34,7 @@ class DateCategoryController extends AbstractController implements PaginatorAwar
      *
      * @Route("/", name="date_category_index", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:DateCategory e ORDER BY e.id';
@@ -49,9 +49,9 @@ class DateCategoryController extends AbstractController implements PaginatorAwar
     /**
      * Creates a new DateCategory entity.
      *
-     * @Route("/new", name="date_category_new", methods={"GET","POST"})
+     * @Route("/new", name="date_category_new", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
@@ -79,7 +79,7 @@ class DateCategoryController extends AbstractController implements PaginatorAwar
      *
      * @Route("/{id}", name="date_category_show", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function showAction(DateCategory $dateCategory) {
         return [
@@ -90,9 +90,9 @@ class DateCategoryController extends AbstractController implements PaginatorAwar
     /**
      * Displays a form to edit an existing DateCategory entity.
      *
-     * @Route("/{id}/edit", name="date_category_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="date_category_edit", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function editAction(Request $request, DateCategory $dateCategory, EntityManagerInterface $em) {

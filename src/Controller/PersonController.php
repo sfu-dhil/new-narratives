@@ -61,7 +61,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      *
      * @Route("/", name="person_index", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Person e ORDER BY e.id';
@@ -100,7 +100,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      *
      * @Route("/search", name="person_search", methods={"GET"})
      *
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -122,9 +122,9 @@ class PersonController extends AbstractController implements PaginatorAwareInter
     /**
      * Creates a new Person entity.
      *
-     * @Route("/new", name="person_new", methods={"GET","POST"})
+     * @Route("/new", name="person_new", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
@@ -152,7 +152,7 @@ class PersonController extends AbstractController implements PaginatorAwareInter
      *
      * @Route("/{id}", name="person_show", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function showAction(Person $person) {
         return [
@@ -163,9 +163,9 @@ class PersonController extends AbstractController implements PaginatorAwareInter
     /**
      * Displays a form to edit an existing Person entity.
      *
-     * @Route("/{id}/edit", name="person_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="person_edit", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function editAction(Request $request, Person $person, EntityManagerInterface $em) {

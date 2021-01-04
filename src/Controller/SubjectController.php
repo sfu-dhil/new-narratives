@@ -36,7 +36,7 @@ class SubjectController extends AbstractController implements PaginatorAwareInte
      *
      * @Route("/", name="subject_index", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Subject e ORDER BY e.id';
@@ -54,7 +54,7 @@ class SubjectController extends AbstractController implements PaginatorAwareInte
      *
      * @Route("/search", name="subject_search", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function searchAction(Request $request, SubjectRepository $repo) {
         $form = $this->createForm(SubjectSearchType::class);
@@ -74,9 +74,9 @@ class SubjectController extends AbstractController implements PaginatorAwareInte
     /**
      * Creates a new Subject entity.
      *
-     * @Route("/new", name="subject_new", methods={"GET","POST"})
+     * @Route("/new", name="subject_new", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
@@ -104,7 +104,7 @@ class SubjectController extends AbstractController implements PaginatorAwareInte
      *
      * @Route("/{id}", name="subject_show", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function showAction(Subject $subject) {
         return [
@@ -115,9 +115,9 @@ class SubjectController extends AbstractController implements PaginatorAwareInte
     /**
      * Displays a form to edit an existing Subject entity.
      *
-     * @Route("/{id}/edit", name="subject_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="subject_edit", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function editAction(Request $request, Subject $subject, EntityManagerInterface $em) {

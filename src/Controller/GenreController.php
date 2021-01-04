@@ -34,7 +34,7 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
      *
      * @Route("/", name="genre_index", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Genre e ORDER BY e.id';
@@ -50,9 +50,9 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
     /**
      * Creates a new Genre entity.
      *
-     * @Route("/new", name="genre_new", methods={"GET","POST"})
+     * @Route("/new", name="genre_new", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
@@ -80,7 +80,7 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
      *
      * @Route("/{id}", name="genre_show", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function showAction(Genre $genre) {
         return [
@@ -91,9 +91,9 @@ class GenreController extends AbstractController implements PaginatorAwareInterf
     /**
      * Displays a form to edit an existing Genre entity.
      *
-     * @Route("/{id}/edit", name="genre_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="genre_edit", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function editAction(Request $request, Genre $genre, EntityManagerInterface $em) {

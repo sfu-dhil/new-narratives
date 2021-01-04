@@ -20,7 +20,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * Person.
  *
  * @ORM\Table(name="person", indexes={
- *  @ORM\Index(columns={"full_name"}, flags={"fulltext"})
+ *     @ORM\Index(columns={"full_name"}, flags={"fulltext"})
  * })
  * @ORM\Entity(repositoryClass="App\Repository\PersonRepository")
  */
@@ -46,8 +46,6 @@ class Person extends AbstractEntity {
 
     /**
      * Return a string representation.
-     *
-     * @return string
      */
     public function __toString() : string {
         return $this->fullName;

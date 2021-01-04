@@ -20,9 +20,9 @@ use Nines\UtilBundle\Entity\AbstractEntity;
  * Work.
  *
  * @ORM\Table(name="work", indexes={
- *  @ORM\Index(columns={"title"}, flags={"fulltext"}),
- *  @ORM\Index(columns={"publication_place"}, flags={"fulltext"}),
- *  @ORM\Index(columns={"dedication"}, flags={"fulltext"})
+ *     @ORM\Index(columns={"title"}, flags={"fulltext"}),
+ *     @ORM\Index(columns={"publication_place"}, flags={"fulltext"}),
+ *     @ORM\Index(columns={"dedication"}, flags={"fulltext"})
  * })
  * @ORM\Entity(repositoryClass="App\Repository\WorkRepository")
  */
@@ -185,8 +185,6 @@ class Work extends AbstractEntity {
 
     /**
      * Return a string representation.
-     *
-     * @return string
      */
     public function __toString() : string {
         return $this->title;

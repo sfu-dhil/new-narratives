@@ -21,18 +21,15 @@ use App\Entity\Subject;
 use App\Entity\Work;
 use App\Entity\WorkCategory;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ObjectManager;
 use Exception;
 use Monolog\Logger;
 use Nines\UserBundle\Entity\User;
 use Psr\Log\LoggerInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ImportCsvCommand extends Command {
     /**
@@ -87,6 +84,7 @@ class ImportCsvCommand extends Command {
 
     protected function headersToIndex($row) {
         $index = [];
+
         foreach ($row as $idx => $header) {
             $index[$header] = $idx;
         }
@@ -169,7 +167,7 @@ class ImportCsvCommand extends Command {
 
         try {
             $date->setValue($dateCol);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->logger->error("Malformed date line:{$this->lineNumber}. '{$dateCol}'");
 
             return;
@@ -247,10 +245,8 @@ class ImportCsvCommand extends Command {
         switch ($row[15]) {
             case '': break;
             case 'Yes': $work->setIllustrations(true);
-
 break;
             case 'No': $work->setIllustrations(false);
-
 break;
             default: $this->logger->error("Unexpected value line {$this->lineNumber} col 15: '{$row[15]}'");
         }
@@ -258,10 +254,8 @@ break;
         switch ($row[16]) {
             case '': break;
             case 'Yes': $work->setFrontispiece(true);
-
 break;
             case 'No': $work->setFrontispiece(false);
-
 break;
             default: $this->logger->error("Unexpected value line {$this->lineNumber} col 16: '{$row[16]}'");
         }
@@ -288,10 +282,8 @@ break;
         switch ($row[26]) {
             case '': break;
             case 'Yes': $work->setTranscription(true);
-
 break;
             case 'No': $work->setTranscription(false);
-
 break;
             default: $this->logger->error("Unexpected value line {$this->lineNumber} col 26: '{$row[26]}'");
         }
@@ -312,7 +304,7 @@ break;
         if ($row[31]) {
             foreach (preg_split('/\\s?[\\/,]\\s*/', $row[31]) as $checkedBy) {
                 $checkedBy = preg_replace('/^\\s|\\s$/', '', $checkedBy);
-                $checkedBy = strtoupper($checkedBy);
+                $checkedBy = mb_strtoupper($checkedBy);
                 $checkedBy = preg_replace('/[^A-Z]/', '', $checkedBy);
                 if ( ! preg_match('/^[A-Z]+$/', $checkedBy)) {
                     $this->logger->error("Invalid initials on line {$this->lineNumber} col 31: '{$checkedBy}'");
@@ -333,13 +325,11 @@ break;
             $work->setEditorialNotes($row[39]);
         }
 
-        switch (strtolower(trim($row[40]))) {
+        switch (mb_strtolower(trim($row[40]))) {
             case '': break;
             case 'yes': $work->setComplete(true);
-
 break;
             case 'no': $work->setComplete(false);
-
 break;
             default: $this->logger->error("Unexpected value on line {$this->lineNumber} col 40: '{$row[40]}'");
         }
@@ -383,7 +373,7 @@ break;
 
         try {
             $this->import($file, $output);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->logger->critical($e->getMessage() . " in CSV file after line {$this->lineNumber}");
         }
     }
@@ -405,6 +395,7 @@ break;
 
     public function addSubjects($work, $subjects = []) : void {
         $repo = $this->em->getRepository(Subject::class);
+
         foreach ($subjects as $label) {
             if ( ! $label) {
                 continue;

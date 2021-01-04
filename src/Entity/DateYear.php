@@ -73,8 +73,6 @@ class DateYear extends AbstractEntity {
 
     /**
      * Return a string representation.
-     *
-     * @return string
      */
     public function __toString() : string {
         if (($this->startCirca === $this->endCirca) && ($this->start === $this->end)) {
@@ -91,9 +89,9 @@ class DateYear extends AbstractEntity {
     }
 
     public function setValue($value) {
-        $value = strtolower(preg_replace('/\s*/', '', (string) $value));
+        $value = mb_strtolower(preg_replace('/\s*/', '', (string) $value));
         $matches = [];
-        if (false === strpos($value, '-')) {
+        if (false === mb_strpos($value, '-')) {
             // not a range
             if (preg_match(YEAR_RE, $value, $matches)) {
                 $this->startCirca = ('c' === $matches[1]);
@@ -122,8 +120,8 @@ class DateYear extends AbstractEntity {
 
     public function isRange() {
         return
-            ($this->startCirca !== $this->endCirca) ||
-            ($this->start !== $this->end);
+            ($this->startCirca !== $this->endCirca)
+            || ($this->start !== $this->end);
     }
 
     public function hasStart() {

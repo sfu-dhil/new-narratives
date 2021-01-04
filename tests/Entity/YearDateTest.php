@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace App\Tests\Entity;
 
 use App\Entity\DateYear;
+use Exception;
 use PHPUnit\Framework\TestCase;
 
 class YearDateTest extends TestCase {
@@ -61,11 +62,12 @@ class YearDateTest extends TestCase {
 
     /**
      * @dataProvider setBadValueData
-     * @expectedException \Exception
      *
      * @param mixed $value
      */
     public function testSetBadValue($value) : void {
+        $this->expectException(Exception::class);
+
         $date = new DateYear();
         $date->setValue($value);
         $this->fail('Set value did not throw an exception.');

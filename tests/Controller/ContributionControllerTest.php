@@ -23,7 +23,6 @@ class ContributionControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonIndex() : void {
-
         $crawler = $this->client->request('GET', '/contribution/');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
     }
