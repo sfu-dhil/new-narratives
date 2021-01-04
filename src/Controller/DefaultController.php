@@ -22,7 +22,7 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
 
     /**
      * @Route("/", name="homepage")
-     * @Template()
+     * @Template
      */
     public function indexAction(Request $request) {
         // replace this example code with whatever you need
@@ -31,7 +31,7 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
 
     /**
      * @Route("/privacy", name="privacy")
-     * @Template()
+     * @Template
      */
     public function privacyAction(Request $request) : void {
     }

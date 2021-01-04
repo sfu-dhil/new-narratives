@@ -34,7 +34,7 @@ class SubjectSourceController extends AbstractController implements PaginatorAwa
      *
      * @Route("/", name="subject_source_index", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:SubjectSource e ORDER BY e.id';
@@ -50,9 +50,9 @@ class SubjectSourceController extends AbstractController implements PaginatorAwa
     /**
      * Creates a new SubjectSource entity.
      *
-     * @Route("/new", name="subject_source_new", methods={"GET","POST"})
+     * @Route("/new", name="subject_source_new", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
@@ -80,7 +80,7 @@ class SubjectSourceController extends AbstractController implements PaginatorAwa
      *
      * @Route("/{id}", name="subject_source_show", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function showAction(SubjectSource $subjectSource) {
         return [
@@ -91,9 +91,9 @@ class SubjectSourceController extends AbstractController implements PaginatorAwa
     /**
      * Displays a form to edit an existing SubjectSource entity.
      *
-     * @Route("/{id}/edit", name="subject_source_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="subject_source_edit", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function editAction(Request $request, SubjectSource $subjectSource, EntityManagerInterface $em) {

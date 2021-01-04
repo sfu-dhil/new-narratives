@@ -35,7 +35,7 @@ class PublisherController extends AbstractController implements PaginatorAwareIn
      *
      * @Route("/", name="publisher_index", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Publisher e ORDER BY e.id';
@@ -53,7 +53,7 @@ class PublisherController extends AbstractController implements PaginatorAwareIn
      *
      * @Route("/search", name="publisher_search", methods={"GET"})
      *
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -75,9 +75,9 @@ class PublisherController extends AbstractController implements PaginatorAwareIn
     /**
      * Creates a new Publisher entity.
      *
-     * @Route("/new", name="publisher_new", methods={"GET","POST"})
+     * @Route("/new", name="publisher_new", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
@@ -105,7 +105,7 @@ class PublisherController extends AbstractController implements PaginatorAwareIn
      *
      * @Route("/{id}", name="publisher_show", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function showAction(Publisher $publisher) {
         return [
@@ -116,9 +116,9 @@ class PublisherController extends AbstractController implements PaginatorAwareIn
     /**
      * Displays a form to edit an existing Publisher entity.
      *
-     * @Route("/{id}/edit", name="publisher_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="publisher_edit", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function editAction(Request $request, Publisher $publisher, EntityManagerInterface $em) {

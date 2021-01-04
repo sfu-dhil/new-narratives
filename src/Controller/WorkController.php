@@ -38,7 +38,7 @@ class WorkController extends AbstractController implements PaginatorAwareInterfa
      *
      * @Route("/", name="work_index", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:Work e ORDER BY e.id';
@@ -56,7 +56,7 @@ class WorkController extends AbstractController implements PaginatorAwareInterfa
      *
      * @Route("/search", name="work_search", methods={"GET"})
      *
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -79,9 +79,9 @@ class WorkController extends AbstractController implements PaginatorAwareInterfa
     /**
      * Creates a new Work entity.
      *
-     * @Route("/new", name="work_new", methods={"GET","POST"})
+     * @Route("/new", name="work_new", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
@@ -109,7 +109,7 @@ class WorkController extends AbstractController implements PaginatorAwareInterfa
      *
      * @Route("/{id}", name="work_show", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function showAction(Work $work) {
         return [
@@ -120,9 +120,9 @@ class WorkController extends AbstractController implements PaginatorAwareInterfa
     /**
      * Displays a form to edit an existing Work entity.
      *
-     * @Route("/{id}/edit", name="work_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="work_edit", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function editAction(Request $request, Work $work, EntityManagerInterface $em) {
@@ -162,7 +162,7 @@ class WorkController extends AbstractController implements PaginatorAwareInterfa
      *
      * @Route("/{id}/dates", name="work_dates")
      *
-     * @Template()
+     * @Template
      * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function workDatesAction(Request $request, Work $work, EntityManagerInterface $em) {
@@ -189,7 +189,7 @@ class WorkController extends AbstractController implements PaginatorAwareInterfa
      *
      * @Route("/{id}/contributions", name="work_contributions")
      *
-     * @Template()
+     * @Template
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      */
     public function workContributionsAction(Request $request, Work $work, EntityManagerInterface $em) {

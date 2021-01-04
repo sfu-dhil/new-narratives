@@ -19,7 +19,7 @@ use Nines\UtilBundle\Entity\AbstractEntity;
  * Publisher.
  *
  * @ORM\Table(name="publisher", indexes={
- *  @ORM\Index(columns={"name"}, flags={"fulltext"})
+ *     @ORM\Index(columns={"name"}, flags={"fulltext"})
  * })
  * @ORM\Entity(repositoryClass="App\Repository\PublisherRepository")
  */
@@ -43,8 +43,6 @@ class Publisher extends AbstractEntity {
 
     /**
      * Return a string representation.
-     *
-     * @return string
      */
     public function __toString() : string {
         return $this->name;

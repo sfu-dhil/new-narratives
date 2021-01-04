@@ -31,7 +31,7 @@ class ContributionController extends AbstractController implements PaginatorAwar
      * Lists all Contribution entities.
      *
      * @Route("/", name="contribution_index", methods={"GET"})
-     * @Template()
+     * @Template
      * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      *
      * @return array

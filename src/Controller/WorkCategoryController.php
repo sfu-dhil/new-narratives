@@ -34,7 +34,7 @@ class WorkCategoryController extends AbstractController implements PaginatorAwar
      *
      * @Route("/", name="work_category_index", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function indexAction(Request $request, EntityManagerInterface $em) {
         $dql = 'SELECT e FROM App:WorkCategory e ORDER BY e.id';
@@ -50,9 +50,9 @@ class WorkCategoryController extends AbstractController implements PaginatorAwar
     /**
      * Creates a new WorkCategory entity.
      *
-     * @Route("/new", name="work_category_new", methods={"GET","POST"})
+     * @Route("/new", name="work_category_new", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function newAction(Request $request, EntityManagerInterface $em) {
@@ -80,7 +80,7 @@ class WorkCategoryController extends AbstractController implements PaginatorAwar
      *
      * @Route("/{id}", name="work_category_show", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function showAction(WorkCategory $workCategory) {
         return [
@@ -91,9 +91,9 @@ class WorkCategoryController extends AbstractController implements PaginatorAwar
     /**
      * Displays a form to edit an existing WorkCategory entity.
      *
-     * @Route("/{id}/edit", name="work_category_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="work_category_edit", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      * @Security("is_granted('ROLE_CONTENT_EDITOR')")
      */
     public function editAction(Request $request, WorkCategory $workCategory, EntityManagerInterface $em) {

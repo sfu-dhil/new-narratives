@@ -16,10 +16,10 @@ use App\Entity\Work;
 use Doctrine\ORM\EntityManagerInterface;
 use DOMDocument;
 use DOMXPath;
+use Exception;
 use GuzzleHttp\Client;
 use OCLC\Auth\WSKey;
 use Psr\Log\LoggerInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -68,7 +68,7 @@ class UpdateSubjectsCommand extends Command {
         $client = new Client();
         $response = $client->request('GET', $url . "?wskey={$this->key}", ['http_errors' => false]);
         if (200 !== $response->getStatusCode()) {
-            throw new \Exception('Error: ' . $response->getStatusCode() . ': ' . $response->getReasonPhrase() . ' ' . $response->getBody());
+            throw new Exception('Error: ' . $response->getStatusCode() . ': ' . $response->getReasonPhrase() . ' ' . $response->getBody());
         }
 
         return $response->getBody()->getContents();
@@ -85,6 +85,7 @@ class UpdateSubjectsCommand extends Command {
         }
 
         $subjects = [];
+
         for ($i = 0; $i < $nodeList->length; $i++) {
             // node is a datafield element.
             $node = $nodeList->item($i);
@@ -93,6 +94,7 @@ class UpdateSubjectsCommand extends Command {
                 continue;
             }
             $subject = '';
+
             for ($j = 0; $j < $children->length; $j++) {
                 // child is a subfield element.
                 $child = $children->item($j);
@@ -158,6 +160,7 @@ class UpdateSubjectsCommand extends Command {
             $this->em->flush();
             $this->em->clear();
             $output->writeln($work->getId() . '-' . $work->getTitle());
+
             foreach ($work->getSubjects() as $s) {
                 $output->writeln('    ' . $s);
             }

@@ -32,7 +32,7 @@ class DateYearController extends AbstractController implements PaginatorAwareInt
      *
      * @Route("/", name="date_index", methods={"GET"})
      *
-     * @Template()
+     * @Template
      * @Security("has_role('ROLE_CONTENT_ADMIN')")
      */
     public function indexAction(Request $request, EntityManagerInterface $em) {

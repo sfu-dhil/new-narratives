@@ -24,7 +24,6 @@ class SubjectControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonIndex() : void {
-
         $crawler = $this->client->request('GET', '/subject/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('New')->filter('.btn')->count());
@@ -45,7 +44,6 @@ class SubjectControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonShow() : void {
-
         $crawler = $this->client->request('GET', '/subject/1');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Edit')->count());
@@ -69,7 +67,6 @@ class SubjectControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonEdit() : void {
-
         $crawler = $this->client->request('GET', '/subject/1/edit');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
     }
@@ -100,7 +97,6 @@ class SubjectControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonNew() : void {
-
         $crawler = $this->client->request('GET', '/subject/new');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
     }
@@ -131,7 +127,6 @@ class SubjectControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonDelete() : void {
-
         $crawler = $this->client->request('GET', '/subject/1/delete');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
     }

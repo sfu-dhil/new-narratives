@@ -24,7 +24,6 @@ class GenreControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonIndex() : void {
-
         $crawler = $this->client->request('GET', '/genre/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('New')->filter('.btn')->count());
@@ -45,7 +44,6 @@ class GenreControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonShow() : void {
-
         $crawler = $this->client->request('GET', '/genre/1');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Edit')->count());
@@ -69,7 +67,6 @@ class GenreControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonEdit() : void {
-
         $crawler = $this->client->request('GET', '/genre/1/edit');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
     }
@@ -98,7 +95,6 @@ class GenreControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonNew() : void {
-
         $crawler = $this->client->request('GET', '/genre/new');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
     }
@@ -127,7 +123,6 @@ class GenreControllerTest extends ControllerBaseCase {
     }
 
     public function testAnonDelete() : void {
-
         $crawler = $this->client->request('GET', '/genre/1/delete');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
     }
