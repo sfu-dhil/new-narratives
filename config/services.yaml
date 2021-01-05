@@ -11,10 +11,10 @@ parameters:
     asset.request_context.base_path: '%env(string:ROUTE_BASE)%'
     asset.request_context.secure: auto
 
-    dhil.piwik_enabled: '%env(bool:PIWIK_ENABLED)%'
-    dhil.piwik_url: null
-    dhil.piwik_siteid: null
-    dhil.piwik_domain: null
+    dhil.matomo_enabled: '%env(bool:MATOMO_ENABLED)%'
+    dhil.matomo_url: //matomo.lib.sfu.ca/library/
+    dhil.matomo_siteid: 34
+    dhil.matomo_domain: dhil.lib.sfu.ca/newn
 
     oclc.key: '%env(string:OCLC_KEY)%'
     oclc.secret: '%env(string:OCLC_SECRET)%'
