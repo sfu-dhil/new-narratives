@@ -17,7 +17,8 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * LoadSubjectSource form.
  */
-class SubjectSourceFixtures extends Fixture {
+class SubjectSourceFixtures extends Fixture
+{
     /**
      * {@inheritdoc}
      */

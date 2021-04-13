@@ -24,7 +24,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * })
  * @ORM\Entity(repositoryClass="App\Repository\PersonRepository")
  */
-class Person extends AbstractEntity {
+class Person extends AbstractEntity
+{
     /**
      * @var string
      * @ORM\Column(type="string", length=200)

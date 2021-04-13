@@ -24,7 +24,8 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route("/date")
  */
-class DateYearController extends AbstractController implements PaginatorAwareInterface {
+class DateYearController extends AbstractController implements PaginatorAwareInterface
+{
     use PaginatorTrait;
 
     /**

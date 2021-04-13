@@ -23,7 +23,8 @@ use Nines\UtilBundle\Entity\AbstractEntity;
  * })
  * @ORM\Entity(repositoryClass="App\Repository\PublisherRepository")
  */
-class Publisher extends AbstractEntity {
+class Publisher extends AbstractEntity
+{
     /**
      * @var string
      * @ORM\Column(type="string", length=600)

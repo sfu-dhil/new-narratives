@@ -8,6 +8,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/common": "^2.13",
+        "doctrine/doctrine-migrations-bundle": "3.0.*",
         "guzzlehttp/guzzle": "^6.5",
         "ninsuo/symfony-collection": "^2.1",
         "oclc/auth": "^4.3",

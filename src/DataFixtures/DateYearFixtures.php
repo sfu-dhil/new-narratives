@@ -18,7 +18,8 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * LoadDateYear form.
  */
-class DateYearFixtures extends Fixture implements DependentFixtureInterface {
+class DateYearFixtures extends Fixture implements DependentFixtureInterface
+{
     /**
      * {@inheritdoc}
      */
