@@ -18,7 +18,8 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * LoadSubject form.
  */
-class SubjectFixtures extends Fixture implements DependentFixtureInterface {
+class SubjectFixtures extends Fixture implements DependentFixtureInterface
+{
     /**
      * {@inheritdoc}
      */

@@ -15,7 +15,8 @@ use App\Entity\WorkCategory;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\Tests\ControllerBaseCase;
 
-class WorkCategoryControllerTest extends ControllerBaseCase {
+class WorkCategoryControllerTest extends ControllerBaseCase
+{
     protected function fixtures() : array {
         return [
             UserFixtures::class,

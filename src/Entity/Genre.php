@@ -21,7 +21,8 @@ use Nines\UtilBundle\Entity\AbstractTerm;
  * @ORM\Table(name="genre")
  * @ORM\Entity(repositoryClass="App\Repository\GenreRepository")
  */
-class Genre extends AbstractTerm {
+class Genre extends AbstractTerm
+{
     /**
      * @var Collection|Work[]
      * @ORM\OneToMany(targetEntity="Work", mappedBy="genre")

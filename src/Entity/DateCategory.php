@@ -21,7 +21,8 @@ use Nines\UtilBundle\Entity\AbstractTerm;
  * @ORM\Table(name="date_category")
  * @ORM\Entity(repositoryClass="App\Repository\DateCategoryRepository")
  */
-class DateCategory extends AbstractTerm {
+class DateCategory extends AbstractTerm
+{
     /**
      * @var Collection|DateYear[]
      * @ORM\OneToMany(targetEntity="DateYear", mappedBy="dateCategory")

@@ -37,7 +37,8 @@ use Symfony\Component\Serializer\Serializer;
  *
  * @Route("/person")
  */
-class PersonController extends AbstractController implements PaginatorAwareInterface {
+class PersonController extends AbstractController implements PaginatorAwareInterface
+{
     use PaginatorTrait;
 
     /**

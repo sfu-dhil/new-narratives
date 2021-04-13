@@ -23,7 +23,8 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ContributionType extends AbstractType {
+class ContributionType extends AbstractType
+{
     /**
      * @var ObjectManager
      */

@@ -17,7 +17,8 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * LoadPerson form.
  */
-class PersonFixtures extends Fixture {
+class PersonFixtures extends Fixture
+{
     /**
      * {@inheritdoc}
      */

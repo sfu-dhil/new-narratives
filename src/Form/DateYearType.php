@@ -19,7 +19,8 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DateYearType extends AbstractType {
+class DateYearType extends AbstractType
+{
     /**
      * @var ObjectManager
      */

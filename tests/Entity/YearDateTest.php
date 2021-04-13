@@ -14,7 +14,8 @@ use App\Entity\DateYear;
 use Exception;
 use PHPUnit\Framework\TestCase;
 
-class YearDateTest extends TestCase {
+class YearDateTest extends TestCase
+{
     /**
      * @dataProvider setValueData
      *

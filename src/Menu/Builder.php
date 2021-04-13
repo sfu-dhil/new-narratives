@@ -20,7 +20,8 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 /**
  * Class to build some menus for navigation.
  */
-class Builder implements ContainerAwareInterface {
+class Builder implements ContainerAwareInterface
+{
     use ContainerAwareTrait;
 
     public const CARET = ' ▾'; // U+25BE, black down-pointing small triangle.
