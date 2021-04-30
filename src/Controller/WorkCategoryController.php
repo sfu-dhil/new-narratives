@@ -26,8 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route("/work_category")
  */
-class WorkCategoryController extends AbstractController implements PaginatorAwareInterface
-{
+class WorkCategoryController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**

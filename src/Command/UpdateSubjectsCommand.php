@@ -27,8 +27,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * UpdateSubjectsCommand command.
  */
-class UpdateSubjectsCommand extends Command
-{
+class UpdateSubjectsCommand extends Command {
     public const BATCH_SIZE = 100;
 
     // append oclcid and ?wskey=

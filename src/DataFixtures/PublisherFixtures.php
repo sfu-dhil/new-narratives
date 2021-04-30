@@ -17,8 +17,7 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * LoadPublisher form.
  */
-class PublisherFixtures extends Fixture
-{
+class PublisherFixtures extends Fixture {
     /**
      * {@inheritdoc}
      */

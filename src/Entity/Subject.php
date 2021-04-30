@@ -21,8 +21,7 @@ use Nines\UtilBundle\Entity\AbstractTerm;
  * @ORM\Table(name="subject")
  * @ORM\Entity(repositoryClass="App\Repository\SubjectRepository")
  */
-class Subject extends AbstractTerm
-{
+class Subject extends AbstractTerm {
     /**
      * @var SubjectSource
      * @ORM\ManyToOne(targetEntity="SubjectSource", inversedBy="subjects")

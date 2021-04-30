@@ -18,8 +18,7 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * LoadWork form.
  */
-class WorkFixtures extends Fixture implements DependentFixtureInterface
-{
+class WorkFixtures extends Fixture implements DependentFixtureInterface {
     /**
      * {@inheritdoc}
      */

@@ -24,8 +24,7 @@ define('RANGE_RE', '/^(?:' . CIRCA_RE . ')?-(?:' . CIRCA_RE . ')?$/');
  * @ORM\Table(name="date_year")
  * @ORM\Entity(repositoryClass="App\Repository\DateYearRepository")
  */
-class DateYear extends AbstractEntity
-{
+class DateYear extends AbstractEntity {
     /**
      * @var int
      * @ORM\Column(type="integer", nullable=true)

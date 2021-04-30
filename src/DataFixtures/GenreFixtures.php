@@ -17,8 +17,7 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * LoadGenre form.
  */
-class GenreFixtures extends Fixture
-{
+class GenreFixtures extends Fixture {
     /**
      * {@inheritdoc}
      */
