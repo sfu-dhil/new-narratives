@@ -1,0 +1,27 @@
+<table class="table table-bordered table-condensed table-hover table-striped">
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Birth Date</th>
+            <th>Death Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for person in people %}
+            <tr>
+                <td>
+                    <a href="{{ path('person_show', { 'id': person.id }) }}">
+                        {{ person.fullName }}
+                    </a>
+                </td>
+                <td>
+                    {{ person.birthDate }}
+                </td>
+
+                <td>
+                    {{ person.deathDate }}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

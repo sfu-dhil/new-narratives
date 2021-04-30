@@ -1,0 +1,88 @@
+<table class='table table-bordered table-condensed table-hover table-striped'>
+    <tbody>
+        <tr>
+            <th>Full Name</th>
+            <td>
+                {{ person.fullName }}
+            </td>
+        </tr>
+        <tr>
+            <th>Birth Date</th>
+            <td>
+                {{ person.birthDate }}
+            </td>
+        </tr>
+        <tr>
+            <th>Death Date</th>
+            <td>
+                {{ person.deathDate }}
+            </td>
+        </tr>
+
+        <tr>
+            <th>Birth Place</th>
+            <td>
+                {% if person.birthPlace %}
+                    <a href='{{ path("place_show", {"id": person.birthPlace.id}) }}'>{{ person.birthPlace }}</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Death Place</th>
+            <td>
+                {% if person.deathPlace %}
+                    <a href='{{ path("place_show", {"id": person.deathPlace.id}) }}'>{{ person.deathPlace }}</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Residences</th>
+            <td>
+                {% if person.residences|length > 0 %}
+                    <ul>
+                        {% for place in person.residences %}
+                            <li>
+                                <a href='{{ path("place_show", {"id":place.id }) }}'>
+                                    {{ place }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Biography</th>
+            <td>{{ person.biography|raw }}</td>
+        </tr>
+        <tr>
+            <th>Links</th>
+            <td>
+                {% embed '@NinesMedia/link/partial/list.html.twig' with {
+                    'entity': person } %}
+                {% endembed %}
+            </td>
+        </tr>
+        <tr>
+            <th>Created</th>
+            <td>{{ person.created|date }}</td>
+        </tr>
+        <tr>
+            <th>Updated</th>
+            <td>{{ person.updated|date }}</td>
+        </tr>
+    </tbody>
+</table>
+
+{% if person.contributions|length > 0 %}
+    <h2>Works</h2>
+    <ul>
+        {% for contribution in person.contributions %}
+            <li>
+                {% include 'work/workBrief.html.twig' with {'work': contribution.work} %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{{ person.biography|raw }}

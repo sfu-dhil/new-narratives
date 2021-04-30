@@ -119,6 +119,10 @@ class Builder implements ContainerAwareInterface {
             'label' => 'People',
             'route' => 'person_index',
         ]);
+        $browse->addChild('place', [
+            'label' => 'Places',
+            'route' => 'place_index',
+        ]);
         $browse->addChild('publisher', [
             'label' => 'Publishers',
             'route' => 'publisher_index',
@@ -144,7 +148,7 @@ class Builder implements ContainerAwareInterface {
             'route' => 'work_category_index',
         ]);
 
-        if ($this->hasRole('ROLE_CONTENT_ADMIN')) {
+        if ($this->hasRole('ROLE_ADMIN')) {
             $browse->addChild('divider', [
                 'label' => '',
             ]);

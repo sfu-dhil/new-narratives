@@ -10,21 +10,21 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use App\DataFixtures\PersonFixtures;
-use App\Repository\PersonRepository;
+use App\DataFixtures\PlaceFixtures;
+use App\Repository\PlaceRepository;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\Tests\ControllerBaseCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class PersonTest extends ControllerBaseCase {
+class PlaceControllerTest extends ControllerBaseCase {
     // Change this to HTTP_OK when the site is public.
     private const ANON_RESPONSE_CODE = Response::HTTP_OK;
 
-    private const TYPEAHEAD_QUERY = 'fullname';
+    private const TYPEAHEAD_QUERY = 'name';
 
     protected function fixtures() : array {
         return [
-            PersonFixtures::class,
+            PlaceFixtures::class,
             UserFixtures::class,
         ];
     }
@@ -34,7 +34,7 @@ class PersonTest extends ControllerBaseCase {
      * @group index
      */
     public function testAnonIndex() : void {
-        $crawler = $this->client->request('GET', '/person/');
+        $crawler = $this->client->request('GET', '/place/');
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('New')->filter('.btn')->count());
     }
@@ -45,7 +45,7 @@ class PersonTest extends ControllerBaseCase {
      */
     public function testUserIndex() : void {
         $this->login('user.user');
-        $crawler = $this->client->request('GET', '/person/');
+        $crawler = $this->client->request('GET', '/place/');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('New')->filter('.btn')->count());
     }
@@ -56,7 +56,7 @@ class PersonTest extends ControllerBaseCase {
      */
     public function testAdminIndex() : void {
         $this->login('user.admin');
-        $crawler = $this->client->request('GET', '/person/');
+        $crawler = $this->client->request('GET', '/place/');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertSame(1, $crawler->selectLink('New')->filter('.btn')->count());
     }
@@ -66,7 +66,7 @@ class PersonTest extends ControllerBaseCase {
      * @group show
      */
     public function testAnonShow() : void {
-        $crawler = $this->client->request('GET', '/person/1');
+        $crawler = $this->client->request('GET', '/place/1');
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Edit')->count());
     }
@@ -77,7 +77,7 @@ class PersonTest extends ControllerBaseCase {
      */
     public function testUserShow() : void {
         $this->login('user.user');
-        $crawler = $this->client->request('GET', '/person/1');
+        $crawler = $this->client->request('GET', '/place/1');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Edit')->count());
     }
@@ -88,7 +88,7 @@ class PersonTest extends ControllerBaseCase {
      */
     public function testAdminShow() : void {
         $this->login('user.admin');
-        $crawler = $this->client->request('GET', '/person/1');
+        $crawler = $this->client->request('GET', '/place/1');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertSame(1, $crawler->selectLink('Edit')->count());
     }
@@ -98,7 +98,7 @@ class PersonTest extends ControllerBaseCase {
      * @group typeahead
      */
     public function testAnonTypeahead() : void {
-        $this->client->request('GET', '/person/typeahead?q=' . self::TYPEAHEAD_QUERY);
+        $this->client->request('GET', '/place/typeahead?q=' . self::TYPEAHEAD_QUERY);
         $response = $this->client->getResponse();
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
         if (self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
@@ -116,7 +116,7 @@ class PersonTest extends ControllerBaseCase {
      */
     public function testUserTypeahead() : void {
         $this->login('user.user');
-        $this->client->request('GET', '/person/typeahead?q=' . self::TYPEAHEAD_QUERY);
+        $this->client->request('GET', '/place/typeahead?q=' . self::TYPEAHEAD_QUERY);
         $response = $this->client->getResponse();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertSame('application/json', $response->headers->get('content-type'));
@@ -130,7 +130,7 @@ class PersonTest extends ControllerBaseCase {
      */
     public function testAdminTypeahead() : void {
         $this->login('user.admin');
-        $this->client->request('GET', '/person/typeahead?q=' . self::TYPEAHEAD_QUERY);
+        $this->client->request('GET', '/place/typeahead?q=' . self::TYPEAHEAD_QUERY);
         $response = $this->client->getResponse();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertSame('application/json', $response->headers->get('content-type'));
@@ -143,7 +143,7 @@ class PersonTest extends ControllerBaseCase {
      * @group edit
      */
     public function testAnonEdit() : void {
-        $crawler = $this->client->request('GET', '/person/1/edit');
+        $crawler = $this->client->request('GET', '/place/1/edit');
         $this->assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());
     }
@@ -154,7 +154,7 @@ class PersonTest extends ControllerBaseCase {
      */
     public function testUserEdit() : void {
         $this->login('user.user');
-        $crawler = $this->client->request('GET', '/person/1/edit');
+        $crawler = $this->client->request('GET', '/place/1/edit');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
 
@@ -164,24 +164,22 @@ class PersonTest extends ControllerBaseCase {
      */
     public function testAdminEdit() : void {
         $this->login('user.admin');
-        $formCrawler = $this->client->request('GET', '/person/1/edit');
+        $formCrawler = $this->client->request('GET', '/place/1/edit');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Save')->form([
-            'person[fullName]' => 'Updated FullName',
-            'person[birthDate]' => '1800-02-05',
-            'person[deathDate]' => '1800-05-05',
-            'person[biography]' => 'Updated Biography',
+            'place[name]' => 'Updated Name',
+            'place[state]' => 'Updated State',
+            'place[country]' => 'Updated Country',
         ]);
 
         $this->client->submit($form);
-        $this->assertTrue($this->client->getResponse()->isRedirect('/person/1'));
+        $this->assertTrue($this->client->getResponse()->isRedirect('/place/1'));
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Updated FullName")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("1800-02-05")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("1800-05-05")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Updated Biography")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("Updated Name")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("Updated State")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("Updated Country")')->count());
     }
 
     /**
@@ -189,7 +187,7 @@ class PersonTest extends ControllerBaseCase {
      * @group new
      */
     public function testAnonNew() : void {
-        $crawler = $this->client->request('GET', '/person/new');
+        $crawler = $this->client->request('GET', '/place/new');
         $this->assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());
     }
@@ -199,7 +197,7 @@ class PersonTest extends ControllerBaseCase {
      * @group new
      */
     public function testAnonNewPopup() : void {
-        $crawler = $this->client->request('GET', '/person/new_popup');
+        $crawler = $this->client->request('GET', '/place/new_popup');
         $this->assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());
     }
@@ -210,7 +208,7 @@ class PersonTest extends ControllerBaseCase {
      */
     public function testUserNew() : void {
         $this->login('user.user');
-        $crawler = $this->client->request('GET', '/person/new');
+        $crawler = $this->client->request('GET', '/place/new');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
 
@@ -220,7 +218,7 @@ class PersonTest extends ControllerBaseCase {
      */
     public function testUserNewPopup() : void {
         $this->login('user.user');
-        $crawler = $this->client->request('GET', '/person/new_popup');
+        $crawler = $this->client->request('GET', '/place/new_popup');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
 
@@ -230,24 +228,22 @@ class PersonTest extends ControllerBaseCase {
      */
     public function testAdminNew() : void {
         $this->login('user.admin');
-        $formCrawler = $this->client->request('GET', '/person/new');
+        $formCrawler = $this->client->request('GET', '/place/new');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Save')->form([
-            'person[fullName]' => 'New FullName',
-            'person[birthDate]' => '1800-02-05',
-            'person[deathDate]' => '1800-05-05',
-            'person[biography]' => 'New Biography',
+            'place[name]' => 'New Name',
+            'place[state]' => 'New State',
+            'place[country]' => 'New Country',
         ]);
 
         $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("New FullName")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("1800-02-05")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("1800-05-05")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("New Biography")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("New Name")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("New State")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("New Country")')->count());
     }
 
     /**
@@ -256,24 +252,22 @@ class PersonTest extends ControllerBaseCase {
      */
     public function testAdminNewPopup() : void {
         $this->login('user.admin');
-        $formCrawler = $this->client->request('GET', '/person/new_popup');
+        $formCrawler = $this->client->request('GET', '/place/new_popup');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Save')->form([
-            'person[fullName]' => 'New FullName',
-            'person[birthDate]' => '1800-02-05',
-            'person[deathDate]' => '1800-05-05',
-            'person[biography]' => 'New Biography',
+            'place[name]' => 'New Name',
+            'place[state]' => 'New State',
+            'place[country]' => 'New Country',
         ]);
 
         $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("New FullName")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("1800-02-05")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("1800-05-05")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("New Biography")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("New Name")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("New State")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("New Country")')->count());
     }
 
     /**
@@ -281,11 +275,11 @@ class PersonTest extends ControllerBaseCase {
      * @group delete
      */
     public function testAdminDelete() : void {
-        $repo = self::$container->get(PersonRepository::class);
+        $repo = self::$container->get(PlaceRepository::class);
         $preCount = count($repo->findAll());
 
         $this->login('user.admin');
-        $crawler = $this->client->request('GET', '/person/1');
+        $crawler = $this->client->request('GET', '/place/1');
         $form = $crawler->selectButton('Delete')->form();
         $this->client->submit($form);
 

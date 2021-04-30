@@ -16,5 +16,5 @@ twig:
         matomo_siteid: '%dhil.matomo_siteid%'
         matomo_domain: '%dhil.matomo_domain%'
     date:
-        format: d.m.Y, H:i:s
+        format: Y-d-m, H:i:s
         interval_format: '%%d days'
