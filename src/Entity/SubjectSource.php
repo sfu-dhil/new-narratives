@@ -21,8 +21,7 @@ use Nines\UtilBundle\Entity\AbstractTerm;
  * @ORM\Table(name="subject_source")
  * @ORM\Entity(repositoryClass="App\Repository\SubjectSourceRepository")
  */
-class SubjectSource extends AbstractTerm
-{
+class SubjectSource extends AbstractTerm {
     /**
      * @var Collection|Subject[]
      * @ORM\OneToMany(targetEntity="Subject", mappedBy="subjectSource")

@@ -26,8 +26,7 @@ use Nines\UtilBundle\Entity\AbstractEntity;
  * })
  * @ORM\Entity(repositoryClass="App\Repository\WorkRepository")
  */
-class Work extends AbstractEntity
-{
+class Work extends AbstractEntity {
     /**
      * @var string
      * @ORM\Column(type="text")

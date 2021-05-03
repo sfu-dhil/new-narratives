@@ -26,8 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route("/subject_source")
  */
-class SubjectSourceController extends AbstractController implements PaginatorAwareInterface
-{
+class SubjectSourceController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**

@@ -30,8 +30,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route("/work")
  */
-class WorkController extends AbstractController implements PaginatorAwareInterface
-{
+class WorkController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**

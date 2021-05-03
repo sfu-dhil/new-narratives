@@ -17,8 +17,7 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * LoadRole form.
  */
-class RoleFixtures extends Fixture
-{
+class RoleFixtures extends Fixture {
     /**
      * {@inheritdoc}
      */

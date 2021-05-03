@@ -26,8 +26,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @author michael
  */
-class WorkSearchType extends AbstractType
-{
+class WorkSearchType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $builder->setMethod('get');
         $builder->add('title', TextType::class, [

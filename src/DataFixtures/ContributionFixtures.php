@@ -18,8 +18,7 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * LoadContribution form.
  */
-class ContributionFixtures extends Fixture implements DependentFixtureInterface
-{
+class ContributionFixtures extends Fixture implements DependentFixtureInterface {
     /**
      * {@inheritdoc}
      */

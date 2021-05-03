@@ -16,8 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class WorkDatesType extends AbstractType
-{
+class WorkDatesType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $work = $options['work'];
         $builder->add('dates', CollectionType::class, [
