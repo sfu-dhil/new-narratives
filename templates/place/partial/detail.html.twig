@@ -1,0 +1,81 @@
+<table class='table table-bordered table-condensed table-hover table-striped'>
+    <tbody>
+        <tr>
+            <th>Name</th>
+            <td>
+                {{ place.name }}
+            </td>
+        </tr>
+        <tr>
+            <th>State</th>
+            <td>
+                {{ place.state }}
+            </td>
+        </tr>
+        <tr>
+            <th>Country</th>
+            <td>
+                {{ place.country }}
+            </td>
+        </tr>
+
+        <tr>
+            <th>People Born</th>
+            <td>
+                {% if place.peopleBorn|length > 0 %}
+                    <ul>
+                        {% for person in place.peopleBorn %}
+                            <li>
+                                <a href='{{ path("person_show", {"id":person.id }) }}'>
+                                    {{ person }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>People Died</th>
+            <td>
+                {% if place.peopleDied|length > 0 %}
+                    <ul>
+                        {% for person in place.peopleDied %}
+                            <li>
+                                <a href='{{ path("person_show", {"id":person.id }) }}'>
+                                    {{ person }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Residents</th>
+            <td>
+                {% if place.residents|length > 0 %}
+                    <ul>
+                        {% for person in place.residents %}
+                            <li>
+                                <a href='{{ path("person_show", {"id":person.id }) }}'>
+                                    {{ person }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Created</th>
+            <td>{{ place.created|date }}</td>
+        </tr>
+        <tr>
+            <th>Updated</th>
+            <td>{{ place.updated|date }}</td>
+        </tr>
+    </tbody>
+</table>
+
+

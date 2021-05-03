@@ -19,6 +19,8 @@ parameters:
     oclc.key: '%env(string:OCLC_KEY)%'
     oclc.secret: '%env(string:OCLC_SECRET)%'
 
+    page_size: 25
+
 services:
     # default configuration for services in *this* file
     _defaults:

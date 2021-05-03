@@ -31,3 +31,4 @@ jquery.collection.js
 public/docs
 *.sql
 src/.preload.php
+data

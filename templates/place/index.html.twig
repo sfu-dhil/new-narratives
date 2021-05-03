@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Person List{% endblock %}
+{% block title %}Place List{% endblock %}
 
 {% block pageheader %}
-    <h1>Person List</h1>
+    <h1>Place List</h1>
     <p class="count">
-        Displaying {{ people|length }} people of {{ people.getTotalItemCount }} total.
+        Displaying {{ places|length }} places of {{ places.getTotalItemCount }} total.
     </p>
 {% endblock %}
 
@@ -14,20 +14,20 @@
     <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
             {% if is_granted('ROLE_CONTENT_ADMIN') %}
-                <a href="{{ path('person_new') }}" class="btn btn-default">
+                <a href="{{ path('place_new') }}" class="btn btn-default">
                     <span class="glyphicon glyphicon-plus"></span> New </a>
             {% endif %}
 
-            <a href="{{ path('person_search') }}" class="btn btn-default">
+            <a href="{{ path('place_search') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-search"></span> Search </a>
         </div>
     </div>
 
-    {% embed 'person/partial/table.html.twig' %}
+    {% embed 'place/partial/table.html.twig' %}
     {% endembed %}
 
     <div class="navigation">
-        {{ knp_pagination_render(people) }}
+        {{ knp_pagination_render(places) }}
     </div>
 
 {% endblock %}

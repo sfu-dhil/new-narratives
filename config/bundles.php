@@ -19,9 +19,10 @@ return [
     Liip\TestFixturesBundle\LiipTestFixturesBundle::class => ['dev' => true, 'test' => true],
 
     Nines\BlogBundle\NinesBlogBundle::class => ['all' => true],
-    Nines\DublinCoreBundle\NinesDublinCoreBundle::class => ['all' => true],
     Nines\EditorBundle\NinesEditorBundle::class => ['all' => true],
     Nines\FeedbackBundle\NinesFeedbackBundle::class => ['all' => true],
+    Nines\MediaBundle\NinesMediaBundle::class => ['all' => true],
+    Nines\MakerBundle\NinesMakerBundle::class => ['dev' => true],
     Nines\UserBundle\NinesUserBundle::class => ['all' => true],
     Nines\UtilBundle\NinesUtilBundle::class => ['all' => true],
 ];
