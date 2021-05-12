@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -244,19 +244,29 @@ class ImportCsvCommand extends Command {
 
         switch ($row[15]) {
             case '': break;
+
             case 'Yes': $work->setIllustrations(true);
+
 break;
+
             case 'No': $work->setIllustrations(false);
+
 break;
+
             default: $this->logger->error("Unexpected value line {$this->lineNumber} col 15: '{$row[15]}'");
         }
 
         switch ($row[16]) {
             case '': break;
+
             case 'Yes': $work->setFrontispiece(true);
+
 break;
+
             case 'No': $work->setFrontispiece(false);
+
 break;
+
             default: $this->logger->error("Unexpected value line {$this->lineNumber} col 16: '{$row[16]}'");
         }
 
@@ -281,10 +291,15 @@ break;
 
         switch ($row[26]) {
             case '': break;
+
             case 'Yes': $work->setTranscription(true);
+
 break;
+
             case 'No': $work->setTranscription(false);
+
 break;
+
             default: $this->logger->error("Unexpected value line {$this->lineNumber} col 26: '{$row[26]}'");
         }
 
@@ -327,10 +342,15 @@ break;
 
         switch (mb_strtolower(trim($row[40]))) {
             case '': break;
+
             case 'yes': $work->setComplete(true);
+
 break;
+
             case 'no': $work->setComplete(false);
+
 break;
+
             default: $this->logger->error("Unexpected value on line {$this->lineNumber} col 40: '{$row[40]}'");
         }
 
