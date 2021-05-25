@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Person;
+use App\Entity\Role;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Query;
@@ -63,6 +64,22 @@ class PersonRepository extends ServiceEntityRepository {
         $qb->orderBy('score', 'DESC');
         $qb->setParameter('q', $q);
 
+        return $qb->getQuery();
+    }
+
+    /**
+     * @param Role $role
+     *
+     * @return Query
+     */
+    public function countByRole(Role $role) {
+        $qb = $this->createQueryBuilder('person');
+        $qb->select('person as p, count(1) as c');
+        $qb->innerJoin('person.contributions', 'contribution');
+        $qb->where('contribution.role = :role');
+        $qb->groupBy('person');
+        $qb->setParameter('role', $role);
+        $qb->orderBy('c', 'DESC');
         return $qb->getQuery();
     }
 }
