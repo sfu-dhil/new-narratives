@@ -12,6 +12,7 @@ namespace App\Controller;
 
 use App\Entity\Role;
 use App\Form\RoleType;
+use App\Repository\PersonRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
@@ -82,9 +83,12 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
      *
      * @Template
      */
-    public function showAction(Role $role) {
+    public function showAction(Role $role, PersonRepository $repo) {
+        $counts = $repo->countByRole($role)->execute();
+
         return [
             'role' => $role,
+            'counts' => $counts,
         ];
     }
 

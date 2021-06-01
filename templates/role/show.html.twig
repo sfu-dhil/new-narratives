@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block pageheader %} 
+{% block pageheader %}
     <h1>Role</h1>
-{% endblock %} 
+{% endblock %}
 
 {% block body %}
 
@@ -46,15 +46,11 @@
         </tbody>
     </table>
 
-    {% if role.contributions|length > 0 %}
-        <h2>Works</h2>
-        <ul>
-            {% for contribution in role.contributions %}
-                <li>
-                    {% include 'work/workBrief.html.twig' with {'work': contribution.work} %}
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+    <h2>People With This Role</h2>
+    <ol>
+    {% for c in counts %}
+        <li><a href='{{ path('person_show', {'id': c.p.id}) }}'>{{ c.p }}</a> - {{ c.c }}</li>
+    {% endfor %}
+    </ol>
 
 {% endblock %}
