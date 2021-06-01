@@ -68,8 +68,6 @@ class PersonRepository extends ServiceEntityRepository {
     }
 
     /**
-     * @param Role $role
-     *
      * @return Query
      */
     public function countByRole(Role $role) {
@@ -80,6 +78,7 @@ class PersonRepository extends ServiceEntityRepository {
         $qb->groupBy('person');
         $qb->setParameter('role', $role);
         $qb->orderBy('c', 'DESC');
+
         return $qb->getQuery();
     }
 }

@@ -85,6 +85,7 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
      */
     public function showAction(Role $role, PersonRepository $repo) {
         $counts = $repo->countByRole($role)->execute();
+
         return [
             'role' => $role,
             'counts' => $counts,
