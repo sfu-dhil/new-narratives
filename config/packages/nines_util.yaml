@@ -1,2 +1,4 @@
 nines_util:
     trim_length: 50
+    routing:
+        - { class: App\Entity\Person, route: person_show }
