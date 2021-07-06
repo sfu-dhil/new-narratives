@@ -42,6 +42,7 @@
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     {{ knp_menu_render('main') }}
+                    {{ knp_menu_render('nines_blog_pages') }}
                     {% if is_granted('ROLE_COMMENT_ADMIN') %}
                         {{ knp_menu_render('nines_feedback') }}
                     {% endif %}
@@ -49,11 +50,13 @@
                 </div><!--/.nav-collapse -->
             </div>
         </nav>
+
         {% if block('jumbo') is defined %}
             <div class="jumbotron">
                 {{ block('jumbo') }}
             </div>
         {% endif %}
+
         <div class="container">
             {% if block('pageheader') is defined %}
                 <div class="page-header">
