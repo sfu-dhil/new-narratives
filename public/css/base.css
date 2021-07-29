@@ -167,6 +167,11 @@ background-color: #0a0a0a;
     color: #ffffff;
     background: #0a0a0a;
 }
+a.dropdown-toggle::after {
+    content: "▾";
+    padding-left: 0.3em;
+    font-size: small;
+}
 
 /* Styling for navbar and dropdown-menu at larger size (min-width >= 768px) */
 @media (min-width: 768px) {

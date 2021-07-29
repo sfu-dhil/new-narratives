@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
+use Nines\BlogBundle\Repository\PageRepository;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,9 +25,10 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
      * @Route("/", name="homepage")
      * @Template
      */
-    public function indexAction(Request $request) {
-        // replace this example code with whatever you need
-        return [];
+    public function indexAction(Request $request, PageRepository $repo) {
+        return [
+            'homepage' => $repo->findHomepage(),
+        ];
     }
 
     /**
