@@ -14,11 +14,8 @@ use App\Entity\Person;
 use App\Form\PersonType;
 use App\Repository\PersonRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
-use Nines\MediaBundle\Controller\AbstractImageController;
 use Nines\MediaBundle\Controller\ImageControllerTrait;
 use Nines\MediaBundle\Entity\Image;
-use Nines\MediaBundle\Entity\ImageContainerTrait;
-use Nines\MediaBundle\Service\LinkManager;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -34,6 +31,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PersonController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
+
     use ImageControllerTrait;
 
     /**
