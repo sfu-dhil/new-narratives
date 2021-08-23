@@ -15,12 +15,15 @@ use App\Form\PersonType;
 use App\Repository\PersonRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\MediaBundle\Controller\AbstractImageController;
+use Nines\MediaBundle\Controller\ImageControllerTrait;
 use Nines\MediaBundle\Entity\Image;
+use Nines\MediaBundle\Entity\ImageContainerTrait;
 use Nines\MediaBundle\Service\LinkManager;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,8 +32,9 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/person")
  */
-class PersonController extends AbstractImageController implements PaginatorAwareInterface {
+class PersonController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
+    use ImageControllerTrait;
 
     /**
      * @Route("/", name="person_index", methods={"GET"})
@@ -98,7 +102,7 @@ class PersonController extends AbstractImageController implements PaginatorAware
      *
      * @return array|RedirectResponse
      */
-    public function new(Request $request, LinkManager $linkManager) {
+    public function new(Request $request) {
         $person = new Person();
         $form = $this->createForm(PersonType::class, $person);
         $form->handleRequest($request);
@@ -106,9 +110,6 @@ class PersonController extends AbstractImageController implements PaginatorAware
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($person);
-            $entityManager->flush();
-
-            $linkManager->setLinks($person, $form->get('links')->getData());
             $entityManager->flush();
 
             $this->addFlash('success', 'The new person has been saved.');
@@ -129,8 +130,8 @@ class PersonController extends AbstractImageController implements PaginatorAware
      *
      * @return array|RedirectResponse
      */
-    public function new_popup(Request $request, LinkManager $linkManager) {
-        return $this->new($request, $linkManager);
+    public function new_popup(Request $request) {
+        return $this->new($request);
     }
 
     /**
@@ -153,12 +154,11 @@ class PersonController extends AbstractImageController implements PaginatorAware
      *
      * @return array|RedirectResponse
      */
-    public function edit(Request $request, Person $person, LinkManager $linkManager) {
+    public function edit(Request $request, Person $person) {
         $form = $this->createForm(PersonType::class, $person);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $linkManager->setLinks($person, $form->get('links')->getData());
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'The updated person has been saved.');
 
@@ -195,7 +195,7 @@ class PersonController extends AbstractImageController implements PaginatorAware
      * @Template(template="@NinesMedia/image/new.html.twig")
      */
     public function newImage(Request $request, Person $person) {
-        return parent::newImageAction($request, $person, 'person_show');
+        return $this->newImageAction($request, $person, 'person_show');
     }
 
     /**
@@ -206,7 +206,7 @@ class PersonController extends AbstractImageController implements PaginatorAware
      * @Template(template="@NinesMedia/image/edit.html.twig")
      */
     public function editImage(Request $request, Person $person, Image $image) {
-        return parent::editImageAction($request, $person, $image, 'person_show');
+        return $this->editImageAction($request, $person, $image, 'person_show');
     }
 
     /**
@@ -215,6 +215,6 @@ class PersonController extends AbstractImageController implements PaginatorAware
      * @IsGranted("ROLE_CONTENT_ADMIN")
      */
     public function deleteImage(Request $request, Person $person, Image $image) {
-        return parent::deleteImageAction($request, $person, $image, 'person_show');
+        return $this->deleteImageAction($request, $person, $image, 'person_show');
     }
 }

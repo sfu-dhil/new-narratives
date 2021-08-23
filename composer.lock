@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0147e0a9b0ffb4cce2ae107b2551fecb",
+    "content-hash": "6c958d1f7ebe050aca22fe6f157b0597",
     "packages": [
         {
             "name": "OCLC/Auth",
@@ -8840,16 +8840,16 @@
         },
         {
             "name": "ubermichael/nines",
-            "version": "4.x-dev",
+            "version": "dev-4.x-img",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ubermichael/nines-bundles.git",
-                "reference": "7b15d53e56bbc618732255ad7ede8b30c1953dbb"
+                "reference": "b077d02747249c115076b813b3ba46de776da8a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ubermichael/nines-bundles/zipball/7b15d53e56bbc618732255ad7ede8b30c1953dbb",
-                "reference": "7b15d53e56bbc618732255ad7ede8b30c1953dbb",
+                "url": "https://api.github.com/repos/ubermichael/nines-bundles/zipball/b077d02747249c115076b813b3ba46de776da8a6",
+                "reference": "b077d02747249c115076b813b3ba46de776da8a6",
                 "shasum": ""
             },
             "require": {
@@ -8872,7 +8872,6 @@
                 "symfony/css-selector": "4.4.*",
                 "symfony/phpunit-bridge": "^5.0"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -8898,10 +8897,10 @@
             ],
             "description": "Some useful bundles.",
             "support": {
-                "source": "https://github.com/ubermichael/nines-bundles/tree/4.x",
+                "source": "https://github.com/ubermichael/nines-bundles/tree/4.x-img",
                 "issues": "https://github.com/ubermichael/nines-bundles/issues"
             },
-            "time": "2021-06-29T18:11:00+00:00"
+            "time": "2021-08-20T22:42:28+00:00"
         },
         {
             "name": "webmozart/assert",
