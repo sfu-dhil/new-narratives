@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block pageheader %} 
+{% block pageheader %}
     <h1>Genre List</h1>
     <p class="count">
         Displaying {{ genres|length }} genres of {{ genres.getTotalItemCount }} total.
     </p>
-{% endblock %} 
+{% endblock %}
 
 {% block body %}
 
@@ -13,8 +13,7 @@
         <div class='btn-toolbar pull-right'>
             <div class='btn-group'>
                 <a href="{{ path('genre_new') }}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-plus"></span> New
-                </a>
+                    <span class="glyphicon glyphicon-plus"></span> New </a>
             </div>
         </div>
     {% endif %}
@@ -39,6 +38,11 @@
             {% endfor %}
         </tbody>
     </table>
+    <p>All terms to characterize genres are drawn from the
+        <a href='https://rbms.info/vocabularies/genre/alphabetical_list.htm'>RBMS</a> controlled vocabulary, except for
+        ‘pamphlet’, which is included in the <a href='https://www.getty.edu/research/tools/vocabularies/aat/'>
+            Getty Art & Architecture Thesaurus (AAT)</a> though absent from RBMS.
+    </p>
 
     <div class="navigation">
         {{ knp_pagination_render(genres) }}
