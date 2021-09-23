@@ -13,6 +13,8 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Nines\MediaBundle\Entity\LinkableInterface;
+use Nines\MediaBundle\Entity\LinkableTrait;
 use Nines\UserBundle\Entity\User;
 use Nines\UtilBundle\Entity\AbstractEntity;
 
@@ -26,7 +28,12 @@ use Nines\UtilBundle\Entity\AbstractEntity;
  * })
  * @ORM\Entity(repositoryClass="App\Repository\WorkRepository")
  */
-class Work extends AbstractEntity {
+class Work extends AbstractEntity implements LinkableInterface {
+    use LinkableTrait {
+        LinkableTrait::__construct as linkable_constructor;
+
+    }
+
     /**
      * @var string
      * @ORM\Column(type="text")
@@ -121,6 +128,12 @@ class Work extends AbstractEntity {
      * @var string
      * @ORM\Column(type="text", nullable=true)
      */
+    private $citation;
+
+    /**
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
     private $editorialNotes;
 
     /**
@@ -138,7 +151,6 @@ class Work extends AbstractEntity {
     /**
      * @var WorkCategory
      * @ORM\ManyToOne(targetEntity="WorkCategory", inversedBy="works")
-     * @ORM\JoinColumn(nullable=false)
      */
     private $workCategory;
 
@@ -176,6 +188,7 @@ class Work extends AbstractEntity {
 
     public function __construct() {
         parent::__construct();
+        $this->linkable_constructor();
         $this->complete = false;
         $this->subjects = new ArrayCollection();
         $this->dates = new ArrayCollection();
@@ -543,9 +556,11 @@ class Work extends AbstractEntity {
     /**
      * Set publisher.
      *
+     * @param ?Publisher $publisher
+     *
      * @return Work
      */
-    public function setPublisher(Publisher $publisher) {
+    public function setPublisher(?Publisher $publisher) {
         $this->publisher = $publisher;
 
         return $this;
@@ -727,6 +742,7 @@ class Work extends AbstractEntity {
         if (count($this->contributions) > 0) {
             return $this->contributions[0];
         }
+
     }
 
     /**
@@ -771,5 +787,13 @@ class Work extends AbstractEntity {
      */
     public function getComplete() {
         return $this->complete;
+    }
+
+    public function getCitation() : string {
+        return $this->citation;
+    }
+
+    public function setCitation(string $citation) : void {
+        $this->citation = $citation;
     }
 }
