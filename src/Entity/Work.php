@@ -125,7 +125,7 @@ class Work extends AbstractEntity implements LinkableInterface {
     private $notes;
 
     /**
-     * @var string
+     * @var ?string
      * @ORM\Column(type="text", nullable=true)
      */
     private $citation;
@@ -789,11 +789,11 @@ class Work extends AbstractEntity implements LinkableInterface {
         return $this->complete;
     }
 
-    public function getCitation() : string {
+    public function getCitation() : ?string {
         return $this->citation;
     }
 
-    public function setCitation(string $citation) : void {
+    public function setCitation(?string $citation) : void {
         $this->citation = $citation;
     }
 }
