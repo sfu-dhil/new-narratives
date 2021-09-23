@@ -24,7 +24,7 @@ class RoleFixtures extends Fixture {
     public function load(ObjectManager $em) : void {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Role();
-            $fixture->setName('role_' . $i);
+            $fixture->setName('role_' . chr(ord('a') + $i));
             $fixture->setLabel('Role ' . $i);
             $fixture->setDescription('role description ' . $i);
 
