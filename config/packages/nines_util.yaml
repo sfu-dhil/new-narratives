@@ -2,3 +2,4 @@ nines_util:
     trim_length: 50
     routing:
         - { class: App\Entity\Person, route: person_show }
+        - { class: App\Entity\Work, route: work_show }
