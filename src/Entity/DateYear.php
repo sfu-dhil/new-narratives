@@ -99,7 +99,7 @@ class DateYear extends AbstractEntity {
                 $this->endCirca = $this->startCirca;
                 $this->end = $this->start;
             } else {
-                throw new Exception("Malformed date {$value}");
+                throw new Exception("Malformed date: '{$value}'");
             }
 
             return $this;

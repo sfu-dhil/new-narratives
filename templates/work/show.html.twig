@@ -30,9 +30,11 @@
             <tr>
                 <th>Category</th>
                 <td>
+                    {% if work.workCategory %}
                     <a href='{{ path('work_category_show', {'id': work.workCategory.id}) }}'>
                         {{ work.workCategory }}
                     </a>
+                    {% endif %}
                 </td>
             </tr>
             <tr>
@@ -158,7 +160,9 @@
             <tr>
                 <th>Genre</th>
                 <td>
+                    {% if work.genre %}
                     <a href='{{ path('genre_show', {'id': work.genre.id}) }}'>{{work.genre}}</a>
+                    {% endif %}
                 </td>
             </tr>
             <tr>
@@ -186,8 +190,20 @@
                 <td>{{ work.notes }}</td>
             </tr>
             <tr>
+                <th>Bibliographic Citation</th>
+                <td>{{ work.citation }}</td>
+            </tr>
+            <tr>
                 <th>Editorial Notes</th>
                 <td>{{ work.editorialNotes }}</td>
+            </tr>
+            <tr>
+                <th>Additional Links</th>
+                <td>
+                    {% embed '@NinesMedia/link/partial/list.html.twig' with {
+                        'entity': work } %}
+                    {% endembed %}
+                </td>
             </tr>
             <tr>
                 <th>Complete</th>

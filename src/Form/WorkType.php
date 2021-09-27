@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace App\Form;
 
+use Nines\MediaBundle\Form\LinkableType;
+use Nines\MediaBundle\Form\Mapper\LinkableMapper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -17,6 +19,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class WorkType extends AbstractType {
+    private LinkableMapper $mapper;
+
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $builder->add('title');
         $builder->add('workCategory', null, [
@@ -72,8 +76,16 @@ class WorkType extends AbstractType {
         $builder->add('physicalLocations');
         $builder->add('digitalLocations');
         $builder->add('digitalUrl');
-
         $builder->add('notes');
+        LinkableType::add($builder, $options);
+        $builder->setDataMapper($this->mapper);
+    }
+
+    /**
+     * @required
+     */
+    public function setMapper(LinkableMapper $mapper) : void {
+        $this->mapper = $mapper;
     }
 
     public function configureOptions(OptionsResolver $resolver) : void {
