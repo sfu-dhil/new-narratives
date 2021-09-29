@@ -287,7 +287,7 @@ class Importer {
         }
         $this->addSubjects($work, $row[22], $row[23], $row[24]);
         // check columns A, AE /pamphlet/i and use that or $row[24] as appropriate
-        if(preg_match('/pamphlet/', $row[0] . ' ' . $row[30])) {
+        if (preg_match('/pamphlet/', $row[0] . ' ' . $row[30])) {
             $this->setGenre($work, 'Pamphlet');
         } else {
             $this->setGenre($work, $row[24]);
