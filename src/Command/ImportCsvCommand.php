@@ -14,7 +14,6 @@ use App\Service\Importer;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMException;
 use Exception;
-use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -82,6 +81,7 @@ class ImportCsvCommand extends Command {
 
     public function trim(array $row, int $columns) : array {
         $data = array_pad($row, $columns, '');
+
         return array_map(fn ($d) => preg_replace('/^\s+|\s+$/u', '', $d), $data);
     }
 

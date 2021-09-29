@@ -742,7 +742,6 @@ class Work extends AbstractEntity implements LinkableInterface {
         if (count($this->contributions) > 0) {
             return $this->contributions[0];
         }
-
     }
 
     /**
