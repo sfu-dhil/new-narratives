@@ -31,7 +31,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PersonController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
-
     use ImageControllerTrait;
 
     /**

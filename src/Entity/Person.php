@@ -34,7 +34,6 @@ class Person extends AbstractEntity implements LinkableInterface, ImageContainer
         LinkableTrait::__construct as linkable_constructor;
 
     }
-
     use ImageContainerTrait {
         ImageContainerTrait::__construct as imagecontainer_constructor;
 
