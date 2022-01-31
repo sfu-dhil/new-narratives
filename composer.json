@@ -7,7 +7,7 @@
         "php": "^7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "composer/package-versions-deprecated": "1.11.99.3",
+        "composer/package-versions-deprecated": "1.11.99.*",
         "doctrine/annotations": "^1.0",
         "doctrine/common": "^2.13",
         "doctrine/doctrine-bundle": "^2.3",
@@ -73,7 +73,10 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "symfony/flex": true
+        }
     },
     "autoload": {
         "psr-4": {
