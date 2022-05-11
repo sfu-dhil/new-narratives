@@ -38,7 +38,7 @@ class PublisherController extends AbstractController implements PaginatorAwareIn
      * @Template
      */
     public function indexAction(Request $request, EntityManagerInterface $em) {
-        $dql = 'SELECT e FROM App:Publisher e ORDER BY e.id';
+        $dql = 'SELECT e FROM App:Publisher e ORDER BY e.name';
         $query = $em->createQuery($dql);
 
         $publishers = $this->paginator->paginate($query, $request->query->getint('page', 1), 25);

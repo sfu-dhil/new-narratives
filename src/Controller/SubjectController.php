@@ -39,7 +39,7 @@ class SubjectController extends AbstractController implements PaginatorAwareInte
      * @Template
      */
     public function indexAction(Request $request, EntityManagerInterface $em) {
-        $dql = 'SELECT e FROM App:Subject e ORDER BY e.id';
+        $dql = 'SELECT e FROM App:Subject e ORDER BY e.label';
         $query = $em->createQuery($dql);
 
         $subjects = $this->paginator->paginate($query, $request->query->getint('page', 1), 25);
