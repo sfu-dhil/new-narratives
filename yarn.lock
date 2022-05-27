@@ -5,7 +5,7 @@
 bootstrap3@^3.3.5:
   version "3.3.5"
   resolved "https://registry.yarnpkg.com/bootstrap3/-/bootstrap3-3.3.5.tgz#496a4ef6c087214fa96838196d60de645e82591a"
-  integrity sha1-SWpO9sCHIU+paDgZbWDeZF6CWRo=
+  integrity sha512-KoChQrvYQQv44JrkjEiSy/90CYp5/4QDF2DZZysD/mPYlZGc+z0QN1aLDUiXhl1KIjWNu5UdJ3w8NhrKZnJOUw==
 
 jquery-ui@>=1.0, jquery-ui@^1.12.1:
   version "1.13.1"
@@ -38,6 +38,6 @@ symfony-collection@^2.1.30:
     jquery-ui ">=1.0"
 
 tinymce@^5.4.0:
-  version "5.10.4"
-  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-5.10.4.tgz#24ee843c7648ade708605dec15d8dad07809f7db"
-  integrity sha512-L0ivAhGu7bEo6cUBrCzhtKlkIQqG2sTcL+uu7soMSxrECQIC5VwUnzp9HCEf+fRl36q6zavLV48lf8jelj+gXA==
+  version "5.10.5"
+  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-5.10.5.tgz#02aef6a67e915f1559e51fa8fb007270d9666778"
+  integrity sha512-nFKtLhmoRtExBxUfv06JlkbQWux5D+d115vxSRAqUmccZdrtpFvOIYwZmikvulLdM9pfEpvO0B+RQ2qFV/+R7w==
