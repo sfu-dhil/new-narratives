@@ -48,6 +48,7 @@
         "ubermichael/nines": "dev-4.x-img"
     },
     "require-dev": {
+        "deployer/deployer": "^6.8",
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "liip/test-fixtures-bundle": "^1.6",
         "phpunit/phpunit": "^9.5",
