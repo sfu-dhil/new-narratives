@@ -1,7 +1,8 @@
+# see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
     secret: '%env(APP_SECRET)%'
-    #csrf_protection: true
-    #http_method_override: true
+    csrf_protection: true
+    http_method_override: true
 
     # Enables session support. Note that the session will ONLY be started if you read or write from it.
     # Remove or comment this section to explicitly disable session support.
@@ -9,7 +10,7 @@ framework:
         handler_id: null
         cookie_secure: auto
         cookie_samesite: lax
-        name: PHP_SESSION_NEWN
+        name: PHP_SESSION_DM
         cookie_path: '%router.request_context.base_url%'
         cookie_domain: '%router.request_context.host%'
 
@@ -19,3 +20,9 @@ framework:
         log: true
 
     error_controller: Nines\UtilBundle\Controller\ErrorController::show
+
+when@test:
+    framework:
+        test: true
+        session:
+            storage_factory_id: session.storage.factory.mock_file

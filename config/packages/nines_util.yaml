@@ -1,5 +1,22 @@
 nines_util:
     trim_length: 50
+    sender: 'noreply@%router.request_context.host%'
     routing:
-        - { class: App\Entity\Person, route: person_show }
-        - { class: App\Entity\Work, route: work_show }
+        work:
+            class: App\Entity\Work
+            route: work_show
+        person:
+            class: App\Entity\Person
+            route: person_show
+    #     - { class: App\Entity\Person, route: person_show }
+    #     - { class: App\Entity\Work, route: work_show }
+    # routing:
+    #     nines_blog:
+    #         class: Nines\BlogBundle\Entity\Page
+    #         route: nines_blog_page_show
+    #     blog_post:
+    #         class: Nines\BlogBundle\Entity\Post
+    #         route: post_show
+    #     blog_page:
+    #         class: Nines\BlogBundle\Entity\Page
+    #         route: page_show

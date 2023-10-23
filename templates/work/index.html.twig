@@ -1,27 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block pageheader %} 
+{% block pageheader %}
     <h1>Work List</h1>
     <p class="count">
         Displaying {{ works|length }} works of {{ works.getTotalItemCount }} total.
     </p>
-{% endblock %} 
+{% endblock %}
+
+{% block action_buttons %}
+    {% if is_granted('ROLE_CONTENT_ADMIN') %}
+        <a href="{{ path('work_new') }}" class="btn btn-light">
+            <span class="bi bi-plus-lg"></span> New
+        </a>
+    {% endif %}
+    <a href="{{ path('work_search') }}" class="btn btn-light">
+        <span class="bi bi-search"></span> Search
+    </a>
+{% endblock %}
 
 {% block body %}
-
-    <div class='btn-toolbar pull-right'>
-        <div class='btn-group'>
-            {% if is_granted('ROLE_CONTENT_ADMIN') %}
-                <a href="{{ path('work_new') }}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-plus"></span> New
-                </a>
-            {% endif %}
-            <a href="{{ path('work_search') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-search"></span> Search
-            </a>
-        </div>
-    </div>
-
     <table class="table table-bordered table-condensed table-hover table-striped">
         <thead>
             <tr>
@@ -47,7 +44,7 @@
                             {% if contribution.role.name != 'aut' %}({{ contribution.role }}){% endif %}
                         {% endif %}
                     </td>
-                    <td>{{ work.edition }}</td>                    
+                    <td>{{ work.edition }}</td>
                     <td>{{ work.volume }}</td>
                     <td>{{ work.publicationPlace }} {{ work.publisher }}</td>
                 </tr>

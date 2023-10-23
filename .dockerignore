@@ -1,0 +1,48 @@
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> phpunit/phpunit ###
+.phpunit.cache/
+coverage/
+###< phpunit/phpunit ###
+
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###
+
+# Editors
+/.idea
+.vscode
+
+# Bundles
+/public/js/jquery.collection.js
+/templates/jquery.collection.html.twig
+
+# Yarn packages.
+node_modules
+
+# Docker
+.data
+
+# MISC
+/*.sql
+/data
+/src/.preload.php
+public/docs
+public/images/blog
+
+# Code coverage and QA reports
+public/dev
+
+# Mac DS_Store
+.DS_Store
+
+# Docker image specific
+/.github/

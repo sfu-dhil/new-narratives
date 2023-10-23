@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Controller;
 
 use App\Entity\Work;
@@ -22,45 +16,30 @@ use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Work controller.
- *
- * @Route("/work")
- */
+#[Route(path: '/work')]
 class WorkController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
-    /**
-     * Lists all Work entities.
-     *
-     * @Route("/", name="work_index", methods={"GET"})
-     *
-     * @Template
-     */
-    public function indexAction(Request $request, EntityManagerInterface $em) {
+    #[Route(path: '/', name: 'work_index', methods: ['GET'])]
+    #[Template]
+    public function index(Request $request, EntityManagerInterface $em) : array {
         $dql = 'SELECT e FROM App:Work e ORDER BY e.id';
         $query = $em->createQuery($dql);
 
-        $works = $this->paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $works = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
         return [
             'works' => $works,
         ];
     }
 
-    /**
-     * Full text search for Work entities.
-     *
-     * @Route("/search", name="work_search", methods={"GET"})
-     *
-     * @Template
-     *
-     * @return array
-     */
-    public function searchAction(Request $request, WorkRepository $repo) {
+    #[Route(path: '/search', name: 'work_search', methods: ['GET'])]
+    #[Template]
+    public function search(Request $request, WorkRepository $repo) : array {
         $works = [];
         $form = $this->createForm(WorkSearchType::class, null, []);
         $form->handleRequest($request);
@@ -76,15 +55,10 @@ class WorkController extends AbstractController implements PaginatorAwareInterfa
         ];
     }
 
-    /**
-     * Creates a new Work entity.
-     *
-     * @Route("/new", name="work_new", methods={"GET", "POST"})
-     *
-     * @Template
-     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
-     */
-    public function newAction(Request $request, EntityManagerInterface $em) {
+    #[Route(path: '/new', name: 'work_new', methods: ['GET', 'POST'])]
+    #[Template]
+    #[Security("is_granted('ROLE_CONTENT_EDITOR')")]
+    public function new(Request $request, EntityManagerInterface $em) : array|RedirectResponse {
         $work = new Work();
         $form = $this->createForm(WorkType::class, $work);
         $form->handleRequest($request);
@@ -104,28 +78,18 @@ class WorkController extends AbstractController implements PaginatorAwareInterfa
         ];
     }
 
-    /**
-     * Finds and displays a Work entity.
-     *
-     * @Route("/{id}", name="work_show", methods={"GET"})
-     *
-     * @Template
-     */
-    public function showAction(Work $work) {
+    #[Route(path: '/{id}', name: 'work_show', methods: ['GET'])]
+    #[Template]
+    public function show(Work $work) : array {
         return [
             'work' => $work,
         ];
     }
 
-    /**
-     * Displays a form to edit an existing Work entity.
-     *
-     * @Route("/{id}/edit", name="work_edit", methods={"GET", "POST"})
-     *
-     * @Template
-     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
-     */
-    public function editAction(Request $request, Work $work, EntityManagerInterface $em) {
+    #[Route(path: '/{id}/edit', name: 'work_edit', methods: ['GET', 'POST'])]
+    #[Template]
+    #[Security("is_granted('ROLE_CONTENT_EDITOR')")]
+    public function edit(Request $request, Work $work, EntityManagerInterface $em) : array|RedirectResponse {
         $editForm = $this->createForm(WorkType::class, $work);
         $editForm->handleRequest($request);
 
@@ -142,14 +106,9 @@ class WorkController extends AbstractController implements PaginatorAwareInterfa
         ];
     }
 
-    /**
-     * Deletes a Work entity.
-     *
-     * @Route("/{id}/delete", name="work_delete", methods={"GET"})
-     *
-     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
-     */
-    public function deleteAction(Request $request, Work $work, EntityManagerInterface $em) {
+    #[Route(path: '/{id}/delete', name: 'work_delete', methods: ['GET'])]
+    #[Security("is_granted('ROLE_CONTENT_EDITOR')")]
+    public function delete(Work $work, EntityManagerInterface $em) : RedirectResponse {
         $em->remove($work);
         $em->flush();
         $this->addFlash('success', 'The work was deleted.');
@@ -157,18 +116,11 @@ class WorkController extends AbstractController implements PaginatorAwareInterfa
         return $this->redirectToRoute('work_index');
     }
 
-    /**
-     * Add/remove dates to a work.
-     *
-     * @Route("/{id}/dates", name="work_dates")
-     *
-     * @Template
-     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
-     */
-    public function workDatesAction(Request $request, Work $work, EntityManagerInterface $em) {
-        $form = $this->createForm(WorkDatesType::class, $work, [
-            'work' => $work,
-        ]);
+    #[Route(path: '/{id}/dates', name: 'work_dates')]
+    #[Template]
+    #[Security("is_granted('ROLE_CONTENT_EDITOR')")]
+    public function workDates(Request $request, Work $work, EntityManagerInterface $em) : array|RedirectResponse {
+        $form = $this->createForm(WorkDatesType::class, $work);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -184,18 +136,11 @@ class WorkController extends AbstractController implements PaginatorAwareInterfa
         ];
     }
 
-    /**
-     * Add contributions to a work.
-     *
-     * @Route("/{id}/contributions", name="work_contributions")
-     *
-     * @Template
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
-     */
-    public function workContributionsAction(Request $request, Work $work, EntityManagerInterface $em) {
-        $form = $this->createForm(WorkContributionsType::class, $work, [
-            'work' => $work,
-        ]);
+    #[Route(path: '/{id}/contributions', name: 'work_contributions')]
+    #[Template]
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
+    public function workContributions(Request $request, Work $work, EntityManagerInterface $em) : array|RedirectResponse {
+        $form = $this->createForm(WorkContributionsType::class, $work);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

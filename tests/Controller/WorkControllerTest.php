@@ -2,27 +2,13 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Tests\Controller;
 
-use App\DataFixtures\WorkFixtures;
 use App\Entity\Work;
 use Nines\UserBundle\DataFixtures\UserFixtures;
-use Nines\UtilBundle\Tests\ControllerBaseCase;
+use Nines\UtilBundle\TestCase\ControllerTestCase;
 
-class WorkControllerTest extends ControllerBaseCase {
-    protected function fixtures() : array {
-        return [
-            UserFixtures::class,
-            WorkFixtures::class,
-        ];
-    }
-
+class WorkControllerTest extends ControllerTestCase {
     public function testAnonIndex() : void {
         $crawler = $this->client->request('GET', '/work/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
@@ -30,14 +16,14 @@ class WorkControllerTest extends ControllerBaseCase {
     }
 
     public function testUserIndex() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/work/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('New')->filter('.btn')->count());
     }
 
     public function testAdminIndex() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $crawler = $this->client->request('GET', '/work/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(1, $crawler->selectLink('New')->filter('.btn')->count());
@@ -51,7 +37,7 @@ class WorkControllerTest extends ControllerBaseCase {
     }
 
     public function testUserShow() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/work/1');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Edit')->count());
@@ -59,7 +45,7 @@ class WorkControllerTest extends ControllerBaseCase {
     }
 
     public function testAdminShow() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $crawler = $this->client->request('GET', '/work/1');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(3, $crawler->selectLink('Edit')->count());
@@ -72,32 +58,32 @@ class WorkControllerTest extends ControllerBaseCase {
     }
 
     public function testUserEdit() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/work/1/edit');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
 
     public function testAdminEdit() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $formCrawler = $this->client->request('GET', '/work/1/edit');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Update')->form([
             'work[title]' => 'cheese.',
-            'work[workCategory]' => 1,
-            'work[edition]' => 1,
-            'work[volume]' => 1,
+            'work[workCategory]' => '1',
+            'work[edition]' => '1',
+            'work[volume]' => '1',
             'work[publicationPlace]' => 'London',
-            'work[publisher]' => 1,
+            'work[publisher]' => '1',
             'work[physicalDescription]' => 'looks like cheese',
-            'work[illustrations]' => 1,
-            'work[frontispiece]' => 1,
+            'work[illustrations]' => '1',
+            'work[frontispiece]' => '1',
             'work[translationDescription]' => 'translated cheese',
             'work[dedication]' => 'to cheese',
             'work[worldcatUrl]' => 'https://www.worldcat.org',
-            'work[subjects]' => 1,
-            'work[genre]' => 1,
-            'work[transcription]' => 1,
+            'work[subjects]' => '1',
+            'work[genre]' => '1',
+            'work[transcription]' => '1',
             'work[physicalLocations]' => 'London',
             'work[digitalLocations]' => 'SFU',
             'work[digitalUrl]' => 'http://library.sfu.ca',
@@ -117,32 +103,32 @@ class WorkControllerTest extends ControllerBaseCase {
     }
 
     public function testUserNew() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/work/new');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
 
     public function testAdminNew() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $formCrawler = $this->client->request('GET', '/work/new');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Create')->form([
             'work[title]' => 'cheese.',
-            'work[workCategory]' => 1,
-            'work[edition]' => 1,
-            'work[volume]' => 1,
+            'work[workCategory]' => '1',
+            'work[edition]' => '1',
+            'work[volume]' => '1',
             'work[publicationPlace]' => 'London',
-            'work[publisher]' => 1,
+            'work[publisher]' => '1',
             'work[physicalDescription]' => 'looks like cheese',
-            'work[illustrations]' => 1,
-            'work[frontispiece]' => 1,
+            'work[illustrations]' => '1',
+            'work[frontispiece]' => '1',
             'work[translationDescription]' => 'translated cheese',
             'work[dedication]' => 'to cheese',
             'work[worldcatUrl]' => 'https://www.worldcat.org',
-            'work[subjects]' => 1,
-            'work[genre]' => 1,
-            'work[transcription]' => 1,
+            'work[subjects]' => '1',
+            'work[genre]' => '1',
+            'work[transcription]' => '1',
             'work[physicalLocations]' => 'London',
             'work[digitalLocations]' => 'SFU',
             'work[digitalUrl]' => 'http://library.sfu.ca',
@@ -162,22 +148,22 @@ class WorkControllerTest extends ControllerBaseCase {
     }
 
     public function testUserDelete() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/work/1/delete');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
 
     public function testAdminDelete() : void {
-        $preCount = count($this->entityManager->getRepository(Work::class)->findAll());
-        $this->login('user.admin');
+        $preCount = count($this->em->getRepository(Work::class)->findAll());
+        $this->login(UserFixtures::ADMIN);
         $crawler = $this->client->request('GET', '/work/1/delete');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
 
-        $this->entityManager->clear();
-        $postCount = count($this->entityManager->getRepository(Work::class)->findAll());
+        $this->em->clear();
+        $postCount = count($this->em->getRepository(Work::class)->findAll());
         $this->assertSame($preCount - 1, $postCount);
     }
 }

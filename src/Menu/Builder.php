@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Menu;
 
 use Knp\Menu\FactoryInterface;
@@ -23,28 +17,9 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 class Builder implements ContainerAwareInterface {
     use ContainerAwareTrait;
 
-    /**
-     * @var FactoryInterface
-     */
-    private $factory;
+    public function __construct(private FactoryInterface $factory, private AuthorizationCheckerInterface $authChecker, private TokenStorageInterface $tokenStorage) {}
 
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    private $authChecker;
-
-    /**
-     * @var TokenStorageInterface
-     */
-    private $tokenStorage;
-
-    public function __construct(FactoryInterface $factory, AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage) {
-        $this->factory = $factory;
-        $this->authChecker = $authChecker;
-        $this->tokenStorage = $tokenStorage;
-    }
-
-    private function hasRole($role) {
+    private function hasRole($role) : bool {
         if ( ! $this->tokenStorage->getToken()) {
             return false;
         }
@@ -54,8 +29,6 @@ class Builder implements ContainerAwareInterface {
 
     /**
      * Build a menu content.
-     *
-     * @param FactoryInterface $factory
      *
      * @return ItemInterface
      */
@@ -68,95 +41,159 @@ class Builder implements ContainerAwareInterface {
         $search = $menu->addChild('search', [
             'uri' => '#',
             'label' => 'Search',
+            'attributes' => [
+                'class' => 'nav-item dropdown',
+            ],
+            'linkAttributes' => [
+                'class' => 'nav-link dropdown-toggle',
+                'role' => 'button',
+                'data-bs-toggle' => 'dropdown',
+                'id' => 'search-dropdown',
+            ],
+            'childrenAttributes' => [
+                'class' => 'dropdown-menu text-small shadow',
+                'aria-labelledby' => 'search-dropdown',
+            ],
         ]);
-        $search->setAttribute('dropdown', true);
-        $search->setLinkAttribute('class', 'dropdown-toggle');
-        $search->setLinkAttribute('data-toggle', 'dropdown');
-        $search->setChildrenAttribute('class', 'dropdown-menu');
-
         $search->addChild('search_advanced', [
             'label' => 'Advanced Search',
             'route' => 'work_search',
+            'linkAttributes' => [
+                'class' => 'dropdown-item',
+            ],
         ]);
         $search->addChild('search_person', [
             'label' => 'Person Search',
             'route' => 'person_search',
+            'linkAttributes' => [
+                'class' => 'dropdown-item',
+            ],
         ]);
         $search->addChild('search_publisher', [
             'label' => 'Publisher Search',
             'route' => 'publisher_search',
+            'linkAttributes' => [
+                'class' => 'dropdown-item',
+            ],
         ]);
         $search->addChild('search_subject', [
             'label' => 'Subject Search',
             'route' => 'subject_search',
+            'linkAttributes' => [
+                'class' => 'dropdown-item',
+            ],
         ]);
 
         $browse = $menu->addChild('browse', [
             'uri' => '#',
             'label' => 'Browse',
+            'attributes' => [
+                'class' => 'nav-item dropdown',
+            ],
+            'linkAttributes' => [
+                'class' => 'nav-link dropdown-toggle',
+                'role' => 'button',
+                'data-bs-toggle' => 'dropdown',
+                'id' => 'browse-dropdown',
+            ],
+            'childrenAttributes' => [
+                'class' => 'dropdown-menu text-small shadow',
+                'aria-labelledby' => 'browse-dropdown',
+            ],
         ]);
-        $browse->setAttribute('dropdown', true);
-        $browse->setLinkAttribute('class', 'dropdown-toggle');
-        $browse->setLinkAttribute('data-toggle', 'dropdown');
-        $browse->setChildrenAttribute('class', 'dropdown-menu');
 
         $browse->addChild('date_category', [
             'label' => 'Date Categories',
             'route' => 'date_category_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item',
+            ],
         ]);
         $browse->addChild('genre', [
             'label' => 'Genres',
             'route' => 'genre_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item',
+            ],
         ]);
         $browse->addChild('person', [
             'label' => 'People',
             'route' => 'person_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item',
+            ],
         ]);
         $browse->addChild('place', [
             'label' => 'Places',
             'route' => 'place_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item',
+            ],
         ]);
         $browse->addChild('publisher', [
             'label' => 'Publishers',
             'route' => 'publisher_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item',
+            ],
         ]);
         $browse->addChild('role', [
             'label' => 'Roles',
             'route' => 'role_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item',
+            ],
         ]);
         $browse->addChild('subject', [
             'label' => 'Subjects',
             'route' => 'subject_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item',
+            ],
         ]);
         $browse->addChild('subject_source', [
             'label' => 'Subject Sources',
             'route' => 'subject_source_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item',
+            ],
         ]);
         $browse->addChild('work', [
             'label' => 'Works',
             'route' => 'work_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item',
+            ],
         ]);
         $browse->addChild('work_category', [
             'label' => 'Work Categories',
             'route' => 'work_category_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item',
+            ],
         ]);
 
         if ($this->hasRole('ROLE_ADMIN')) {
-            $browse->addChild('divider', [
-                'label' => '',
-            ]);
-            $browse['divider']->setAttributes([
-                'role' => 'separator',
-                'class' => 'divider',
+            $browse->addChild('divider1', [
+                'label' => '<hr class="dropdown-divider">',
+                'extras' => [
+                    'safe_label' => true,
+                ],
             ]);
 
             $browse->addChild('contribution', [
                 'label' => 'Contributions',
                 'route' => 'contribution_index',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item',
+                ],
             ]);
             $browse->addChild('date', [
                 'label' => 'Dates',
                 'route' => 'date_index',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item',
+                ],
             ]);
         }
 

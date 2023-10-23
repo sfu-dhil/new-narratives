@@ -2,160 +2,95 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
+use App\Repository\PersonRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Nines\MediaBundle\Entity\ImageContainerInterface;
-use Nines\MediaBundle\Entity\ImageContainerTrait;
 use Nines\MediaBundle\Entity\LinkableInterface;
 use Nines\MediaBundle\Entity\LinkableTrait;
 use Nines\UtilBundle\Entity\AbstractEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * Person.
- *
- * @ORM\Table(name="person", indexes={
- *     @ORM\Index(columns={"full_name"}, flags={"fulltext"})
- * })
- * @ORM\Entity(repositoryClass="App\Repository\PersonRepository")
- */
-class Person extends AbstractEntity implements LinkableInterface, ImageContainerInterface {
+#[ORM\Table(name: 'person')]
+#[ORM\Index(columns: ['full_name'], flags: ['fulltext'])]
+#[ORM\Entity(repositoryClass: PersonRepository::class)]
+class Person extends AbstractEntity implements LinkableInterface {
     use LinkableTrait {
         LinkableTrait::__construct as linkable_constructor;
-
-    }
-    use ImageContainerTrait {
-        ImageContainerTrait::__construct as imagecontainer_constructor;
-
     }
 
-    /**
-     * @var string
-     * @ORM\Column(type="string", length=200)
-     * @Groups({"shallow"})
-     */
-    private $fullName;
+    #[ORM\Column(type: Types::STRING, length: 200)]
+    #[Groups(['shallow'])]
+    private ?string $fullName = null;
+
+    #[ORM\Column(type: Types::STRING, length: 12, nullable: true)]
+    #[Assert\Regex(pattern: '/^\d{4}(?:-\d{2}-\d{2})?$/', message: '{{ value }} is not a valid value. It must be formatted as a year YYYY or a date YYYY-MM-DD.')]
+    private ?string $birthDate = null;
+
+    #[ORM\Column(type: Types::STRING, length: 12, nullable: true)]
+    #[Assert\Regex(pattern: '/^\d{4}(?:-\d{2}-\d{2})?$/', message: '{{ value }} is not a valid value. It must be formatted as a year YYYY or a date YYYY-MM-DD.')]
+    private ?string $deathDate = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $biography = null;
+
+    #[ORM\ManyToOne(targetEntity: Place::class, inversedBy: 'peopleBorn')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
+    private ?Place $birthPlace = null;
+
+    #[ORM\ManyToOne(targetEntity: Place::class, inversedBy: 'peopleDied')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
+    private ?Place $deathPlace = null;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=12, nullable=true)
-     * @Assert\Regex(
-     *     pattern="/^\d{4}(?:-\d{2}-\d{2})?$/",
-     * message="{{ value }} is not a valid value. It must be formatted as a year YYYY or a date YYYY-MM-DD.")
+     * @var Collection<Place>
      */
-    private $birthDate;
+    #[ORM\ManyToMany(targetEntity: Place::class, inversedBy: 'residents')]
+    private Collection $residences;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=12, nullable=true)
-     * @Assert\Regex(
-     *     pattern="/^\d{4}(?:-\d{2}-\d{2})?$/",
-     * message="{{ value }} is not a valid value. It must be formatted as a year YYYY or a date YYYY-MM-DD.")
+     * @var Collection<Contribution>
      */
-    private $deathDate;
-
-    /**
-     * @var string
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $biography;
-
-    /**
-     * @var Place
-     * @ORM\ManyToOne(targetEntity="App\Entity\Place", inversedBy="peopleBorn")
-     */
-    private $birthPlace;
-
-    /**
-     * @var Place
-     * @ORM\ManyToOne(targetEntity="App\Entity\Place", inversedBy="peopleDied")
-     */
-    private $deathPlace;
-
-    /**
-     * @var Collection
-     * @ORM\ManyToMany(targetEntity="App\Entity\Place", inversedBy="residents")
-     */
-    private $residences;
-
-    /**
-     * @var Collection|Contribution[]
-     * @ORM\OneToMany(targetEntity="Contribution", mappedBy="person")
-     * @Groups({"contributions"})
-     */
-    private $contributions;
+    #[ORM\OneToMany(targetEntity: Contribution::class, mappedBy: 'person')]
+    #[Groups(['contributions'])]
+    private Collection $contributions;
 
     public function __construct() {
         parent::__construct();
         $this->linkable_constructor();
-        $this->imagecontainer_constructor();
         $this->contributions = new ArrayCollection();
         $this->residences = new ArrayCollection();
     }
 
-    /**
-     * Return a string representation.
-     */
     public function __toString() : string {
-        return $this->fullName;
+        return (string) $this->fullName;
     }
 
-    /**
-     * Set fullName.
-     *
-     * @param string $fullName
-     *
-     * @return Person
-     */
-    public function setFullName($fullName) {
+    public function setFullName(?string $fullName) : self {
         $this->fullName = $fullName;
 
         return $this;
     }
 
-    /**
-     * Get fullName.
-     *
-     * @return string
-     */
-    public function getFullName() {
+    public function getFullName() : ?string {
         return $this->fullName;
     }
 
-    /**
-     * Add contribution.
-     *
-     * @return Person
-     */
-    public function addContribution(Contribution $contribution) {
+    public function addContribution(Contribution $contribution) : self {
         $this->contributions[] = $contribution;
 
         return $this;
     }
 
-    /**
-     * Remove contribution.
-     */
     public function removeContribution(Contribution $contribution) : void {
         $this->contributions->removeElement($contribution);
     }
 
-    /**
-     * Get contributions.
-     *
-     * @return Collection
-     */
-    public function getContributions() {
+    public function getContributions() : Collection {
         return $this->contributions;
     }
 
@@ -209,9 +144,6 @@ class Person extends AbstractEntity implements LinkableInterface, ImageContainer
         return $this;
     }
 
-    /**
-     * @return Collection|Place[]
-     */
     public function getResidences() : Collection {
         return $this->residences;
     }

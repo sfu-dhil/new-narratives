@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Form;
 
 use App\Entity\Genre;
@@ -30,9 +24,11 @@ class WorkSearchType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         $builder->setMethod('get');
         $builder->add('title', TextType::class, [
+            'label' => 'Title',
             'required' => false,
         ]);
         $builder->add('category', EntityType::class, [
+            'label' => 'Category',
             'required' => false,
             'multiple' => true,
             'expanded' => true,
@@ -40,12 +36,15 @@ class WorkSearchType extends AbstractType {
             'class' => WorkCategory::class,
         ]);
         $builder->add('edition', IntegerType::class, [
+            'label' => 'Edition',
             'required' => false,
         ]);
         $builder->add('volume', IntegerType::class, [
+            'label' => 'Volume',
             'required' => false,
         ]);
         $builder->add('digitalEdition', ChoiceType::class, [
+            'label' => 'Digital Edition',
             'required' => false,
             'expanded' => true,
             'multiple' => true,
@@ -68,12 +67,15 @@ class WorkSearchType extends AbstractType {
             ],
         ]);
         $builder->add('publicationPlace', TextType::class, [
+            'label' => 'Publication Place',
             'required' => false,
         ]);
         $builder->add('publisher', TextType::class, [
+            'label' => 'Publisher',
             'required' => false,
         ]);
         $builder->add('illustrations', ChoiceType::class, [
+            'label' => 'Illustrations',
             'required' => false,
             'expanded' => true,
             'multiple' => true,
@@ -83,6 +85,7 @@ class WorkSearchType extends AbstractType {
             ],
         ]);
         $builder->add('frontispiece', ChoiceType::class, [
+            'label' => 'Frontispiece',
             'required' => false,
             'expanded' => true,
             'multiple' => true,
@@ -92,12 +95,15 @@ class WorkSearchType extends AbstractType {
             ],
         ]);
         $builder->add('dedication', TextType::class, [
+            'label' => 'Dedication',
             'required' => false,
         ]);
         $builder->add('subject', TextType::class, [
+            'label' => 'Subject',
             'required' => false,
         ]);
         $builder->add('genre', EntityType::class, [
+            'label' => 'Genre',
             'required' => false,
             'multiple' => true,
             'expanded' => true,
@@ -105,6 +111,7 @@ class WorkSearchType extends AbstractType {
             'class' => Genre::class,
         ]);
         $builder->add('transcription', ChoiceType::class, [
+            'label' => 'Transcription',
             'required' => false,
             'expanded' => true,
             'multiple' => true,

@@ -3,7 +3,6 @@ nines_user:
         - ROLE_ADMIN
         - ROLE_BLOG_ADMIN
         - ROLE_CONTENT_ADMIN
-        - ROLE_DC_ADMIN
         - ROLE_FEEDBACK_ADMIN
         - ROLE_MEDIA_ADMIN
         - ROLE_USER_ADMIN

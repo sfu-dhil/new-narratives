@@ -2,39 +2,25 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Tests\Controller;
 
-use App\DataFixtures\ContributionFixtures;
 use Nines\UserBundle\DataFixtures\UserFixtures;
-use Nines\UtilBundle\Tests\ControllerBaseCase;
+use Nines\UtilBundle\TestCase\ControllerTestCase;
 
-class ContributionControllerTest extends ControllerBaseCase {
-    protected function fixtures() : array {
-        return [
-            UserFixtures::class,
-            ContributionFixtures::class,
-        ];
-    }
-
+class ContributionControllerTest extends ControllerTestCase {
     public function testAnonIndex() : void {
         $crawler = $this->client->request('GET', '/contribution/');
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
     }
 
     public function testUserIndex() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/contribution/');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
 
     public function testAdminIndex() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $crawler = $this->client->request('GET', '/contribution/');
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }

@@ -1,5 +1,5 @@
-<i><a href="{{ path('work_show', {'id': work.id}) }}">{{ work.title }}</a></i>
-    {% if work.contributions|length > 0 %}
+<i><a href="{{ path('work_show', {'id': work.id}) }}">{{ work.title|default('<Unknown>') }}</a></i>
+{% if work.contributions|length > 0 %}
     <br>
     {% for contribution in work.contributions %}
         {{ contribution.role }}: {{ contribution.person }}

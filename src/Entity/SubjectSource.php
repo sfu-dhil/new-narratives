@@ -2,61 +2,39 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
+use App\Repository\SubjectSourceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Nines\UtilBundle\Entity\AbstractTerm;
 
-/**
- * SubjectSource.
- *
- * @ORM\Table(name="subject_source")
- * @ORM\Entity(repositoryClass="App\Repository\SubjectSourceRepository")
- */
+#[ORM\Table(name: 'subject_source')]
+#[ORM\Entity(repositoryClass: SubjectSourceRepository::class)]
 class SubjectSource extends AbstractTerm {
     /**
-     * @var Collection|Subject[]
-     * @ORM\OneToMany(targetEntity="Subject", mappedBy="subjectSource")
+     * @var Collection<Subject>
      */
-    private $subjects;
+    #[ORM\OneToMany(targetEntity: Subject::class, mappedBy: 'subjectSource')]
+    private Collection $subjects;
 
     public function __construct() {
         parent::__construct();
         $this->subjects = new ArrayCollection();
     }
 
-    /**
-     * Add subject.
-     *
-     * @return SubjectSource
-     */
-    public function addSubject(Subject $subject) {
+    public function addSubject(Subject $subject) : self {
         $this->subjects[] = $subject;
 
         return $this;
     }
 
-    /**
-     * Remove subject.
-     */
     public function removeSubject(Subject $subject) : void {
         $this->subjects->removeElement($subject);
     }
 
-    /**
-     * Get subjects.
-     *
-     * @return Collection
-     */
-    public function getSubjects() {
+    public function getSubjects() : Collection {
         return $this->subjects;
     }
 }

@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Command;
 
 use App\Service\Importer;
@@ -15,29 +9,22 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMException;
 use Exception;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'app:import:csv')]
 class ImportCsvCommand extends Command {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
+    private \Doctrine\ORM\EntityManagerInterface $em;
 
-    /**
-     * @var int
-     */
-    private $lineNumber = 1;
+    private int $lineNumber = 1;
 
     private Importer $importer;
 
-    protected static $defaultName = 'app:import:csv';
-
     protected function configure() : void {
-        $this->setName('app:import:csv');
         $this->setDescription('Import a CSV file');
         $this->addArgument('file', InputArgument::REQUIRED, 'File to import.');
         $this->addOption('commit', null, InputOption::VALUE_NONE, 'Commit the import to the database.');
@@ -56,7 +43,7 @@ class ImportCsvCommand extends Command {
             $ignored = fgetcsv($fh);
         }
 
-        while (($row = fgetcsv($fh))) {
+        while ($row = fgetcsv($fh)) {
             $this->lineNumber++;
 
             try {
@@ -82,26 +69,20 @@ class ImportCsvCommand extends Command {
     public function trim(array $row, int $columns) : array {
         $data = array_pad($row, $columns, '');
 
-        return array_map(fn ($d) => preg_replace('/^\s+|\s+$/u', '', $d), $data);
+        return array_map(fn ($d) => preg_replace('/^\s+|\s+$/u', '', (string) $d), $data);
     }
 
-    /**
-     * @required
-     */
+    #[\Symfony\Contracts\Service\Attribute\Required]
     public function setImporter(Importer $importer) : void {
         $this->importer = $importer;
     }
 
-    /**
-     * @required
-     */
+    #[\Symfony\Contracts\Service\Attribute\Required]
     public function setEntityManager(EntityManagerInterface $em) : void {
         $this->em = $em;
     }
 
-    /**
-     * @required
-     */
+    #[\Symfony\Contracts\Service\Attribute\Required]
     public function setLogger(LoggerInterface $logger) : void {
         $this->logger = $logger;
     }

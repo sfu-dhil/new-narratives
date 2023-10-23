@@ -6,48 +6,42 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="google" content="notranslate" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
-        <link rel="stylesheet" href="{{ asset('yarn/bootstrap3/dist/css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('yarn/bootstrap3/dist/css/bootstrap-theme.min.css') }}">
+        <link rel="icon" type="image/x-icon" href="{{ asset_prefix|default('') ~ asset('favicon.ico') }}">
 
-        <link rel="stylesheet" href="{{ asset('css/base.css') }}">
-
-        <script src="{{ asset('yarn/jquery/dist/jquery.min.js') }}"></script>
-
-        <script src="{{ asset('yarn/select2/dist/js/select2.full.min.js') }}"></script>
-        <link href="{{ asset('yarn/select2/dist/css/select2.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('yarn/select2-bootstrap-css/select2-bootstrap.min.css') }}" rel="stylesheet">
-
-        <script src="{{ asset('bundles/tetranzselect2entity/js/select2entity.js') }}"></script>
-        <script src="{{ asset('yarn/symfony-collection/jquery.collection.js') }}"></script>
-
-        <script src="{{ asset('js/form.js') }}"></script>
-
+        <link rel="stylesheet" href="{{ asset_prefix|default('') ~ asset('node_modules/bootstrap/dist/css/bootstrap.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset_prefix|default('') ~ asset('node_modules/bootstrap-icons/font/bootstrap-icons.css') }}" />
+        <link rel="stylesheet" href="{{ asset_prefix|default('') ~ asset('node_modules/select2/dist/css/select2.min.css') }}">
+        <link rel="stylesheet" href="{{ asset_prefix|default('') ~ asset('node_modules/select2-bootstrap-5-theme/dist/select2-bootstrap-5-theme.min.css') }}" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:200,300,400,700&amp;subset=latin-ext" rel="stylesheet">
+
+        <link rel="stylesheet" href="{{ asset_prefix|default('') ~ asset('css/base.css') }}">
+
+        <script src="{{ asset_prefix|default('') ~ asset('node_modules/jquery/dist/jquery.min.js') }}"></script>
+        <script src="{{ asset_prefix|default('') ~ asset('node_modules/select2/dist/js/select2.full.min.js') }}"></script>
+        <script src="{{ asset_prefix|default('') ~ asset('bundles/tetranzselect2entity/js/select2entity.js') }}"></script>
+        <script src="{{ asset_prefix|default('') ~ asset('node_modules/symfony-collection/jquery.collection.js') }}"></script>
+        <script src="{{ asset_prefix|default('') ~ asset('node_modules/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+
+        <script src="{{ asset_prefix|default('') ~ asset('js/form.js') }}"></script>
 
         {% block styles %}
         {% endblock %}
     </head>
     <body>
-        <nav class="navbar navbar-default navbar-fixed-top">
+        <nav class="navbar navbar-default navbar-dark fixed-top navbar-expand-lg p-1">
             <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="{{ path('homepage') }}">New Narratives</a>
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div id="navbar" class="collapse navbar-collapse">
-                    {{ knp_menu_render('main') }}
-                    {{ knp_menu_render('nines_blog_pages') }}
+                <a class="navbar-brand" href="{{ path('homepage') }}">New Narratives</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    {{ knp_menu_render('main', { 'allow_safe_labels': true }) }}
+                    {{ knp_menu_render('nines_blog_pages', { 'allow_safe_labels': true }) }}
                     {% if is_granted('ROLE_FEEDBACK_ADMIN') %}
-                        {{ knp_menu_render('nines_feedback') }}
+                        {{ knp_menu_render('nines_feedback', { 'allow_safe_labels': true }) }}
                     {% endif %}
-                    {{ knp_menu_render('nines_user_nav') }}
-                </div><!--/.nav-collapse -->
+                    {{ knp_menu_render('nines_user_nav', { 'allow_safe_labels': true }) }}
+                </div>
             </div>
         </nav>
 
@@ -58,16 +52,27 @@
         {% endif %}
 
         <div class="container">
-            {% if block('pageheader') is defined %}
-                <div class="page-header">
-                    {{ block('pageheader') }}
+            <div class="row mb-3 align-items-center">
+                <div class="col-lg">
+                    {% if block('pageheader') is defined %}
+                        <div class="page-header">
+                            {{ block('pageheader') }}
+                        </div>
+                    {% endif %}
                 </div>
-            {% endif %}
+                <div class="col-lg-auto">
+                    <div class="d-grid gap-2 d-md-block m-2">
+                        <button type="button" class="btn mx-0 px-0 invisible spacer">&nbsp;</button>
+                        {% block action_buttons %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
 
             {% for type, messages in app.session.flashbag.all() %}
                 {% for message in messages %}
-                    <div class="alert alert-{{ type }}">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         {{ message }}
                     </div>
                 {% endfor %}
@@ -82,14 +87,15 @@
                 <p>
                     <b>New Narratives in the History of Philosophy</b>
                     <br/>
-                    <a href="{{ asset('docs/sphinx/index.html') }}">Documentation</a> |
+                    <a href="{{ asset_prefix|default('') ~ asset('docs/sphinx/index.html') }}">Documentation</a> |
                     <a href="{{ path('privacy') }}">Privacy</a> |
-                    <a href="https://github.com/sfu-dhil/new-narratives">GitHub</a>
+                    {% if git_repo and (git_tag or git_commit) %}
+                        <a href="{{ git_repo ~ '/tree/' ~ (git_tag ? git_tag : git_commit) }}" target="_blank">GitHub{{ git_tag ? ' ' ~ git_tag : '' }}</a>
+                    {% endif %}
                 </p>
             </div>
         </footer>
 
-        <script src="{{ asset('yarn/bootstrap3/dist/js/bootstrap.min.js') }}"></script>
         {% block javascripts %}
         {% endblock %}
 

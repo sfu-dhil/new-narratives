@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Controller;
 
 use App\Entity\Role;
@@ -19,44 +13,34 @@ use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Role controller.
- *
- * @Route("/role")
  */
+#[Route(path: '/role')]
 class RoleController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
-    /**
-     * Lists all Role entities.
-     *
-     * @Route("/", name="role_index", methods={"GET"})
-     *
-     * @Template
-     */
-    public function indexAction(Request $request, EntityManagerInterface $em) {
+    #[Route(path: '/', name: 'role_index', methods: ['GET'])]
+    #[Template]
+    public function index(Request $request, EntityManagerInterface $em) : array {
         $dql = 'SELECT e FROM App:Role e ORDER BY e.id';
         $query = $em->createQuery($dql);
 
-        $roles = $this->paginator->paginate($query, $request->query->getint('page', 1), 25);
+        $roles = $this->paginator->paginate($query, $request->query->getInt('page', 1), 25);
 
         return [
             'roles' => $roles,
         ];
     }
 
-    /**
-     * Creates a new Role entity.
-     *
-     * @Route("/new", name="role_new", methods={"GET", "POST"})
-     *
-     * @Template
-     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
-     */
-    public function newAction(Request $request, EntityManagerInterface $em) {
+    #[Route(path: '/new', name: 'role_new', methods: ['GET', 'POST'])]
+    #[Template]
+    #[Security("is_granted('ROLE_CONTENT_EDITOR')")]
+    public function new(Request $request, EntityManagerInterface $em) : array|RedirectResponse {
         $role = new Role();
         $form = $this->createForm(RoleType::class, $role);
         $form->handleRequest($request);
@@ -76,14 +60,9 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
         ];
     }
 
-    /**
-     * Finds and displays a Role entity.
-     *
-     * @Route("/{id}", name="role_show", methods={"GET"})
-     *
-     * @Template
-     */
-    public function showAction(Role $role, PersonRepository $repo) {
+    #[Route(path: '/{id}', name: 'role_show', methods: ['GET'])]
+    #[Template]
+    public function show(Role $role, PersonRepository $repo) : array {
         $counts = $repo->countByRole($role)->execute();
 
         return [
@@ -92,15 +71,10 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
         ];
     }
 
-    /**
-     * Displays a form to edit an existing Role entity.
-     *
-     * @Route("/{id}/edit", name="role_edit", methods={"GET", "POST"})
-     *
-     * @Template
-     * @Security("is_granted('ROLE_CONTENT_EDITOR')")
-     */
-    public function editAction(Request $request, Role $role, EntityManagerInterface $em) {
+    #[Route(path: '/{id}/edit', name: 'role_edit', methods: ['GET', 'POST'])]
+    #[Template]
+    #[Security("is_granted('ROLE_CONTENT_EDITOR')")]
+    public function edit(Request $request, Role $role, EntityManagerInterface $em) : array|RedirectResponse {
         $editForm = $this->createForm(RoleType::class, $role);
         $editForm->handleRequest($request);
 
@@ -119,12 +93,10 @@ class RoleController extends AbstractController implements PaginatorAwareInterfa
 
     /**
      * Deletes a Role entity.
-     *
-     * @Route("/{id}/delete", name="role_delete", methods={"GET"})
-     *
-     * @Security("is_granted('ROLE_CONTENT_ADMIN')")
      */
-    public function deleteAction(Request $request, Role $role, EntityManagerInterface $em) {
+    #[Route(path: '/{id}/delete', name: 'role_delete', methods: ['GET'])]
+    #[Security("is_granted('ROLE_CONTENT_ADMIN')")]
+    public function delete(Role $role, EntityManagerInterface $em) : RedirectResponse {
         $em->remove($role);
         $em->flush();
         $this->addFlash('success', 'The role was deleted.');

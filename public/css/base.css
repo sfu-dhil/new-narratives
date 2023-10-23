@@ -6,7 +6,8 @@ html {
 }
 body {
     /* Margin bottom by footer height */
-    margin-bottom: 60px;
+    margin-top: 56px;
+    margin-bottom: 80px;
 }
 .footer {
     position: absolute;
@@ -17,11 +18,18 @@ body {
     background-color: #eeeeee;
     padding-top:6px;
 }
+.footer p {
+    margin-bottom: 0px;
+}
 body > .container {
     padding-top: 40px;
 }
 
 /* Custom app styles */
+
+.delete-form {
+    display: inline-block;
+}
 
 label.required::after {
     content: ' *';
@@ -30,55 +38,54 @@ label.required::after {
 }
 
 a[href ^= 'mailto:']::after {
-    content: "\2709";
-    position: relative;
-    top: 1px;
+    content: "\f32c";
     display: inline-block;
-    padding-left: 0.5ex;
-    font-family: 'Glyphicons Halflings';
+    font-family: bootstrap-icons !important;
     font-style: normal;
-    font-weight: 400;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
     line-height: 1;
+    vertical-align: -.125em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
-
-a[href ^= 'mailto:']::after {
-    content: "\2709";
-
-    position: relative;
-    top: 1px;
-    display: inline-block;
     padding-left: 0.5ex;
-    font-family: 'Glyphicons Halflings';
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
 a[href ^= 'http://']::after,
 a[href ^= 'https://']::after {
-    content: "\e164";
-
-    position: relative;
-    top: 1px;
+    content: "\F1C5";
     display: inline-block;
-    padding-left: 0.5ex;
-    font-family: 'Glyphicons Halflings';
+    font-family: bootstrap-icons !important;
     font-style: normal;
-    font-weight: 400;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
     line-height: 1;
+    vertical-align: -.125em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    padding-left: 0.5ex;
 }
 
 /* Collection form pages. */
 /* make the search form checkboxes less bad. */
-div.checkbox, div.radio {
+div.form-check, div.form-radio {
     width: 30%;
     float: left;
+}
+
+.form-signin div.form-check, .form-signin div.form-radio {
+    width: inherit !important;
+    float: none !important;
+}
+
+div.collection span[class*="-collection-actions"] {
+    width: inherit !important;
+}
+
+.col-form-label {
+    font-weight: bold;
 }
 
 /* Changes to make visual style match New Narratives website */
@@ -122,14 +129,19 @@ h1, h2 {
     /* position: relative; */
     padding: 90px 25px;
     text-align: center;
+    width: 1170px;
 }
 .jumbotron > .container > h1 {
     color: #ffffff;
+    font-size: 63px;
 }
 /* Styling for header on small screen sizes */
-@media (max-width: 767px) {
+@media (max-width: 992px) {
     .jumbotron > .container {
         padding: 90px 0px 90px 10px;
+    }
+    .jumbotron > .container > h1 {
+        font-size: 36px;
     }
 }
 
@@ -167,33 +179,28 @@ background-color: #0a0a0a;
     color: #ffffff;
     background: #0a0a0a;
 }
-a.dropdown-toggle::after {
-    content: "▾";
-    padding-left: 0.3em;
-    font-size: small;
+
+/* dropdown-menu styles */
+.dropdown-menu {
+    background: #232323;
+}
+.dropdown-menu > li > a {
+    color: #ffffff;
+    text-transform: uppercase;
+}
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+    color: #ffffff;
+    background: #0a0a0a;
+}
+.dropdown-menu > .active > a,
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > .active > a:focus {
+    color: #fff;
 }
 
 /* Styling for navbar and dropdown-menu at larger size (min-width >= 768px) */
-@media (min-width: 768px) {
-    /* dropdown-menu styles */
-    .dropdown-menu {
-        background: #232323;
-    }
-    .dropdown-menu > li > a {
-        color: #ffffff;
-        text-transform: uppercase;
-    }
-    .dropdown-menu > li > a:hover,
-    .dropdown-menu > li > a:focus {
-    color: #ffffff;
-    background: #0a0a0a;
-    }
-    .dropdown-menu > .active > a,
-    .dropdown-menu > .active > a:hover,
-    .dropdown-menu > .active > a:focus {
-    color: #fff;
-    }
-
+@media (min-width: 992px) {
     /* navbar styles */
     #navbar {
         padding-top: 5px;
@@ -205,21 +212,24 @@ a.dropdown-toggle::after {
         text-shadow: none;
         letter-spacing: 0.05em;
         padding: 10px;
+        border: 2px solid #232323;
     }
     .navbar-default .navbar-nav > li > a:hover,
     .navbar-default .navbar-nav > li > a:focus {
         color: #ffffff;
-        padding: 7px;
         border: 2px solid #ffffff;
         border-radius: 2px;
-        margin: 1px;
     }
 }
 
-/* Styling for navbar and dropdown-menu at smaller size (max-width <= 767px) */
-@media (max-width: 767px) {
+/* Styling for navbar and dropdown-menu at smaller size (max-width <= 992px) */
+@media (max-width: 992px) {
     #navbar {
         padding: inherit;
+    }
+    .navbar-default .navbar-collapse {
+        max-height: 340px;
+        overflow-y: auto;
     }
     .navbar-default .navbar-nav .open .dropdown-menu > li > a {
         color: #ffffff;
@@ -234,13 +244,6 @@ a.dropdown-toggle::after {
         border-radius: none;
         margin: none;
     }
-    .navbar-default .navbar-toggle:hover,
-    .navbar-default .navbar-toggle:focus {
-        background-color: #0a0a0a;
-    }
-    .navbar-default .navbar-toggle .icon-bar {
-        background-color: #ffffff;
-    }
     .navbar-default .navbar-nav > li > a {
         color: #ffffff;
         font-weight: 400;
@@ -253,23 +256,19 @@ a.dropdown-toggle::after {
         color: #ffffff;
         background-color: #0a0a0a;
     }
-
-    .navbar-collapse .navbar-nav {
-        padding-left: 15px;
-    }
 }
 
 .navbar-nav li li > a {
     text-transform: none !important;
 }
 
-/* Panel styling */
-.panel {
+/* card styling */
+.card {
     border-radius: 2px;
     box-shadow: none;
     -webkit-box-shadow: none;
 }
-.panel-default > .panel-heading {
+.card-light > .card-heading {
     color: #666666;
     font-weight: 600;
     background-image: none;
@@ -304,8 +303,8 @@ a.dropdown-toggle::after {
     background: #ffffff;
 }
 
-/* .btn-default */
-.btn-default {
+/* .btn-light */
+.btn-light {
     color: #ffffff;
     background: #a1a1a1;
     text-shadow: none;
@@ -314,16 +313,16 @@ a.dropdown-toggle::after {
     box-shadow: none;
     -webkit-box-shadow: none;
 }
-.btn-default:focus,
-.btn-default.focus,
-.btn-default:hover,
-.btn-default:active,
-.btn-default.active {
+.btn-light:focus,
+.btn-light.focus,
+.btn-light:hover,
+.btn-light:active,
+.btn-light.active {
     color: #a1a1a1;
     background: #ffffff;
 }
 
-.btn-default:active:hover {
+.btn-light:active:hover {
     color: #666666;
     border-color: #666666;
     background: #ffffff;
@@ -406,8 +405,8 @@ a.dropdown-toggle::after {
 
 .btn-danger.active,
 .btn-danger:active,
-.btn-default.active,
-.btn-default:active,
+.btn-light.active,
+.btn-light:active,
 .btn-info.active,
 .btn-info:active,
 .btn-primary.active,

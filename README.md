@@ -6,50 +6,183 @@ women's contributions to philosophical discourse.
 
 ## Requirements
 
-We have tried to keep the requirements minimal. How you install these
-requirements is up to you, but we have [provided some recommendations][setup]
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- A copy of the `newn.sql` database sql file. If you are not sure what these are or where to get them, you should contact the [Digital Humanities Innovation Lab](mailto:dhil@sfu.ca) for access. This file should be placed in the root folder.
 
-- Apache >= 2.4
-- PHP >= 7.4
-- Composer >= 2.0
-- MariaDB >= 10.8[^1]
-- Yarn >= 1.22
+## Initialize the Application
 
-## Installation
+First you must setup the database for the first time
 
-1. Fork and clone the project from [GitHub][github-newn].
-2. Install the git submodules. `git submodule update --init` is a good way to do this
-3. Install composer dependencies with `composer install`.
-4. Install yarn dependencies with `yarn install`.
-4. Create a MariaDB database and user.
+    docker compose up -d db
+    # wait 30 after the command has fully completed
+    docker exec -it newn_db bash -c "mysql -u newn -ppassword newn < /newn.sql"
 
-   ```sql
-    DROP DATABASE IF EXISTS newn;
-    CREATE DATABASE newn;
-    DROP USER IF EXISTS newn@localhost;
-    CREATE USER newn@localhost IDENTIFIED BY 'abc123';
-    GRANT ALL ON newn.* TO newn@localhost;
-    ```
-5. Copy .env to .env.local and edit configuration to suite your needs.
-6. Either 1) create the schema and load fixture data, or 2) load a MySQLDump file
-   if one has been provided.
-    1. ```bash
-        php ./bin/console doctrine:schema:create --quiet
-        php ./bin/console doctrine:fixtures:load --group=dev --purger=fk_purger
-      ``` 
-    2. ```bash
-        mysql newn < newn.sql
-      ``` 
+Next you must start the whole application
 
-7. Visit http://localhost/newn
-8. happy coding!
+    docker compose up -d --build
 
-Some of the steps above are made easier with the included [MakeFiles](etc/README.md)
-which are in a git submodule. If you missed step 2 above they will be missing.
+newn will now be available at `http://localhost:8080/`
 
-[newn]: https://dhil.lib.sfu.ca/newn
-[symfony]: https://symfony.com
-[github-newn]: https://github.com/sfu-dhil/newn
-[setup]: https://sfu-dhil.github.io/dhil-docs/dev/
+### Create your admin user credentials
 
-[^1]: A similar version of MySQL should also work, but will not be supported.
+    docker exec -it newn_app ./bin/console nines:user:create <your@email.address> '<your full name>' '<affiliation>'
+    docker exec -it newn_app ./bin/console nines:user:password <your@email.address> <password>
+    docker exec -it newn_app ./bin/console nines:user:promote <your@email.address> ROLE_ADMIN
+    docker exec -it newn_app ./bin/console nines:user:activate <your@email.address>
+
+example:
+
+    docker exec -it newn_app ./bin/console nines:user:create test@test.com 'Test User' 'DHIL'
+    docker exec -it newn_app ./bin/console nines:user:password test@test.com test_password
+    docker exec -it newn_app ./bin/console nines:user:promote test@test.com ROLE_ADMIN
+    docker exec -it newn_app ./bin/console nines:user:activate test@test.com
+
+## General Usage
+
+### Starting the Application
+
+    docker compose up -d
+
+### Stopping the Application
+
+    docker compose down
+
+### Rebuilding the Application (after upstream or js/php package changes)
+
+    docker compose up -d --build
+
+### Viewing logs (each container)
+
+    docker logs -f newn_app
+    docker logs -f newn_db
+    docker logs -f newn_mail
+
+### Accessing the Application
+
+    http://localhost:8080/
+
+### Accessing the Database
+
+Command line:
+
+    docker exec -it newn_db mysql -u newn -ppassword newn
+
+Through a database management tool:
+- Host:`127.0.0.1`
+- Port: `13306`
+- Username: `newn`
+- Password: `password`
+
+### Accessing Mailhog (catches emails sent by the app)
+
+    http://localhost:8025/
+
+### Database Migrations
+
+Migrate up to latest
+
+    docker exec -it newn_app make migrate
+
+## Updating Application Dependencies
+
+### Yarn (javascript)
+
+First setup an image to build the yarn deps in
+
+    docker build -t newn_yarn_helper --target newn-prod-assets .
+
+Then run the following as needed
+
+    # add new package
+    docker run -it --rm -v $(pwd)/public:/app newn_yarn_helper yarn add [package]
+
+    # update a package
+    docker run -it --rm -v $(pwd)/public:/app newn_yarn_helper yarn upgrade [package]
+
+    # update all packages
+    docker run -it --rm -v $(pwd)/public:/app newn_yarn_helper yarn upgrade
+
+Note: If you are having problems starting/building the application due to javascript dependencies issues you can also run a standalone node container to help resolve them
+
+    docker run -it --rm -v $(pwd)/public:/app -w /app node:19.5 bash
+
+    [check Dockerfile for the 'apt-get update' code piece of newn-prod-assets]
+
+    yarn ...
+
+After you update a dependency make sure to rebuild the images
+
+    docker compose down
+    docker compose up -d
+
+### Composer (php)
+
+    # add new package
+    docker exec -it newn_app composer require [vendor/package]
+
+    # add new dev package
+    docker exec -it newn_app composer require --dev [vendor/package]
+
+    # update a package
+    docker exec -it newn_app composer update [vendor/package]
+
+    # update all packages
+    docker exec -it newn_app composer update
+
+Note: If you are having problems starting/building the application due to php dependencies issues you can also run a standalone php container to help resolve them
+
+    docker run -it -v $(pwd):/var/www/html -w /var/www/html php:7.4-apache bash
+
+    [check Dockerfile for the 'apt-get update' code piece of newn]
+
+    composer ...
+
+After you update a dependency make sure to rebuild the images
+
+    docker compose down
+    docker compose up -d
+
+## Tests
+
+First make sure the application and database are started with `docker compose up -d`
+
+### Unit Tests
+
+    docker exec -it newn_app make test
+
+### Generate Code Coverage
+
+    docker exec -it newn_app make test.cover
+    make test.cover.view
+
+If the coverage file doesn't open automatically you can manually open it `coverage/index.html`
+
+## Misc
+
+### PHP Code standards
+
+See standards errors
+
+    docker exec -it newn_app make lint-all
+    docker exec -it newn_app make symlint
+
+    # or
+    docker exec -it newn_app make stan
+    docker exec -it newn_app make twiglint
+    docker exec -it newn_app make twigcs
+    docker exec -it newn_app make yamllint
+    docker exec -it newn_app make symlint
+
+
+Automatically fix some standards errors
+
+    docker exec -it newn_app make fix.all
+
+### Debug helpers
+
+    docker exec -it newn_app make dump.autowire
+    docker exec -it newn_app make dump.container
+    docker exec -it newn_app make dump.env
+    docker exec -it newn_app make dump.params
+    docker exec -it newn_app make dump.router
+    docker exec -it newn_app make dump.twig

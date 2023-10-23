@@ -2,65 +2,45 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
+use App\Repository\PlaceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Nines\UtilBundle\Entity\AbstractEntity;
 
-/**
- * @ORM\Table(name="place",
- *     indexes={
- *         @ORM\Index(name="place_names_ft", columns={"name"}, flags={"fulltext"})
- *     })
- *     @ORM\Entity(repositoryClass="App\Repository\PlaceRepository")
- */
+#[ORM\Table(name: 'place')]
+#[ORM\Index(name: 'place_names_ft', columns: ['name'], flags: ['fulltext'])]
+#[ORM\Entity(repositoryClass: PlaceRepository::class)]
 class Place extends AbstractEntity {
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=200, nullable=false)
-     */
-    private $name;
+    #[ORM\Column(name: 'name', type: Types::STRING, length: 200, nullable: false)]
+    private ?string $name = null;
+
+    #[ORM\Column(name: 'state', type: Types::STRING, length: 200, nullable: true)]
+    private ?string $state = null;
+
+    #[ORM\Column(name: 'country', type: Types::STRING, length: 200, nullable: false)]
+    private ?string $country = null;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="state", type="string", length=200, nullable=true)
+     * @var Collection<Person>
      */
-    private $state;
+    #[ORM\OneToMany(targetEntity: Person::class, mappedBy: 'birthPlace')]
+    private Collection $peopleBorn;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="country", type="string", length=200, nullable=false)
+     * @var Collection<Person>
      */
-    private $country;
+    #[ORM\OneToMany(targetEntity: Person::class, mappedBy: 'deathPlace')]
+    private Collection $peopleDied;
 
     /**
-     * @var Collection|Person[]
-     * @ORM\OneToMany(targetEntity="Person", mappedBy="birthPlace")
+     * @var Collection<Person>
      */
-    private $peopleBorn;
-
-    /**
-     * @var Collection|Person[]
-     * @ORM\OneToMany(targetEntity="Person", mappedBy="deathPlace")
-     */
-    private $peopleDied;
-
-    /**
-     * @var Collection|Person[]
-     * @ORM\ManyToMany(targetEntity="Person", mappedBy="residences")
-     */
-    private $residents;
+    #[ORM\ManyToMany(targetEntity: Person::class, mappedBy: 'residences')]
+    private Collection $residents;
 
     /**
      * Constructor.
@@ -83,7 +63,7 @@ class Place extends AbstractEntity {
         return $this->name;
     }
 
-    public function setName(?string $name) : self {
+    public function setName(string $name) : self {
         $this->name = $name;
 
         return $this;
@@ -103,15 +83,12 @@ class Place extends AbstractEntity {
         return $this->country;
     }
 
-    public function setCountry(?string $country) : self {
+    public function setCountry(string $country) : self {
         $this->country = $country;
 
         return $this;
     }
 
-    /**
-     * @return Collection|Person[]
-     */
     public function getPeopleBorn() : Collection {
         return $this->peopleBorn;
     }
@@ -136,9 +113,6 @@ class Place extends AbstractEntity {
         return $this;
     }
 
-    /**
-     * @return Collection|Person[]
-     */
     public function getPeopleDied() : Collection {
         return $this->peopleDied;
     }
@@ -163,9 +137,6 @@ class Place extends AbstractEntity {
         return $this;
     }
 
-    /**
-     * @return Collection|Person[]
-     */
     public function getResidents() : Collection {
         return $this->residents;
     }

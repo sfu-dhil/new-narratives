@@ -2,14 +2,10 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
+use App\Repository\DateYearRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Nines\UtilBundle\Entity\AbstractEntity;
@@ -18,50 +14,28 @@ define('CIRCA_RE', '(c?)([1-9][0-9]{3})');
 define('YEAR_RE', '/^' . CIRCA_RE . '$/');
 define('RANGE_RE', '/^(?:' . CIRCA_RE . ')?-(?:' . CIRCA_RE . ')?$/');
 
-/**
- * Date.
- *
- * @ORM\Table(name="date_year")
- * @ORM\Entity(repositoryClass="App\Repository\DateYearRepository")
- */
+#[ORM\Table(name: 'date_year')]
+#[ORM\Entity(repositoryClass: DateYearRepository::class)]
 class DateYear extends AbstractEntity {
-    /**
-     * @var int
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $start;
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    private ?int $start = null;
 
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    private $startCirca;
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $startCirca;
 
-    /**
-     * @var bool
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $end;
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    private ?int $end = null;
 
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    private $endCirca;
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $endCirca;
 
-    /**
-     * @var DateCategory
-     * @ORM\ManyToOne(targetEntity="DateCategory", inversedBy="dates")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $dateCategory;
+    #[ORM\ManyToOne(targetEntity: DateCategory::class, inversedBy: 'dates')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    private ?DateCategory $dateCategory = null;
 
-    /**
-     * @var Work
-     * @ORM\ManyToOne(targetEntity="Work", inversedBy="dates")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $work;
+    #[ORM\ManyToOne(targetEntity: Work::class, inversedBy: 'dates')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    private ?Work $work = null;
 
     public function __construct() {
         parent::__construct();
@@ -71,9 +45,6 @@ class DateYear extends AbstractEntity {
         $this->endCirca = false;
     }
 
-    /**
-     * Return a string representation.
-     */
     public function __toString() : string {
         if (($this->startCirca === $this->endCirca) && ($this->start === $this->end)) {
             return ($this->startCirca ? 'c' : '') . $this->start;
@@ -84,18 +55,18 @@ class DateYear extends AbstractEntity {
                 ($this->endCirca ? 'c' : '') . $this->end;
     }
 
-    public function getValue() {
-        return (string) $this;
+    public function getValue() : string {
+        return $this->__toString();
     }
 
-    public function setValue($value) {
+    public function setValue(null|int|string $value) : self {
         $value = mb_strtolower(preg_replace('/\s*/', '', (string) $value));
         $matches = [];
         if (false === mb_strpos($value, '-')) {
             // not a range
             if (preg_match(YEAR_RE, $value, $matches)) {
                 $this->startCirca = ('c' === $matches[1]);
-                $this->start = $matches[2];
+                $this->start = (int) $matches[2];
                 $this->endCirca = $this->startCirca;
                 $this->end = $this->start;
             } else {
@@ -109,84 +80,54 @@ class DateYear extends AbstractEntity {
         }
 
         $this->startCirca = ('c' === $matches[1]);
-        $this->start = $matches[2];
+        $this->start = $matches[2] ? (int) $matches[2] : null;
         if (count($matches) > 3) {
             $this->endCirca = ('c' === $matches[3]);
-            $this->end = $matches[4];
+            $this->end = $matches[4] ? (int) $matches[4] : null;
         }
 
         return $this;
     }
 
-    public function isRange() {
+    public function isRange() : bool {
         return
             ($this->startCirca !== $this->endCirca)
             || ($this->start !== $this->end);
     }
 
-    public function hasStart() {
-        return null !== $this->start && '' !== $this->start;
+    public function hasStart() : bool {
+        return null !== $this->start && 0 !== $this->start;
     }
 
-    /**
-     * Get start.
-     *
-     * @return int
-     */
-    public function getStart() {
+    public function getStart() : string {
         return ($this->startCirca ? 'c' : '') . $this->start;
     }
 
-    public function hasEnd() {
-        return null !== $this->end && '' !== $this->end;
+    public function hasEnd() : bool {
+        return null !== $this->end && 0 !== $this->end;
     }
 
-    /**
-     * Get end.
-     *
-     * @return int
-     */
-    public function getEnd() {
+    public function getEnd() : string {
         return ($this->endCirca ? 'c' : '') . $this->end;
     }
 
-    /**
-     * Set dateCategory.
-     *
-     * @return DateYear
-     */
-    public function setDateCategory(DateCategory $dateCategory) {
+    public function setDateCategory(DateCategory $dateCategory) : self {
         $this->dateCategory = $dateCategory;
 
         return $this;
     }
 
-    /**
-     * Get dateCategory.
-     *
-     * @return DateCategory
-     */
-    public function getDateCategory() {
+    public function getDateCategory() : ?DateCategory {
         return $this->dateCategory;
     }
 
-    /**
-     * Set work.
-     *
-     * @return DateYear
-     */
-    public function setWork(Work $work) {
+    public function setWork(Work $work) : self {
         $this->work = $work;
 
         return $this;
     }
 
-    /**
-     * Get work.
-     *
-     * @return Work
-     */
-    public function getWork() {
+    public function getWork() : ?Work {
         return $this->work;
     }
 }

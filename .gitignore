@@ -8,37 +8,41 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
-###> symfony/phpunit-bridge ###
-.phpunit
-.phpunit.result.cache
-/phpunit.xml
-###< symfony/phpunit-bridge ###
-
-# documentation
-/docs/src/build
-/web/docs
-
-# PHPStorm config.
-/.idea
-
-# yarn stuffs
-.yarn-integrity
-public/yarn
-
-# deployer configuration
-config/deploy.yaml
-jquery.collection.js
-public/docs
-*.sql
-src/.preload.php
-data
-
 ###> phpunit/phpunit ###
-/phpunit.xml
-.phpunit.result.cache
+.phpunit.cache/
+coverage/
 ###< phpunit/phpunit ###
 
 ###> friendsofphp/php-cs-fixer ###
-/.php-cs-fixer.php
 /.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
+
+# Editors
+/.idea
+.vscode
+
+# Bundles
+/public/js/jquery.collection.js
+/templates/jquery.collection.html.twig
+
+# Yarn packages.
+node_modules
+
+# docs
+/public/docs
+
+# Docker
+.data
+
+# MISC
+/*.sql
+/data
+/src/.preload.php
+public/docs
+public/images/blog
+
+# Code coverage and QA reports
+public/dev
+
+# Mac DS_Store
+.DS_Store

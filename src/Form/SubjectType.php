@@ -2,29 +2,32 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Form;
 
+use App\Entity\Subject;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SubjectType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
-        $builder->add('name');
-        $builder->add('label');
-        $builder->add('description');
-        $builder->add('subjectSource');
+        $builder->add('name', null, [
+            'label' => 'Name',
+        ]);
+        $builder->add('label', null, [
+            'label' => 'Label',
+        ]);
+        $builder->add('description', null, [
+            'label' => 'Description',
+        ]);
+        $builder->add('subjectSource', null, [
+            'label' => 'Subject Source',
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver) : void {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\Subject',
+            'data_class' => Subject::class,
         ]);
     }
 }

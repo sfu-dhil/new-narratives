@@ -2,47 +2,22 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Tests\Service;
 
-use App\DataFixtures\ContributionFixtures;
-use App\DataFixtures\DateCategoryFixtures;
-use App\DataFixtures\PersonFixtures;
-use App\DataFixtures\PublisherFixtures;
-use App\DataFixtures\RoleFixtures;
-use App\DataFixtures\SubjectFixtures;
-use App\DataFixtures\WorkCategoryFixtures;
-use App\DataFixtures\WorkFixtures;
 use App\Entity\Work;
+use App\Repository\WorkRepository;
 use App\Service\Importer;
 use Doctrine\ORM\UnitOfWork;
 use Nines\UserBundle\DataFixtures\UserFixtures;
-use Nines\UtilBundle\Tests\BaseCase;
+use Nines\UtilBundle\TestCase\ServiceTestCase;
 
-class ImporterTest extends BaseCase {
+class ImporterTest extends ServiceTestCase {
     private ?Importer $importer = null;
 
-    protected function fixtures() : array {
-        return [
-            UserFixtures::class,
-            PersonFixtures::class,
-            RoleFixtures::class,
-            WorkFixtures::class,
-            ContributionFixtures::class,
-            DateCategoryFixtures::class,
-            PublisherFixtures::class,
-            SubjectFixtures::class,
-            WorkCategoryFixtures::class,
-        ];
-    }
+    private ?WorkRepository $workRepository = null;
 
     protected function state($entity) : int {
-        return $this->entityManager->getUnitOfWork()->getEntityState($entity);
+        return $this->em->getUnitOfWork()->getEntityState($entity);
     }
 
     public function testSetUp() : void {
@@ -99,18 +74,16 @@ class ImporterTest extends BaseCase {
     }
 
     public function testAddNullContribution() : void {
-        /** @var Work $work */
-        $work = $this->getReference('work.1');
+        $work = $this->workRepository->find(2);
         $count = count($work->getContributions());
         $this->importer->addContribution($work, '', '[aut]');
-        $this->assertSame($count, count($work->getContributions()));
+        $this->assertCount($count, $work->getContributions());
         $this->importer->addContribution($work, 'Felicia', '');
-        $this->assertSame($count, count($work->getContributions()));
+        $this->assertCount($count, $work->getContributions());
     }
 
     public function testAddContribution() : void {
-        /** @var Work $work */
-        $work = $this->getReference('work.1');
+        $work = $this->workRepository->find(2);
         $count = count($work->getContributions());
         $this->importer->addContribution($work, 'Felicia', '[role_a]');
         $this->assertSame($count + 1, count($work->getContributions()));
@@ -124,23 +97,25 @@ class ImporterTest extends BaseCase {
 
     public function testAddDateUnknownCategory() : void {
         $this->expectExceptionMessageMatches('/Cannot find date category/');
-        /** @var Work $work */
-        $work = $this->getReference('work.1');
+
+        $work = $this->workRepository->find(2);
         $this->importer->addDate($work, '1900', 'abc');
     }
 
     public function testAddDateMalformed() : void {
         $this->expectExceptionMessageMatches('/Malformed date/');
-        /** @var Work $work */
-        $work = $this->getReference('work.1');
+
+        $work = $this->workRepository->find(2);
         $this->importer->addDate($work, '1900-01', 'Category 0');
     }
 
     public function testAddDate() : void {
-        /** @var Work $work */
-        $work = $this->getReference('work.1');
+        $work = $this->workRepository->find(2);
+        $oldCount = count($work->getDates());
         $this->importer->addDate($work, '1900', 'Category 0');
-        $date = $work->getDates()[0];
+        $newCount = count($work->getDates());
+        $this->assertSame($oldCount + 1, $newCount);
+        $date = $work->getDates()[$newCount - 1];
         $this->assertNotNull($date);
         $this->assertSame(UnitOfWork::STATE_NEW, $this->state($date));
         $this->assertSame('Category 0', $date->getDateCategory()->getLabel());
@@ -163,12 +138,8 @@ class ImporterTest extends BaseCase {
 
     /**
      * @dataProvider yesNoData
-     *
-     * @param mixed $expected
-     * @param mixed $value
-     * @param mixed $exception
      */
-    public function testYesNo($expected, $value, $exception = false) : void {
+    public function testYesNo(mixed $expected, mixed $value, mixed $exception = false) : void {
         if ($exception) {
             $this->expectExceptionMessageMatches('|Malformed Yes/No field|');
         }
@@ -196,46 +167,40 @@ class ImporterTest extends BaseCase {
 
     public function testAddSubjectUnknown() : void {
         $this->expectExceptionMessageMatches('/Unknown subject/');
-        /** @var Work $work */
-        $work = $this->getReference('work.0');
+
+        $work = $this->workRepository->find(1);
         $this->importer->addSubjects($work, 'unknown');
     }
 
     public function testSubjectBlank() : void {
-        /** @var Work $work */
-        $work = $this->getReference('work.0');
+        $work = $this->workRepository->find(1);
         $this->importer->addSubjects($work, '');
         $this->assertCount(1, $work->getSubjects());
     }
 
     public function testAddSubject() : void {
-        /** @var Work $work */
-        $work = $this->getReference('work.0');
+        $work = $this->workRepository->find(1);
         $this->importer->addSubjects($work, 'Subject 0');
         $this->assertCount(2, $work->getSubjects());
     }
 
     public function testSetGenreUnknown() : void {
         $this->expectExceptionMessageMatches('/Unknown genre/');
-        /** @var Work $work */
-        $work = $this->getReference('work.0');
+
+        $work = $this->workRepository->find(1);
         $this->importer->setGenre($work, 'abc');
     }
 
     public function testSetGenre() : void {
-        /** @var Work $work */
-        $work = $this->getReference('work.0');
+        $work = $this->workRepository->find(1);
         $this->importer->setGenre($work, 'Genre 0');
         $this->assertSame('genre_0', $work->getGenre()->getName());
     }
 
     /**
      * @dataProvider getUrlsData
-     *
-     * @param mixed $expected
-     * @param mixed $data
      */
-    public function testGetUrls($expected, $data) : void {
+    public function testGetUrls(mixed $expected, mixed $data) : void {
         $urls = $this->importer->getUrls($data);
         $this->assertSame($expected, $urls);
     }
@@ -249,8 +214,7 @@ class ImporterTest extends BaseCase {
     }
 
     public function testSetWorkCategoryBlank() : void {
-        /** @var Work $work */
-        $work = $this->getReference('work.0');
+        $work = $this->workRepository->find(1);
         $category = $work->getWorkCategory();
         $this->importer->setWorkCategory($work, '');
         $this->assertSame($category, $work->getWorkCategory());
@@ -258,21 +222,22 @@ class ImporterTest extends BaseCase {
 
     public function testSetWorkCategoryUnknown() : void {
         $this->expectExceptionMessageMatches('/Unknown work category/');
-        /** @var Work $work */
-        $work = $this->getReference('work.0');
+
+        $work = $this->workRepository->find(1);
         $this->importer->setWorkCategory($work, 'abc123');
     }
 
     public function testSetWorkCategory() : void {
         $this->expectExceptionMessageMatches('/Unknown work category/');
-        /** @var Work $work */
-        $work = $this->getReference('work.0');
+
+        $work = $this->workRepository->find(1);
         $this->importer->setWorkCategory($work, 'Category 2');
         $this->assertSame('category_2', $work->getWorkCategory()->getName());
     }
 
     protected function setUp() : void {
         parent::setUp();
-        $this->importer = self::$container->get(Importer::class);
+        $this->importer = self::getContainer()->get(Importer::class);
+        $this->workRepository = self::getContainer()->get(WorkRepository::class);
     }
 }

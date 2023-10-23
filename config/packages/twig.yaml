@@ -3,17 +3,26 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     form_themes:
-        - 'bootstrap_3_horizontal_layout.html.twig'
-        - "@NinesUtil/form/fields.html.twig"
+        - '@NinesUtil/form/bootstrap_5_horizontal_layout.html.twig'
         - '@TetranzSelect2Entity/Form/fields.html.twig'
         - 'jquery.collection.html.twig'
     globals:
+        asset_prefix: '%env(default::string:ROUTE_BASE)%'
         comment_service: '@Nines\FeedbackBundle\Services\CommentService'
         text_service: '@Nines\UtilBundle\Services\Text'
         matomo_enabled: '%dhil.matomo_enabled%'
         matomo_url: '%dhil.matomo_url%'
         matomo_siteid: '%dhil.matomo_siteid%'
         matomo_domain: '%dhil.matomo_domain%'
+        git_repo: '%env(default::string:GIT_REPO)%'
+        git_commit: '%env(default::string:GIT_COMMIT)%'
+        git_commit_short: '%env(default::string:GIT_COMMIT_SHORT)%'
+        git_branch: '%env(default::string:GIT_BRANCH)%'
+        git_tag: '%env(default::string:GIT_TAG)%'
     date:
         format: Y-d-m, H:i:s
         interval_format: '%%d days'
+
+when@test:
+    twig:
+        strict_variables: true

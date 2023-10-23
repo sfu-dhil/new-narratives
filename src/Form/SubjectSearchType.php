@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Form;
 
 use App\Entity\SubjectSource;
@@ -23,15 +17,15 @@ class SubjectSearchType extends AbstractType {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
-        $builder->setMethod('GET');
+        $builder->setMethod(\Symfony\Component\HttpFoundation\Request::METHOD_GET);
         $builder->add('q', TextType::class, [
             'label' => 'Search query',
             'required' => false,
         ]);
         $builder->add('source', EntityType::class, [
+            'label' => 'Filter by source',
             'class' => SubjectSource::class,
             'choice_label' => 'label',
-            'label' => 'Filter by source',
             'multiple' => true,
             'expanded' => true,
             'required' => false,

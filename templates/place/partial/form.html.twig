@@ -1,6 +1,6 @@
 {{ form_start(form) }}
 {{ form_widget(form) }}
-<div class="form-group">
+<div class="mb-3 row">
     <div class="col-sm-2"></div>
     <div class="col-sm-10">
         <input type="submit" value="Save" class="btn btn-primary" />
@@ -13,3 +13,6 @@
 </div>
 {{ form_end(form) }}
 
+{% block javascripts %}
+    {% include '@NinesEditor/editor/widget.html.twig' %}
+{% endblock %}

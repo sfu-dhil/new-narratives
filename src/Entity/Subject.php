@@ -2,88 +2,53 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
+use App\Repository\SubjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Nines\UtilBundle\Entity\AbstractTerm;
 
-/**
- * Subject.
- *
- * @ORM\Table(name="subject")
- * @ORM\Entity(repositoryClass="App\Repository\SubjectRepository")
- */
+#[ORM\Table(name: 'subject')]
+#[ORM\Entity(repositoryClass: SubjectRepository::class)]
 class Subject extends AbstractTerm {
-    /**
-     * @var SubjectSource
-     * @ORM\ManyToOne(targetEntity="SubjectSource", inversedBy="subjects")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $subjectSource;
+    #[ORM\ManyToOne(targetEntity: SubjectSource::class, inversedBy: 'subjects')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    private ?SubjectSource $subjectSource = null;
 
     /**
-     * @var Collection|Work[]
-     * @ORM\ManyToMany(targetEntity="Work", mappedBy="subjects")
+     * @var Collection<Work>
      */
-    private $works;
+    #[ORM\ManyToMany(targetEntity: Work::class, mappedBy: 'subjects')]
+    private Collection $works;
 
     public function __construct() {
         parent::__construct();
         $this->works = new ArrayCollection();
     }
 
-    /**
-     * Set subjectSource.
-     *
-     * @return Subject
-     */
-    public function setSubjectSource(SubjectSource $subjectSource) {
+    public function setSubjectSource(SubjectSource $subjectSource) : self {
         $this->subjectSource = $subjectSource;
 
         return $this;
     }
 
-    /**
-     * Get subjectSource.
-     *
-     * @return SubjectSource
-     */
-    public function getSubjectSource() {
+    public function getSubjectSource() : ?SubjectSource {
         return $this->subjectSource;
     }
 
-    /**
-     * Add work.
-     *
-     * @return Subject
-     */
-    public function addWork(Work $work) {
+    public function addWork(Work $work) : self {
         $this->works[] = $work;
 
         return $this;
     }
 
-    /**
-     * Remove work.
-     */
     public function removeWork(Work $work) : void {
         $this->works->removeElement($work);
     }
 
-    /**
-     * Get works.
-     *
-     * @return Collection
-     */
-    public function getWorks() {
+    public function getWorks() : Collection {
         return $this->works;
     }
 }

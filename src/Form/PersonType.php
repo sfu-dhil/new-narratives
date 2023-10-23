@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Form;
 
 use App\Entity\Person;
@@ -25,6 +19,8 @@ use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
  * Person form.
  */
 class PersonType extends AbstractType {
+    private ?LinkableMapper $mapper = null;
+
     /**
      * Add form fields to $builder.
      */
@@ -32,16 +28,13 @@ class PersonType extends AbstractType {
         $builder->add('fullName', TextType::class, [
             'label' => 'Full Name',
             'required' => true,
-            'attr' => [
-                'help_block' => '',
-            ],
         ]);
 
         $builder->add('birthDate', TextType::class, [
             'label' => 'Birth Date',
             'required' => false,
+            'help' => 'Enter the date as YYYY-MM-DD or the year as YYYY.',
             'attr' => [
-                'help_block' => 'Enter the date as YYYY-MM-DD or the year as YYYY.',
                 'placeholder' => 'yyyy-mm-dd',
             ],
         ]);
@@ -52,8 +45,7 @@ class PersonType extends AbstractType {
             'remote_route' => 'place_typeahead',
             'allow_clear' => true,
             'attr' => [
-                'help_block' => '',
-                'add_path' => 'place_new_popup',
+                'add_path' => 'place_new',
                 'add_label' => 'Add Place',
             ],
         ]);
@@ -65,8 +57,7 @@ class PersonType extends AbstractType {
             'allow_clear' => true,
             'multiple' => true,
             'attr' => [
-                'help_block' => '',
-                'add_path' => 'place_new_popup',
+                'add_path' => 'place_new',
                 'add_label' => 'Add Place',
             ],
         ]);
@@ -74,8 +65,8 @@ class PersonType extends AbstractType {
         $builder->add('deathDate', TextType::class, [
             'label' => 'Death Date',
             'required' => false,
+            'help' => 'Enter the date as YYYY-MM-DD or the year as YYYY.',
             'attr' => [
-                'help_block' => 'Enter the date as YYYY-MM-DD or the year as YYYY.',
                 'placeholder' => 'yyyy-mm-dd',
             ],
         ]);
@@ -86,8 +77,7 @@ class PersonType extends AbstractType {
             'remote_route' => 'place_typeahead',
             'allow_clear' => true,
             'attr' => [
-                'help_block' => '',
-                'add_path' => 'place_new_popup',
+                'add_path' => 'place_new',
                 'add_label' => 'Add Place',
             ],
         ]);
@@ -95,7 +85,6 @@ class PersonType extends AbstractType {
             'label' => 'Biography',
             'required' => false,
             'attr' => [
-                'help_block' => '',
                 'class' => 'tinymce',
             ],
         ]);
@@ -103,9 +92,7 @@ class PersonType extends AbstractType {
         $builder->setDataMapper($this->mapper);
     }
 
-    /**
-     * @required
-     */
+    #[\Symfony\Contracts\Service\Attribute\Required]
     public function setMapper(LinkableMapper $mapper) : void {
         $this->mapper = $mapper;
     }

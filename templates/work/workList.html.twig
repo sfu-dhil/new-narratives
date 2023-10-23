@@ -1,8 +1,8 @@
 {% if works|length > 0 %}
     <h2>Works</h2>
-    <ul>
+    <ul class="list-group">
         {% for work in works %}
-            <li>
+            <li class="list-group-item {{ loop.index0 % 2 == 0 ? 'list-group-item-light' : 'list-group-item-secondary' }}">
                 {% include 'work/workBrief.html.twig' with {'work': work } %}
             </li>
         {% endfor %}

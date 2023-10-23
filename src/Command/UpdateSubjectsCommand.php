@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Command;
 
 use App\Entity\Subject;
@@ -20,46 +14,27 @@ use Exception;
 use GuzzleHttp\Client;
 use OCLC\Auth\WSKey;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * UpdateSubjectsCommand command.
- */
+#[AsCommand(name: 'newn:update:subjects')]
 class UpdateSubjectsCommand extends Command {
     public const BATCH_SIZE = 100;
 
     // append oclcid and ?wskey=
     public const URL_PFX = 'http://www.worldcat.org/webservices/catalog/content/';
 
-    private $key;
-
-    private $secret;
-
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    public function __construct($key, $secret, EntityManagerInterface $em, LoggerInterface $logger) {
+    public function __construct(private $key, private $secret, private EntityManagerInterface $em, private LoggerInterface $logger) {
         parent::__construct();
-        $this->key = $key;
-        $this->secret = $secret;
-        $this->em = $em;
-        $this->logger = $logger;
     }
 
     /**
      * Configure the command.
      */
     protected function configure() : void {
-        $this->setName('newn:update:subjects')->setDescription('Fetch subject data from OCLC');
+        $this->setDescription('Fetch subject data from OCLC');
     }
 
     protected function fetch($oclcNumber) {

@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Service;
 
 use App\Entity\Contribution;
@@ -105,15 +99,14 @@ class Importer {
     }
 
     /**
-     * @param mixed $name
-     *
      * @throws Exception
      */
-    public function findRole($name) : Role {
+    public function findRole(mixed $name) : Role {
         $matches = [];
-        if ( ! preg_match('/\[(\w+)\]/', $name, $matches)) {
+        if ( ! preg_match('/\[(\w+)\]/', (string) $name, $matches)) {
             throw new Exception("Malformed role code '{$name}'.");
         }
+
         /** @var Role $role */
         $role = $this->roleRepository->findOneBy(['name' => $matches[1]]);
         if ( ! $role) {
@@ -150,6 +143,7 @@ class Importer {
         if ( ! $label) {
             $label = 'Date Issued';
         }
+
         /** @var DateCategory $category */
         $category = $this->dateCategoryRepository->findOneBy(['label' => $label]);
         if ( ! $category) {
@@ -159,7 +153,7 @@ class Importer {
 
         try {
             $dateYear->setValue($date);
-        } catch (Exception $e) {
+        } catch (Exception) {
             throw new Exception("Malformed date '{$date}'");
         }
         $dateYear->setDateCategory($category);
@@ -191,13 +185,11 @@ class Importer {
         }
         $s = mb_strtolower($str);
 
-        switch ($s[0]) {
-            case 'y': return true;
-
-            case 'n': return false;
-
-            default: throw new Exception("Malformed Yes/No field: '{$str}'");
-        }
+        return match ($s[0]) {
+            'y' => true,
+            'n' => false,
+            default => throw new Exception("Malformed Yes/No field: '{$str}'"),
+        };
     }
 
     public function addSubjects(Work $work, ...$subjects) : void {
@@ -205,6 +197,7 @@ class Importer {
             if ( ! $label) {
                 continue;
             }
+
             /** @var Subject $subject */
             $subject = $this->subjectRepository->findOneBy(['label' => $label]);
             if ( ! $subject) {
@@ -218,6 +211,7 @@ class Importer {
         if ( ! $label) {
             return;
         }
+
         /** @var Genre $genre */
         $genre = $this->genreRepository->findOneBy(['label' => $label]);
         if ( ! $genre) {
@@ -228,7 +222,7 @@ class Importer {
 
     public function getUrls($string) : array {
         $matches = [];
-        preg_match_all('{https?://[^\" \n]+}im', $string, $matches);
+        preg_match_all('{https?://[^\" \n]+}im', (string) $string, $matches);
 
         return $matches[0];
     }
@@ -243,6 +237,7 @@ class Importer {
         if ('MS' === $label) {
             $label = 'Manuscript';
         }
+
         /** @var WorkCategory $category */
         $category = $this->workCategoryRepository->findOneBy(['label' => $label]);
         if ( ! $category) {
@@ -324,72 +319,52 @@ class Importer {
         return [$work, $links];
     }
 
-    /**
-     * @required
-     */
+    #[\Symfony\Contracts\Service\Attribute\Required]
     public function setEntityManager(EntityManagerInterface $em) : void {
         $this->em = $em;
     }
 
-    /**
-     * @required
-     */
+    #[\Symfony\Contracts\Service\Attribute\Required]
     public function setDateCategoryRepository(DateCategoryRepository $dateCategoryRepository) : void {
         $this->dateCategoryRepository = $dateCategoryRepository;
     }
 
-    /**
-     * @required
-     */
+    #[\Symfony\Contracts\Service\Attribute\Required]
     public function setPersonRepository(PersonRepository $personRepository) : void {
         $this->personRepository = $personRepository;
     }
 
-    /**
-     * @required
-     */
+    #[\Symfony\Contracts\Service\Attribute\Required]
     public function setRoleRepository(RoleRepository $roleRepository) : void {
         $this->roleRepository = $roleRepository;
     }
 
-    /**
-     * @required
-     */
+    #[\Symfony\Contracts\Service\Attribute\Required]
     public function setPublisherRepository(PublisherRepository $publisherRepository) : void {
         $this->publisherRepository = $publisherRepository;
     }
 
-    /**
-     * @required
-     */
+    #[\Symfony\Contracts\Service\Attribute\Required]
     public function setGenreRepository(GenreRepository $genreRepository) : void {
         $this->genreRepository = $genreRepository;
     }
 
-    /**
-     * @required
-     */
+    #[\Symfony\Contracts\Service\Attribute\Required]
     public function setSubjectRepository(SubjectRepository $subjectRepository) : void {
         $this->subjectRepository = $subjectRepository;
     }
 
-    /**
-     * @required
-     */
+    #[\Symfony\Contracts\Service\Attribute\Required]
     public function setUserRepository(UserRepository $userRepository) : void {
         $this->userRepository = $userRepository;
     }
 
-    /**
-     * @required
-     */
+    #[\Symfony\Contracts\Service\Attribute\Required]
     public function setWorkCategoryRepository(WorkCategoryRepository $workCategoryRepository) : void {
         $this->workCategoryRepository = $workCategoryRepository;
     }
 
-    /**
-     * @required
-     */
+    #[\Symfony\Contracts\Service\Attribute\Required]
     public function setLogger(LoggerInterface $logger) : void {
         $this->logger = $logger;
     }

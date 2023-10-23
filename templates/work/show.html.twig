@@ -4,23 +4,21 @@
     <h1>Work</h1>
 {% endblock %}
 
-{% block body %}
+{% block action_buttons %}
+    <a href="{{ path('work_index') }}" class="btn btn-light">
+        <span class="bi bi-arrow-left"></span> Back
+    </a>
+    {% if is_granted('ROLE_CONTENT_ADMIN') %}
+        <a href="{{ path('work_edit', { 'id': work.id }) }}" class="btn btn-light">
+            <span class='bi bi-pencil-square'></span> Edit
+        </a>
+        <a href="{{ path('work_delete', { 'id': work.id }) }}" class="btn btn-light" data-confirm="Are you sure you want to delete this Work?">
+            <span class='bi bi-x-lg'></span> Delete
+        </a>
+    {% endif %}
+{% endblock %}
 
-    <div class="btn-toolbar">
-        <div class="btn-group pull-right">
-            <a href="{{ path('work_index') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-arrow-left"></span> Back
-            </a>
-            {% if is_granted('ROLE_CONTENT_ADMIN') %}
-                <a href="{{ path('work_edit', { 'id': work.id }) }}" class="btn btn-default">
-                    <span class='glyphicon glyphicon-edit'></span> Edit
-                </a>
-                <a href="{{ path('work_delete', { 'id': work.id }) }}" class="btn btn-default" data-confirm="Are you sure you want to delete this Work?">
-                    <span class='glyphicon glyphicon-remove'></span> Delete
-                </a>
-            {% endif %}
-        </div>
-    </div>
+{% block body %}
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tbody>
             <tr>
@@ -59,7 +57,11 @@
                         </ul>
                     {% endif %}
                     {% if is_granted('ROLE_CONTENT_ADMIN') %}
-                        <a href="{{ path('work_contributions', {'id': work.id}) }}" class="pull-right">Edit contributions</a>
+                        <div class="text-end">
+                            <a href="{{ path('work_contributions', {'id': work.id}) }}" class="btn btn-light">
+                                <span class='bi bi-pencil-square'></span> Edit contributions
+                            </a>
+                        </div>
                     {% endif %}
                 </td>
             </tr>
@@ -78,7 +80,11 @@
                         </ul>
                     {% endif %}
                     {% if is_granted('ROLE_CONTENT_ADMIN') %}
-                        <a href="{{ path('work_dates', {'id': work.id}) }}" class="pull-right">Edit dates</a>
+                        <div class="text-end">
+                            <a href="{{ path('work_dates', {'id': work.id}) }}" class="btn btn-light">
+                                <span class='bi bi-pencil-square'></span> Edit dates
+                            </a>
+                        </div>
                     {% endif %}
                 </td>
             </tr>
@@ -89,9 +95,13 @@
             <tr>
                 <th>Publisher</th>
                 <td>
-                    <a href='{{ path('publisher_show', {'id': work.publisher.id}) }}'>
-                        {{ work.publisher }}
-                    </a>
+                    {% if work.illustrations is null %}
+                        Unknown
+                    {% else %}
+                        <a href='{{ path('publisher_show', {'id': work.publisher.id}) }}'>
+                            {{ work.publisher }}
+                        </a>
+                    {% endif %}
                 </td>
             </tr>
             <tr>

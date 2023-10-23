@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Form;
 
 use App\Entity\Place;
@@ -27,23 +21,17 @@ class PlaceType extends AbstractType {
         $builder->add('name', TextType::class, [
             'label' => 'Name',
             'required' => true,
-            'attr' => [
-                'help_block' => 'Name of the city or township',
-            ],
+            'help' => 'Name of the city or township',
         ]);
         $builder->add('state', TextType::class, [
             'label' => 'State',
             'required' => false,
-            'attr' => [
-                'help_block' => 'Province or state name, unabbreviated',
-            ],
+            'help' => 'Province or state name, unabbreviated',
         ]);
         $builder->add('country', TextType::class, [
             'label' => 'Country',
             'required' => true,
-            'attr' => [
-                'help_block' => 'Full country name',
-            ],
+            'help' => 'Full country name',
         ]);
     }
 
