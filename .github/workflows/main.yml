@@ -30,8 +30,11 @@ jobs:
         echo ELASTICSEARCH_USERNAME="elastic" >> .env.test.local
         echo ELASTICSEARCH_PASSWORD="" >> .env.test.local
 
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+
     - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
+      uses: docker/setup-buildx-action@v3
 
     - name: Login to Docker Hub
       uses: docker/login-action@v3
@@ -60,14 +63,13 @@ jobs:
         discovery type: 'single-node'
 
     - name: Build newn
-      uses: docker/build-push-action@v4
+      uses: docker/build-push-action@v5
       with:
         context: .
         load: true
         pull: true
         tags: dhilsfu/newn:latest
         cache-from: type=registry,ref=dhilsfu/newn:buildcache
-        cache-to: type=registry,ref=dhilsfu/newn:buildcache,mode=max
 
     - name: Run Unit Tests
       run: |
@@ -85,8 +87,11 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v3
 
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+
     - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
+      uses: docker/setup-buildx-action@v3
 
     - name: Login to Docker Hub
       uses: docker/login-action@v3
@@ -95,9 +100,10 @@ jobs:
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
     - name: Build & Push Symfony Base
-      uses: docker/build-push-action@v4
+      uses: docker/build-push-action@v5
       with:
         context: .
+        platforms: linux/amd64,linux/arm64
         push: true
         pull: true
         tags: dhilsfu/newn:latest,dhilsfu/newn:${{github.ref_name}}

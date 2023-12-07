@@ -62,6 +62,6 @@ services:
 
   mail:
     container_name: newn_mail
-    image: mailhog/mailhog:v1.0.1
+    image: jcalonso/mailhog:v1.0.1
     ports:
       - "8025:8025"
