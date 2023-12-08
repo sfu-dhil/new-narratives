@@ -26,7 +26,7 @@ RUN yarn --production \
     && yarn cache clean
 
 FROM dhilsfu/symfony-base:php-8.2-apache AS newn
-ENV GIT_REPO=https://github.com/sfu-dhil/newn
+ENV GIT_REPO=https://github.com/sfu-dhil/new-narratives
 
 # basic deps installer (no script/plugings)
 COPY --chown=www-data:www-data --chmod=775 composer.json composer.lock /var/www/html/
