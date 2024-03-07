@@ -1,4 +1,4 @@
-FROM python:3.9.17 AS newn-docs
+FROM python:3.12-slim AS newn-docs
 WORKDIR /app
 
 # build python deps
@@ -10,7 +10,7 @@ COPY docs /app
 RUN sphinx-build source _site
 
 
-FROM node:20.4 AS newn-prod-assets
+FROM node:21.6-slim AS newn-prod-assets
 WORKDIR /app
 
 RUN apt-get update \
