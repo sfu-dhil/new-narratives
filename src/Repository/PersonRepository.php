@@ -27,7 +27,7 @@ class PersonRepository extends ServiceEntityRepository {
      */
     public function indexQuery() {
         return $this->createQueryBuilder('person')
-            ->orderBy('person.id')
+            ->orderBy('person.fullName')
             ->getQuery()
         ;
     }
