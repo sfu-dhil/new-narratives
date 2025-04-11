@@ -13,6 +13,8 @@ use Nines\MediaBundle\Entity\LinkableInterface;
 use Nines\MediaBundle\Entity\LinkableTrait;
 use Nines\UserBundle\Entity\User;
 use Nines\UtilBundle\Entity\AbstractEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Config\Tradition;
 
 #[ORM\Table(name: 'work')]
 #[ORM\Index(columns: ['title'], flags: ['fulltext'])]
@@ -32,6 +34,13 @@ class Work extends AbstractEntity implements LinkableInterface {
 
     #[ORM\Column(type: Types::INTEGER, nullable: true)]
     private ?int $volume = null;
+
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[Assert\Language]
+    private ?string $languageCode = null;
+
+    #[ORM\Column(type: Types::STRING, enumType: Tradition::class, length: 255, nullable: true)]
+    private ?Tradition $tradition = null;
 
     #[ORM\Column(type: Types::STRING, length: 200, nullable: true)]
     private ?string $publicationPlace = null;
@@ -158,6 +167,26 @@ class Work extends AbstractEntity implements LinkableInterface {
 
     public function getVolume() : ?int {
         return $this->volume;
+    }
+
+    public function getLanguageCode() : ?string {
+        return $this->languageCode;
+    }
+
+    public function setLanguageCode(?string $languageCode) : self {
+        $this->languageCode = $languageCode;
+
+        return $this;
+    }
+
+    public function getTradition() : ?Tradition {
+        return $this->tradition;
+    }
+
+    public function setTradition(?Tradition $tradition) : self {
+        $this->tradition = $tradition;
+
+        return $this;
     }
 
     public function setPublicationPlace(?string $publicationPlace) : self {

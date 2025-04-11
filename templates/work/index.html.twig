@@ -27,6 +27,8 @@
                 <th>Edition</th>
                 <th>Volume</th>
                 <th>Publisher</th>
+                <th>Language</th>
+                <th>Tradition</th>
             </tr>
         </thead>
         <tbody>
@@ -47,6 +49,8 @@
                     <td>{{ work.edition }}</td>
                     <td>{{ work.volume }}</td>
                     <td>{{ work.publicationPlace }} {{ work.publisher }}</td>
+                    <td>{{ work.languageCode|language_name }}</td>
+                    <td>{{ work.tradition ? work.tradition.label : '' }}</td>
                 </tr>
             {% endfor %}
         </tbody>

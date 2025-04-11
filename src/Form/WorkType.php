@@ -10,8 +10,11 @@ use Nines\MediaBundle\Form\Mapper\LinkableMapper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
+use App\Config\Tradition;
 
 class WorkType extends AbstractType {
     private ?LinkableMapper $mapper = null;
@@ -31,6 +34,24 @@ class WorkType extends AbstractType {
         $builder->add('volume', IntegerType::class, [
             'label' => 'Volume',
             'required' => false,
+        ]);
+        $builder->add('languageCode', LanguageType::class, [
+            'label' => 'Language',
+            'required' => false,
+            'expanded' => false,
+            'multiple' => false,
+            'preferred_choices' => ['en'],
+            'attr' => [
+                'class' => 'select2-simple',
+                'data-theme' => 'bootstrap-5',
+            ],
+        ]);
+        $builder->add('tradition', EnumType::class, [
+            'label' => 'Tradition',
+            'required' => false,
+            'multiple' => false,
+            'class' => Tradition::class,
+            'choice_label' => fn (?Tradition $tradition) : string => $tradition ? $tradition->label() : '',
         ]);
         $builder->add('publicationPlace', null, [
             'label' => 'Publication Place',

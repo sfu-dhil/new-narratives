@@ -44,6 +44,14 @@
                 <td>{{ work.volume }}</td>
             </tr>
             <tr>
+                <th>Language</th>
+                <td>{{ work.languageCode|language_name }}</td>
+            </tr>
+            <tr>
+                <th>Tradition</th>
+                <td>{{ work.tradition ? work.tradition.label : '' }}</td>
+            </tr>
+            <tr>
                 <th>Contributions</th>
                 <td>
                     {% if work.contributions|length > 0 %}

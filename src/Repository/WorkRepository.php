@@ -38,6 +38,14 @@ class WorkRepository extends ServiceEntityRepository {
             $qb->andWhere('e.volume = :volume');
             $qb->setParameter('volume', $data['volume']);
         }
+        if (isset($data['languageCode']) && $data['languageCode']) {
+            $qb->andWhere('e.languageCode = :languageCode');
+            $qb->setParameter('languageCode', $data['languageCode']);
+        }
+        if (isset($data['tradition']) && $data['tradition']) {
+            $qb->andWhere('e.tradition = :tradition');
+            $qb->setParameter('tradition', $data['tradition']);
+        }
         if (isset($data['digitalEdition']) && count($data['digitalEdition']) > 0) {
             $qb->andWhere('e.digitalUrl IS NOT NULL');
         }

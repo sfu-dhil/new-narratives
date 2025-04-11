@@ -12,8 +12,11 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
+use App\Config\Tradition;
 
 /**
  * Description of WorkSearchType.
@@ -42,6 +45,24 @@ class WorkSearchType extends AbstractType {
         $builder->add('volume', IntegerType::class, [
             'label' => 'Volume',
             'required' => false,
+        ]);
+        $builder->add('languageCode', LanguageType::class, [
+            'label' => 'Language',
+            'required' => false,
+            'expanded' => false,
+            'multiple' => false,
+            'preferred_choices' => ['en'],
+            'attr' => [
+                'class' => 'select2-simple',
+                'data-theme' => 'bootstrap-5',
+            ],
+        ]);
+        $builder->add('tradition', EnumType::class, [
+            'label' => 'Tradition',
+            'required' => false,
+            'multiple' => false,
+            'class' => Tradition::class,
+            'choice_label' => fn (?Tradition $tradition) : string => $tradition ? $tradition->label() : '',
         ]);
         $builder->add('digitalEdition', ChoiceType::class, [
             'label' => 'Digital Edition',
