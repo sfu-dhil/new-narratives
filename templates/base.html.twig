@@ -88,7 +88,7 @@
                     <b>New Narratives in the History of Philosophy</b>
                     <br/>
                     <a href="{{ asset_prefix|default('') ~ asset('docs/sphinx/index.html') }}">Documentation</a> |
-                    <a href="{{ path('privacy') }}">Privacy</a> |
+                    <a href="https://docs.dhil.lib.sfu.ca/privacy.html" target="_blank">Privacy</a> |
                     {% if git_repo and (git_tag or git_commit) %}
                         <a href="{{ git_repo ~ '/tree/' ~ (git_tag ? git_tag : git_commit) }}" target="_blank">GitHub{{ git_tag ? ' ' ~ git_tag : '' }}</a>
                     {% endif %}
