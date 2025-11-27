@@ -1,3 +1,7 @@
+[![Docker Image Latest Badge](https://ghcr-badge.egpl.dev/sfu-dhil/new-narratives/latest_tag?trim=major&label=latest)](https://github.com/sfu-dhil/new-narratives/pkgs/container/new-narratives)
+[![Docker Image Size badge](https://ghcr-badge.egpl.dev/sfu-dhil/new-narratives/size)](https://github.com/sfu-dhil/new-narratives/pkgs/container/new-narratives)
+
+
 # New Narratives in the History of Philosophy
 
 [New Narratives in the History of Philosophy][newn] (affectionately known as NEWN) is a PHP application written using the

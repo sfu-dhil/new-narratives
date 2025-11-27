@@ -22,7 +22,7 @@ services:
 
   app:
     container_name: newn_app
-    # image: dhil/newn
+    # image: ghcr.io/sfu-dhil/new-narratives
     build:
       context: .
       target: newn

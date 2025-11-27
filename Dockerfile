@@ -25,7 +25,7 @@ COPY public/package.json public/yarn.lock /app/
 RUN yarn --production \
     && yarn cache clean
 
-FROM dhilsfu/symfony-base:php-8.2-apache AS newn
+FROM ghcr.io/sfu-dhil/symfony-base:php-8.2-apache AS newn
 ENV GIT_REPO=https://github.com/sfu-dhil/new-narratives
 
 # basic deps installer (no script/plugings)
